@@ -1,0 +1,12 @@
+<resources>
+    <string name="welcome_message">अपनी सूची में संपर्क जोड़े</string>
+    <string name="title_activity_main">सर्कल ऑफ़ सिक्स</string>
+
+    <string name="circle_complete_confirmation"><![CDATA[मैंने आपको अपने सर्कल ऑफ़ सिक्स का एक हिस्सा बनने के लिए चुना है।<s>
+	इसके बारे में अधिक जानकारी यहाँ पाएं http://www.circleof6app.com<s>]]></string>
+
+    <string name="text_add_more_contacts"><![CDATA[अपने चक्र\n
+     पूरा करने के लिए + \n
+     संकेत ठोकर]]></string>
+
+</resources>

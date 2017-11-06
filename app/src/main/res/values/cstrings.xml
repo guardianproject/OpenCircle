@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alert_request_sent">your request\nhas been sent\nto your circle</string>
+    <string name="alert_alert_your_friend">We\'re going to alert your friends that they are part of your circle via SMS</string>
+    <string name="alert_3_contacts">Circle of 6 will work with 3 contacts, but we recommend 6!</string>
+    <string name="alert_circle_complete">Your circle is complete!</string>
+    <string name="alert_getting_location">getting your location</string>
+    <string name="alert_nogps">GPS deactivated. Still want to alert your circle that you need help via SMS?</string>
+    <string name="alert_sms_confirmation_location">sms message \"come and get me\" will be sent to your circle with your location</string>
+    <string name="alert_sms_confirmation_interruption">sms message\n\"call me I need an interruption\"\nwill be sent to your circle</string>
+    <string name="alert_sms_confirmation_relationships">sms message\n\"I need to talk\"\nwill be sent to your circle</string>
+    <string name="alert_got_help">Your circle will be alerted via SMS that you are OK</string>
+
+    <string name="text_cancel">cancel</string>
+    <string name="text_add_more_contacts">tap \"+\" signs \n to complete \n your circle</string>
+    <string name="text_ask_my_circle">ask my\ncircle to</string>
+
+    <string name="left_button_message">&quot;Need help getting home safely. Location approx, call when ur close:&quot;</string>
+    <string name="left_button_error_message">&quot;Come and get me-I need help getting home safely. Call ASAP to get my location.&quot;</string>
+
+    <string name="middle_button_message">Call and pretend you need me. I need an interruption.</string>
+    <string name="right_button_message">&quot;I need to talk.&quot;</string>
+    <string name="ok_button_message">&quot;I've gotten help, thanks. You're the best, Circle of 6!&quot;</string>
+    <string name="message_footer">Message sent thru circleof6.</string>
+    <string name="message_footer_short">Sent thru circleof6.</string>
+
+    <bool name="map_url_front">false</bool>
+</resources>

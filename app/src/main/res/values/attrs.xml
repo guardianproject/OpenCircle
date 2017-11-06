@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleOf6View">
+        <attr name="external_circle_color" format="color"/>
+        <attr name="internal_circle_color" format="color"/>
+        <attr name="center_text_color" format="color"/>
+        <attr name="details_color" format="color"/>
+        <attr name="src_image_add_contact" format="integer"/>
+        <attr name="src_image_info" format="integer"/>
+        <attr name="src_image_911" format="integer"/>
+        <attr name="src_image_location" format="integer"/>
+        <attr name="src_image_phone" format="integer"/>
+        <attr name="src_image_message" format="integer"/>
+        <attr name="src_image_default_contact" format="integer"/>
+        <attr name="text_add_contacts" format="string"/>
+        <attr name="text_ask_circle" format="string"/>
+        <attr name="text_close_ask_circle" format="string"/>
+    </declare-styleable>
+</resources>    

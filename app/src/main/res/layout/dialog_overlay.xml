@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/image_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/alert_blank"/>
+
+    <ImageView
+        android:id="@+id/image_alert_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="34dp"
+        android:visibility="gone"
+        android:src="@drawable/alert_check"/>
+
+    <TextView
+        android:id="@+id/center_text"
+        android:textSize="20sp"
+        android:textColor="#0288b7"
+        android:gravity="center"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="20dp"
+        />
+
+    <ImageButton
+        android:id="@+id/button_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/alert_ok_button"
+        android:background="@android:color/transparent"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="36dp"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/button_cancel"
+        android:background="@android:color/transparent"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="36dp"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/location_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:indeterminate="true"
+        android:layout_gravity="bottom|center_horizontal"
+        android:indeterminateBehavior="cycle"
+        android:visibility="gone"
+        />
+
+</FrameLayout>

@@ -1,0 +1,111 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <FrameLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@color/background_activity"
+                 tools:context=".ui.MainActivity"
+                 android:id="@+id/full_body"
+                 android:visibility="gone">
+
+        <com.circleof6.view.CircleOf6View
+            android:id="@+id/circle_of_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:center_text_color="@color/center_circle_color"
+            custom:details_color="@color/details_color"
+            custom:external_circle_color="@color/external_circle_color"
+            custom:internal_circle_color="@color/internal_circle_color"
+            custom:src_image_911="@drawable/nineoneone_button"
+            custom:src_image_add_contact="@drawable/ic_add"
+            custom:src_image_default_contact="@drawable/contact_icon"
+            custom:src_image_info="@drawable/ic_info"
+            custom:src_image_location="@drawable/ic_location"
+            custom:src_image_message="@drawable/ic_message"
+            custom:src_image_phone="@drawable/ic_phone"
+            custom:text_add_contacts="@string/text_add_more_contacts"
+            custom:text_ask_circle="@string/text_ask_my_circle"
+            custom:text_close_ask_circle="@string/text_cancel"
+            />
+
+        <include layout="@layout/include_logo"/>
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/logo"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="right|top"
+            android:layout_margin="12dp"
+            android:scaleType="centerInside"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/checkbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_margin="12dp"
+            android:background="@drawable/click_default_event"
+            android:clickable="true"
+            android:contentDescription="@string/check_button"
+            android:onClick="okButtonPress"
+            android:padding="@dimen/padding_icons_main_activity"
+            android:src="@drawable/ic_check"/>
+
+        <ImageButton
+            android:id="@+id/emergencwybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/click_default_event"
+            android:contentDescription="@string/emergency_button"
+            android:onClick="emergencyButtonPress"
+            android:padding="@dimen/padding_icons_main_activity"
+            android:src="@drawable/ic_hotlines"/>
+
+        <ImageView
+            android:id="@+id/infobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="12dp"
+            android:background="@drawable/click_default_event"
+            android:clickable="true"
+            android:contentDescription="@string/info_button"
+            android:onClick="onInfoButtonClicked"
+            android:padding="@dimen/padding_icons_main_activity"
+            android:src="@drawable/ic_questionmark"/>
+
+        <Button
+            android:id="@+id/share_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/click_default_event"
+            android:onClick="shareApp"
+            android:padding="0dp"
+            android:text="share"
+            android:visibility="gone"
+            android:textColor="@color/primary_text_white"
+            />
+
+    </FrameLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:indicator="BallClipRotateMultiple"
+        app:indicator_color="@color/purple"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>
+

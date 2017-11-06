@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">CircleOf6</string>
+    <string name="title_activity_main">CircleOf6</string>
+
+    <string name="text_pick_another_college">Change location</string>
+
+    <string name="button_tutorial_info_text"><![CDATA[Back to this tutorial<br>Change location]]></string>
+    <string name="button_tutorial_resources_text"><![CDATA[Health and safety resources]]></string>
+    <string name="button_tutorial_emergency_text"><![CDATA[Call national health and safety hotlines, and your customized number]]></string>
+
+    <string name="emergency_button_action_title">Call national health and safety hotlines, and your customized number</string>
+
+    <string name="link_share_app">https://tinyurl.com/jm33rle</string>
+
+</resources>

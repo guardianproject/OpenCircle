@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_hello_there"
+        android:textColor="@color/purple"
+        android:textSize="41sp"/>
+
+    <TextView
+        android:id="@+id/where_are_you"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/label_where_are_you"
+        android:textColor="@color/purple"
+        android:textSize="20sp"/>
+
+
+    <ImageView
+        android:id="@+id/tutorialheader_triangle"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="@dimen/padding_medium"
+        android:contentDescription="@string/welcome_message"
+        android:scaleType="fitXY"
+        android:src="@drawable/collegeselection_blue_stroke" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_colleges"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.76"
+        tools:listitem="@layout/item_college"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.76">
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicator="BallClipRotateMultiple"
+            app:indicator_color="@color/purple"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cyan"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:layout_marginTop="@dimen/padding_small"
+        android:scaleType="centerInside"
+        android:src="@drawable/tutorial_co6_u_logo" />
+
+</LinearLayout>

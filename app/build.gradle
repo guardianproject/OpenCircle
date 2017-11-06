@@ -1,0 +1,76 @@
+buildscript {
+    repositories {
+    }
+
+    dependencies {
+    }
+}
+apply plugin: 'com.android.application'
+
+repositories {
+}
+
+dependencies {
+}
+
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
+
+    defaultConfig {
+        applicationId "com.circleof6.open"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 300 
+        versionName "3.0.0"
+    }
+
+    flavorDimensions "free"
+
+    productFlavors {
+        universal {
+            dimension "free"
+            applicationId "com.circleof6.open"
+        }
+    }
+
+    signingConfigs {
+
+    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        staging {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:recyclerview-v7:25.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
+    compile 'com.android.support:design:25.4.0'
+    compile 'com.google.android.gms:play-services-location:11.4.2'
+    compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile 'com.wang.avi:library:1.0.1'
+    compile 'cn.pedant.sweetalert:library:1.3'
+
+}

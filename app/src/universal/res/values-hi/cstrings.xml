@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alert_request_sent">आपके अनुरोध अपने सर्कल के लिए भेज दिया गया है</string>
+
+    <string name="left_button_message"><![CDATA[आओ और मुझे यहाँ से ले जाओ:]]></string>
+
+    <string name="left_button_error_message"><![CDATA[आओ और मुझे यहाँ से ले जाओ-मुझे सुरक्षित घर पहुचने में मदद कि जरूरत है<s>पास पहुँचने पे कॉल करो।<s>मैं यहाँ हूँ:]]></string>
+
+    <string name="middle_button_message"><![CDATA[मुझे कॉल करो, मुझे यहाँ से बहार निकलने का बहाना चाहिए।<s>संदेश सर्कल  ऑफ़ सिक्स से।]]></string>
+    <string name="right_button_message"><![CDATA[मैं स्वस्थ संबंधों के बारे में जानकारी देख रही/रहा हूँ।<s>बस तुम्हे बता रही/रहा हूँ।<s>http://www.jagori.org। संदेश सर्कल ऑफ़ सिक्स से।]]></string>
+    <string name="ok_button_message">&quot;सभी को धन्यवाद्. मुझे मदद मिल चुकी है.&quot;</string>
+
+    <string name="message_footer"> </string>
+    <string name="message_footer_short"> </string>
+
+    <bool name="map_url_front">true</bool>
+</resources>

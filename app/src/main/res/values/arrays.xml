@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- UNIVERSAL -o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o -->
+    <string-array name="country">
+        <item>United States</item>
+        <item>Other Locations</item>
+    </string-array>
+
+    <string-array name="country_ids">
+        <item>id_us</item>
+        <item>id_oth</item>
+    </string-array>
+
+    <string-array name="country_other">
+        <item>India</item>
+        <item>Other countries - App will include customizable hotline</item>
+    </string-array>
+
+    <string-array name="country_other_ids">
+        <item>id_ind</item>
+        <item>id_oth</item>
+    </string-array>
+
+
+    <string-array name="country_images">
+        <item>@drawable/ic_location</item>
+        <item>@drawable/ic_location</item>
+    </string-array>
+
+
+    <!-- HOTLINES                                              -->
+    <string-array name="usa_hotlines_titles">
+        <item>24h Safety Hotline</item>
+        <item>Relationship Advice</item>
+    </string-array>
+    <string-array name="usa_hotlines_phones">
+        <item>8006564673</item>
+        <item>8663319474</item>
+    </string-array>
+
+    <string-array name="hindi_hotlines_titles">
+        <item>24/7 Women\'s hotline</item>
+        <item>Women\'s Rights &amp; Advocacy</item>
+        <item>Emergency New Delhi</item>
+    </string-array>
+    <string-array name="hindi_hotlines_phones">
+        <item>+91–11–2669–2700</item>
+        <item>+91–11–2437–4830</item>
+        <item>+91–11–181</item>
+    </string-array>
+
+
+    <!-- INFO                                              -->
+    <string-array name="us_information_titles">
+        <item>Link to health &amp; safety resources</item>
+    </string-array>
+    <string-array name="us_information_links">
+        <item>http://www.scarleteen.com/for_circle_of_6ers/</item>
+    </string-array>
+
+    <string-array name="hindi_information_titles">
+        <item>Link to jagori.org</item>
+    </string-array>
+    <string-array name="hindi_information_links">
+        <item>http://www.jagori.org/</item>
+    </string-array>
+
+</resources>

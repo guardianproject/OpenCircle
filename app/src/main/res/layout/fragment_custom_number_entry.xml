@@ -1,0 +1,75 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.circleof6.view.CenterZoomingImageView
+        android:id="@+id/background_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="32dp"
+        android:scaleType="matrix"
+        android:src="@drawable/tutorial_circle_full_background"/>
+
+
+    <TextView
+        android:id="@+id/enter_your_custom_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/custom_number_info_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center_horizontal"
+        android:text="@string/custom_number_entry_title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/custom_number_info_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:autoLink="phone"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#9f1f72"/>
+
+    <EditText
+        android:id="@+id/phone_number_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/custom_number_info_text"
+        android:layout_centerHorizontal="true"
+        android:ems="14"
+        android:inputType="phone"
+        android:paddingBottom="12dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <ImageButton
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phone_number_entry"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/tutorial_custom_number_ok_button"/>
+
+    <Button
+        android:id="@+id/do_it_later_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ok_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/click_default_event"
+        android:padding="8dp"
+        android:text="No, I'll do it later"
+        android:textColor="#9f1f72"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

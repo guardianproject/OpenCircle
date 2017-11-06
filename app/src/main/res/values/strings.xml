@@ -1,0 +1,130 @@
+<resources>
+
+    <string name="app_name">CircleOf6</string>
+    <string name="welcome_message">add contacts to your circle</string>
+    <string name="title_activity_main">CircleOf6</string>
+
+    <string name="emergency_button">icon with emergency</string>
+    <string name="info_button">information button</string>
+    <string name="check_button">alert your friends you are OK</string>
+
+    <string name="custom_hotline_set">Your custom hotline has been set.</string>
+
+    <string name="custom_hotline_not_added_title">Alert</string>
+    <string name="custom_hotline_not_added">You can enter your custom number at any time by calling
+        back this tutorial from the app. Just tap on the icon at the bottom right of the screen.
+    </string>
+
+    <string name="custom_hotline_title">Custom Hotline</string>
+
+
+
+    <string name="welcome_main_text">Welcome to Circle of 6. This app links you to
+        friends &amp; safety resources, allowing you to support each other in a specific moment
+        &amp; throughout the year. Circle of 6 is fast, easy to use,
+        and confidential. It\'s the mobile way to reach your circle, and look out for your friends
+        with a simple text message. Circle of 6 U connects you quickly and easily to
+        resources for support, safety, and prevention.
+    </string>
+
+<string name="tutorial_welcome_default">
+        <![CDATA[
+With Circle of 6, you can connect with your friends to stay close, stay safe and prevent violence before it happens. The Circle of 6 app makes it quick and easy to reach the 6 friends you choose. Need help getting home? Need an interruption? Two touches lets your circle know where you are and how they can help. Icons represent actions; so that no one can tell what you\’re up to. Designed for safety, its fast, easy-to-use and private. It\’s the mobile way to look out for your friends, on campus or when you\’re out for the night.
+      	]]>
+    </string>
+
+    <string name="emergency_button_action_title_hws">* Denotes a confidential resource</string>
+
+
+    <string name="circle_complete_confirmation">You\'ve been added to my Circle of 6, see
+        www.circleof6app.com for info.
+    </string>
+    <string name="emergency_button_action_title">Call local, campus-specific hotlines, safety
+        numbers, and your customized number
+    </string>
+
+    <string name="title_activity_paged_tutorial">PagedTutorialActivity</string>
+    <string name="title_activity_select_localization">SelectLocalizationActivity</string>
+
+
+
+    <string name="custom_number_entry_title">
+        <![CDATA[
+        Enter your custom number
+        ]]>
+    </string>
+
+
+
+    <string name="button_tutorial_initial_text">
+        <![CDATA[<b>Tap on the icons to learn<br>what they do</b>]]></string>
+    <string name="button_tutorial_resources_text">
+        <![CDATA[Campus and local safety resources]]></string>
+    <string name="button_tutorial_sample_friend_text">
+        <![CDATA[add up to 6 contacts<br/>(app works with 3)]]></string>
+    <string name="button_tutorial_car_text">
+        <![CDATA[send a text that says,<br><b>&#x201c;come and get me&#x201d;</b> to your circle with your GPS location]]></string>
+    <string name="button_tutorial_call_text">
+        <![CDATA[send a text that says,<br><b>&#x201c;call and pretend you need me&#x201d;</b> to your circle if you need an interruption]]></string>
+    <string name="button_tutorial_message_text">
+        <![CDATA[send a text that says,<br><b>&#x201c;I need to talk&#x201d;</b> to your circle]]></string>
+    <string name="button_tutorial_check_text">
+        <![CDATA[send a text that says,<br><b>&#x201c;I\'m ok, I got help&#x201d;</b> to your circle]]></string>
+    <string name="button_tutorial_emergency_text">
+        <![CDATA[Call local, campus-specific hotlines, safety numbers, and your customized number]]></string>
+    <string name="button_tutorial_info_text"><![CDATA[back to this tutorial]]></string>
+
+    <string name="welcome_instruction_text">OK, swipe right to learn about the features and get
+        started!
+    </string>
+    <string name="ok">Ok</string>
+    <string name="message_unsent_sms">It was not possible to send your message to</string>
+
+
+    <string name="label_hello_there">Hello There</string>
+    <string name="label_where_are_you">Where are you?</string>
+
+
+<string name="us_default_step3_page">
+         <![CDATA[
+Tap on the phone icon, this will take you to a choice of 2 pre-programmed hotlines and one you can customize: Rape or Sexual Assault: RAINN 1-800-656-4673 (HOPE) Relationship Abuse: Love is Respect 1-866-331-9474 For the third option, take a moment to find out the number for a women\'s or anti-violence support center, or emergency service of your choice. Plug it in here. This is an optional function. If you choose to leave it blank, you will still have the 2 national hotlines.
+		]]>
+    </string>
+
+    <string name="in_default_step3_page">
+         <![CDATA[
+Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is 24/7) and a customizable emergency number. For the New Delhi 24/7 Police Hotline for Women: 181. For Women\'s Rights and Advocacy: JAGORI + 91 11 2669 2700. Additionally, you can plug in a number of your choice: We suggest Legal Help: LAWYER\'S COLLECTIVE +91-11-46805555. This is an optional function. If you choose to leave it blank, you will still have New Delhi 24/7 hotline and Jagori numbers.
+		]]>
+    </string>
+
+    <string name="message_friend_without_phone">Your friend does not have a phone number</string>
+    <string name="help_using_app">Help us spread the world!</string>
+    <string name="share_on">Share on</string>
+    <string name="text_share_app">I\'m using @Circleof6app, check it out! Stay connected and stay
+        safe.
+    </string>
+    <string name="link_share_app">https://tinyurl.com/ljv7fgy</string>
+    <string name="no_thanks">NO THANKS</string>
+    <string name="shared_app">Share App</string>
+    <string name="url_app">
+        https://play.google.com/store/apps/details?id=com.circleof6.williamsuniversity
+    </string>
+
+    <string name="error_share_facebook">Facebook app not installed</string>
+    <string name="error_share_twitter">Twitter app not installed</string>
+    <string name="error_share_instagram">Instagram app not installed</string>
+
+    <string name="thanks_share">THANKS FOR THE LOVE!</string>
+    <string name="back_app">Take me back to the app</string>
+    <string name="select_number">Select a number:</string>
+    <string name="numberi_invalid">It is not a valid phone number</string>
+    <string name="messsage_notification_share">Thanks for using Circle of 6! Tap here to share the love :)</string>
+    <string name="text_pick_another_college">PICK ANOTHER COLLEGE</string>
+
+    <!--alert-->
+    <string name="no_posts">Missing required content</string>
+    <string name="no_posts_description">Check you internet connection and retry.</string>
+    <string name="retry">Retry</string>
+    <string name="loading">Loading &#8230;</string>
+
+</resources>

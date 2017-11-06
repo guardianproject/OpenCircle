@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation="vertical" android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/image_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/alert_blank"/>
+
+    <TextView
+        android:id="@+id/center_text"
+        android:textSize="20sp"
+        android:textColor="#0288b7"
+        android:gravity="center"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="26dp"
+        android:text="@string/alert_sms_confirmation_location"
+        />
+
+    <LinearLayout
+        android:baselineAligned="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="26dp"
+        android:orientation="horizontal">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sms_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/sms_confirmation_yes" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sms_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/sms_confirmation_no" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

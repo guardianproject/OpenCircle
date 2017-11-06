@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="AppTheme.ShareApp" parent="AppTheme">
+        <item name="colorPrimary">@color/primary_color_sharing_app</item>
+        <item name="colorPrimaryDark">@color/primary_dark_color_sharing_app</item>
+        <item name="android:windowBackground">@color/primary_color_sharing_app</item>
+    </style>
+
+    <style name="TitleDialogTextAppearance" parent="@android:style/TextAppearance.Holo.DialogWindowTitle"/>
+</resources>

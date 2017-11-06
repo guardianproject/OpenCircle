@@ -1,0 +1,163 @@
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tutorial_background_circle"
+        android:src="@drawable/tutorial_tutorial_background_circle"
+        android:layout_centerInParent="true"/>
+
+    <WebView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_explanation_web_view"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/centerlayout"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/backgroundcircle"
+            android:src="@drawable/background_circle"
+            android:layout_margin="6dp"
+            android:visibility="invisible"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/backgroundcircle">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/friend2"
+                android:src="@drawable/tutorial_contact_icon_sharp"
+                android:layout_marginBottom="@dimen/padding_medium"
+                android:layout_toRightOf="@+id/friend1"
+                android:layout_alignParentTop="true"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/centerbutton"
+                android:visibility="invisible"
+                android:layout_margin="@dimen/center_button_margin"
+                android:src="@drawable/central_button_ask"
+                android:layout_centerInParent="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/friend1"
+                android:layout_toLeftOf="@+id/centerbutton"
+                android:layout_centerVertical="true"
+                android:src="@drawable/add_contact_button"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/friend4"
+                android:layout_toRightOf="@+id/centerbutton"
+                android:layout_centerVertical="true"
+                android:src="@drawable/add_contact_button"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rightbutton"
+                android:layout_margin="@dimen/action_button_margin"
+                android:layout_alignLeft="@+id/friend4"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/tutorial_bubble_icon_sharp"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leftbutton"
+                android:src="@drawable/tutorial_car_icon_sharp"
+                android:layout_margin="@dimen/action_button_margin"
+                android:layout_alignRight="@+id/friend1"
+                android:layout_alignParentBottom="true"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/emergencylayout"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/infobutton"
+            android:src="@drawable/tutorial_information_icon_sharp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/padding_large"
+            android:layout_marginBottom="@dimen/padding_large"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkbutton"
+            android:src="@drawable/tutorial_checkmark_icon_sharp"
+            android:paddingBottom="@dimen/padding_small"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/padding_large"/>
+
+    </RelativeLayout>
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/campus_resources_button"
+        android:src="@drawable/tutorial_resources_icon_sharp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/centerlayout"
+        android:layout_marginBottom="@dimen/padding_medium"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/middlebutton"
+        android:src="@drawable/tutorial_phone_icon_sharp"
+        android:layout_below="@+id/centerlayout"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:id="@+id/emergency_button"
+        android:scaleType="centerInside"
+        android:src="@drawable/tutorial_danger_icon_sharp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>

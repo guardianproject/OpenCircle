@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+    <dimen name="center_button_margin">21dp</dimen>
+    <dimen name="action_button_margin">11dp</dimen>
+    <dimen name="padding_icons_main_activity">6dp</dimen>
+    <dimen name="margin_default_fab">0dp</dimen>
+
+</resources>

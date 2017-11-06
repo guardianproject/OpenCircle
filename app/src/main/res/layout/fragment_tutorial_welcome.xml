@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools">
+
+    <com.circleof6.view.CenterZoomingImageView
+        android:id="@+id/tutorial_background_circle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/tutorial_circle_full_background"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/welcome_main_container"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/welcome_main_text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="WELCOME!"
+            android:id="@+id/welcome_title_text"
+            android:fontFamily="Helvetica Neue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/welcome_main_text"
+            android:id="@+id/welcome_main_text"
+            android:gravity="center"
+            android:textColor="#9f1f72"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/welcome_instruction_text"
+            android:id="@+id/welcome_instruction_text"
+            android:textColor="#9f1f72"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/welcome_main_text"
+            android:lines="2"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:layout_marginTop="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/choose_college"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="@string/text_pick_another_college"
+            tools:text="Change language and/or location"
+            android:textStyle="bold"
+            android:minWidth="170dp"
+            android:maxWidth="170dp"
+            android:textColor="@color/text_color_select_college"
+            android:layout_below="@+id/welcome_instruction_text"
+            android:minHeight="48dp"
+            android:background="@drawable/click_default_event"
+            android:clickable="true"
+            android:onClick="launchPickCollegeActivity"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

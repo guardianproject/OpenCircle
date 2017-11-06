@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ripple_color">#1f000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="purple">#A4206E</color>
+    <color name="cyan">#73CCD9</color>
+    <color name="external_circle_color">#A2206E</color>
+    <color name="internal_circle_color">#FFDB4B</color>
+    <color name="center_circle_color">#6ac5d8</color>
+    <color name="details_color">#ffffff</color>
+    <color name="background_activity">#B8BAD3</color>
+
+    <color name="primary_color_sharing_app">#384259</color>
+    <color name="primary_dark_color_sharing_app">#2A3242</color>
+
+    <color name="primary_text_white">#ffffff</color>
+    <color name="secondary_text_white">#b2FFFFFF</color>
+    <color name="primary_text_black">#212121</color>
+    <color name="link_color">#5AC8DA</color>
+    <color name="text_color_select_college">#00C6D9</color>
+
+</resources>

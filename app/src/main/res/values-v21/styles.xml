@@ -1,0 +1,6 @@
+<resources>
+
+    <style name="TitleDialogTextAppearance" parent="@android:style/TextAppearance.Material.DialogWindowTitle"/>
+
+
+</resources>

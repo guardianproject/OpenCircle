@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.circleof6"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- android:installLocation="internalOnly" -->
+
+
+    <!-- <uses-sdk -->
+    <!-- android:minSdkVersion="10" -->
+    <!-- android:targetSdkVersion="15" /> -->
+
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <!-- for Parse-based push notifications -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <permission android:name="${applicationId}.permission.C2D_MESSAGE"
+                android:protectionLevel="signature"/>
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE"/>
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-feature android:name="android.hardware.location.gps"/>
+    <application
+        android:name=".CircleOf6Application"
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
+
+
+    <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.PagedTutorialActivity"
+            android:label="@string/title_activity_paged_tutorial"
+            android:parentActivityName="android.app.ListActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="locale"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.app.ListActivity"/>
+        </activity>
+
+        <activity
+            android:name=".ui.SharingAppActivity"
+            android:theme="@style/AppTheme.ShareApp">
+        </activity>
+        <activity android:name=".ui.FinishSharingActivity"
+                  android:theme="@style/AppTheme.ShareApp">
+        </activity>
+        <provider
+            android:name="com.circleof6.data.CustomContentProvider"
+            android:authorities="com.circleof6.data.CustomContentProvider"
+            android:exported="false"
+            android:multiprocess="true">
+        </provider>
+
+        <receiver android:name=".receiver.CircleOfSixBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.ShareNotificationReceiver"/>
+
+        <service android:name=".service.ShareNotificationService" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <service android:name="com.circleof6.data.DBUpdateService" />
+        <service android:name="com.circleof6.data.DBUpdateServicePhaseTwo" />
+
+
+    </application>
+
+</manifest>

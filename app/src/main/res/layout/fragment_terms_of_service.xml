@@ -1,0 +1,55 @@
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.circleof6.view.CenterZoomingImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"
+        android:id="@+id/background_image_view"
+        android:src="@drawable/tutorial_circle_full_background"
+        android:adjustViewBounds="false"
+        android:scaleType="matrix"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="64dp"
+        android:layout_marginTop="148dp"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Terms of service"
+            android:id="@+id/terms_of_service"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffffff"/>
+
+        <WebView
+            android:id="@+id/terms_of_service_webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:background="#00ffffff"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="16sp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/i_agree_button"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/tutorial_i_agree_button"
+            android:background="#00ffffff"
+            android:scaleType="center"/>
+    </LinearLayout>
+
+</RelativeLayout>

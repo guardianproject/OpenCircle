@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp"
+              tools:context=".ui.SharingAppActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/co6_u_logo"
+        android:drawablePadding="12dp"
+        android:text="@string/help_using_app"
+        android:textColor="@color/primary_text_white"
+        android:textSize="22sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_text_sharing_app"
+        android:orientation="vertical"
+        android:paddingBottom="14dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="14dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_share_app"
+            android:textColor="@color/primary_text_black"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/link_share_app"
+            android:textColor="@color/link_color"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/share_on"
+        android:textColor="@color/primary_text_white"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabshareFacebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_default_fab"
+                android:layout_marginTop="@dimen/margin_default_fab"
+                android:src="@drawable/icon_share_facebook"
+                app:backgroundTint="@color/details_color"
+                app:borderWidth="0dp"/>
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabshareTwitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_default_fab"
+                android:layout_marginTop="@dimen/margin_default_fab"
+                android:src="@drawable/icon_share_twitter"
+                app:backgroundTint="@color/details_color"
+                app:borderWidth="0dp"/>
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabshareInstagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_default_fab"
+                android:layout_marginTop="@dimen/margin_default_fab"
+                android:src="@drawable/icon_share_instagram"
+                app:backgroundTint="@color/details_color"
+                app:borderWidth="0dp"/>
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabshareDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_default_fab"
+                android:layout_marginTop="@dimen/margin_default_fab"
+                android:src="@drawable/icon_share_default"
+                app:backgroundTint="@color/details_color"
+                app:borderWidth="0dp"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonNoThanks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/click_default_event"
+        android:minHeight="48dp"
+        android:minWidth="256dp"
+        android:text="@string/no_thanks"
+        android:textColor="@color/secondary_text_white"/>
+
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="english_hotlines_titles">
+        <item>24h Safety Hotline</item>
+        <item>Relationship Advice</item>
+    </string-array>
+
+    <string-array name="english_information_titles">
+        <item>Link to health &amp; safety resources</item>
+    </string-array>
+
+
+
+</resources>
