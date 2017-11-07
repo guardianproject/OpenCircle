@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="app_name">Circleof6</string>
+    <string name="welcome_message">Agrega contactos a tu circulo</string>
+    <string name="title_activity_main">Circleof6</string>
+
+    <string name="emergency_button">Icono con Emergencia</string>
+    <string name="info_button">Boton de informacion</string>
+    <string name="check_button">Avisa a tus amigos que estas bien</string>
+
+    <string name="custom_hotline_set">Tu line de emergencia personalizada ha sido creada</string>
+
+    <string name="custom_hotline_not_added_title">Alerta</string>
+    <string name="custom_hotline_not_added">Bienvenido a Circle of 6. Esta aplicacion te conecta con amigos &amp; y recursos de seguridad, que les permitira apoyarse unos a otros en un momento especifico &amp a traves del aňo. Circle of 6 es rapido, facil de usar, y confidencial.  El la forma movil de contactar a tu circulo, y cuidar a tus amigos con un simple mensaje. Circle of 6 U te conecta facil y rapido a recursos de ayuda, seguridad y prevencion. </string>
+
+    <string name="emergency_button_action_title_hws">*Indica un recurso confidencial</string>
+
+
+    <string name="circle_complete_confirmation">Has sido agregado a mi  Circle of 6, para obtener mas informacion visita www.circleof6app.com.</string>
+    <string name="emergency_button_action_title">Llamar a lineas de emergencia locales,
+ numeros de proteccion civil y tus numeros personalizados.</string>
+
+    <string name="title_activity_paged_tutorial">PagedTutorialActivity</string>
+    <string name="custom_number_entry_title"> <![CDATA[ Guarda un numero personal ]]></string>
+
+
+
+    <string name="button_tutorial_initial_text"> <![CDATA[1Toca los iconos para saber lo que hacen1]]></string>
+    <string name="button_tutorial_resources_text">
+ <![CDATA[Numeros locales de proteccion civil]]></string>
+    <string name="button_tutorial_sample_friend_text">
+<![CDATA[Agrega hasta 6 contactos1(app funciona con 3)]]></string>
+    <string name="button_tutorial_car_text"> 
+<![CDATA[Enviar un mensaje que dice,12&#x201c;ven por me&#x201d;2a tu circulo con tu ubicacion geografica]]></string>
+    </resources>

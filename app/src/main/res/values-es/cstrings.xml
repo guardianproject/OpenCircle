@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alert_alert_your_friend">Vamos a avisarle a tus amigos que ahora son parte de tu circulo de Mensajeria</string>
+    <string name="alert_3_contacts">Circle of 6 funciona con 3 contactos, pero nosotros te recomendamos tener 6!</string>
+    <string name="alert_circle_complete">Tu circulo esta completo!</string>
+    <string name="alert_getting_location">Obteniendo tu ubicacion.</string>
+    <string name="alert_nogps">GPS desactivado.  Aun deseas avisar a tu circulo que necesitas ayuda atraves de un mensaje?</string>
+    <string name="alert_sms_confirmation_location">El Mensaje de texto \" Ven por mi\"  sera enviado a tu circulo con tu ubicacion. </string>
+    <string name="alert_sms_confirmation_interruption">El mensaje de texto\n \" Llamame, necesito que me interrumpas\" \n sera enviado a tu circulo</string>
+    <string name="alert_sms_confirmation_relationships">El menmsaje de texto\n \" Necesito hablar con alguien\"\n sera enviado a tu circulo</string>
+    <string name="alert_got_help">Un mensaje sera enviado a tu circulo para informarles que estas bien. </string>
+
+    <string name="text_cancel">Cancelar</string>
+    <string name="text_add_more_contacts">Presiona \"+\"\n para completar tu circulo</string>
+    <string name="text_ask_my_circle">Pedir a mi\n circulo que</string>
+
+    <string name="left_button_message">&quot;Ven por mi, necesito ayuda para volver a casa a salvo. Llamame lo mas pronto posible para obtener mi ubicacion.&quot;</string>
+    <string name="left_button_error_message">&quot;Ven por mi, necesito ayuda para llegar a casa a salvo. Llamame lo mas pronto posible para obtener mi ubicacion.&quot;</string>
+
+    <string name="middle_button_message">Llamame diciendo que me necesitas. Necesito que me interrumpas.</string>
+    <string name="right_button_message">&quot;Necesito hablar con alguien.&quot;</string>
+    <string name="ok_button_message">&quot;Ya recibi ayuda, gracias.Eres increible, Circle of 6!</string>
+    <string name="message_footer">Mensaje enviado a traves de Circle of 6.</string>
+    <string name="message_footer_short">Enviado a traves de Circle of 6.</string>
+
+    <bool name="map_url_front">false</bool>
+</resources>
