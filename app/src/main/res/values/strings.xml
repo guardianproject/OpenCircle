@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">CircleOf6</string>
+    <string name="app_name">Co6-Dev</string>
     <string name="welcome_message">add contacts to your circle</string>
-    <string name="title_activity_main">CircleOf6</string>
+    <string name="title_activity_main">Co6-Dev</string>
 
     <string name="emergency_button">icon with emergency</string>
     <string name="info_button">information button</string>
