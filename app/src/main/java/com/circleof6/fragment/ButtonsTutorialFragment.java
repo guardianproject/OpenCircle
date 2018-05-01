@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.circleof6.CircleOf6Application;
@@ -39,7 +41,7 @@ public class ButtonsTutorialFragment extends TutorialFragment
 
     private EnumMap<ButtonKey, ImageView>   mSharpImageViews;
     private EnumMap<ButtonKey, String>      mButtonExplanationHtmls;
-    private WebView mButtonExplanationWebView;
+    private TextView mButtonExplanationWebView;
     private DBHelper dbHelper;
 
 
@@ -94,18 +96,8 @@ public class ButtonsTutorialFragment extends TutorialFragment
                 getString(R.string.button_tutorial_emergency_text), view,
                 getContext());
 
-        //        if(isUCLALocalization())
-        //        {
-        //            addTappableImage(ButtonKey.NINEONEONE, R.id.nineoneonebutton,
-        //                             R.drawable.tutorial_nineoneone_button_blurred, "Dial 911",
-        //                             fragmentView, container.getContext());
-        //        }
     }
 
-    public boolean isUCLALocalization() {
-        return AppPreferences.getInstance(getContext()).getCollegeLocation().equals(AppPreferences.ID_UCLA);
-
-    }
 
     private void addTappableImage(final ButtonKey buttonKey, int sharpImageViewId, int blurredImageId, final String explanationHtml, final View fragmentView, Context context)
     {
@@ -188,29 +180,25 @@ public class ButtonsTutorialFragment extends TutorialFragment
     }
 
     private void setupTextViewExplantion(View view) {
-        mButtonExplanationWebView = (WebView) view.findViewById(R.id.button_explanation_web_view);
+        mButtonExplanationWebView =  view.findViewById(R.id.button_explanation_web_view);
 
-        mButtonExplanationWebView.reload();
 
-        mButtonExplanationWebView.setBackgroundColor(0x00000000);
-        if (Build.VERSION.SDK_INT >= 11) {
-            mButtonExplanationWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
-        }
+     //   mButtonExplanationWebView.setBackgroundColor(0x00000000);
+     //   mButtonExplanationWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
 
-        setExplanationText(getString(R.string.button_tutorial_initial_text));
+       setExplanationText(getString(R.string.button_tutorial_initial_text));
     }
 
     private void setExplanationText(String textExplanation) {
-        mButtonExplanationWebView.loadData("<html>" +
+
+        mButtonExplanationWebView.setText(Html.fromHtml("<html>" +
                         "<body style=\"background-color: transparent; font-family: light; font-size: 11.5pt; color: #77899f;\">" +
                         "<div style=\"text-align: center;\"" +
                         "<div style=\"display: block;\">" +
                         textExplanation +
                         "</div>" +
                         "</div>" +
-                        "</body></html>",
-                "text/html; charset=UTF-8", null);
-        mButtonExplanationWebView.reload();
+                        "</body></html>"));
     }
 
     @Override
