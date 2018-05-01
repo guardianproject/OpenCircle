@@ -5,49 +5,66 @@
     <string name="title_activity_main">Circleof6</string>
 
     <string name="emergency_button">Icono de Emergencia</string>
-    <string name="info_button">Boton de informacion</string>
+    <string name="info_button">Boton de información</string>
     <string name="check_button">Avisa a tus amigos que estas bien</string>
 
-    <string name="custom_hotline_set">Tu line de emergencia personalizada ha sido creada</string>
+    <string name="custom_hotline_set">Tu linea de emergencia personalizada ha sido creada</string>
 
     <string name="custom_hotline_not_added_title">Alerta</string>
-    <string name="custom_hotline_not_added">Bienvenido a Circle of 6. Esta aplicacion te conecta con amigos &amp; y recursos de seguridad, que les permitira apoyarse unos a otros en un momento especifico &amp; a traves del aňo. Circle of 6 es rapido, facil de usar, y confidencial.  El la forma movil de contactar a tu circulo, y cuidar a tus amigos con un simple mensaje. Circle of 6 U te conecta facil y rapido a recursos de ayuda, seguridad y prevencion. </string>
+    <string name="custom_hotline_not_added">Puedes ingresar tu numero de emergencia personalizado
+en cualquier momento, abriendo este  tutorial de la aplicacion. Solo selecciona el icono en la esquina derecha de abajo. </string>
 
-    <string name="custom_hotline_title">Linea de emergencia customizada</string>
+    <string name="custom_hotline_title">Linea de emergencia personalizada</string>
 
 
 
-    <string name="welcome_main_text">Bienvenido a Circle of 6. Esta aplicacion te vincula a ti y a tus amigos&amp; a recursos de seguridad, permitiendo ayudarse unos a otros en un momento especifico &amp; durante el aňo. Circle of 6 es rapido  facil de usar,  y confidencial. Es la forma movil de contactar a tu circulo de amigos y cuidarse unos a otros.  Circle of 6 U te conecta rapidamente a recursos de apoyo, seguridad y prevencion.</string>
+    <string name="welcome_main_text">Bienvenido a Circle of 6. Esta aplicación te conecta con
+ tu familia y amigos, dandoles acceso a recursos de 
+seguridad, que les permitira apoyarse unos a otros en un 
+caso de emergencia. Circle of 6 es rápido, fácil de usar, y
+ confidencial. Es la forma movil de mantenerte en contacto con tu circulo  de  familia y  amigos mas ceranos,  enviando un solo mensaje. 
+Circle of 6  te conecta fácil y rápido a recursos de ayuda, seguridad y prevención. 
+En caso de una emergencia por favor llama al 911 primero. </string>
 
-<string name="tutorial_welcome_default"> <![CDATA[ConCircle of 6, te puedes conectar con tus amigos para mantenerse cerca,a salvo y prevenir violencia antes de que ocurra.  La plicacion hace posible contactar 6 amigos de tu eleccion de manera rapida y facil. Necesitas ayuda para llegar a tu casa? Necesitas que te interrumpan? Dos selecciones en tu pantalla y tu circulo sabra donde estas y como pueden ayudarte. Los iconos representa acciones, asi nadie puede saber lo que estas haciendo  	]]></string>
+<string name="tutorial_welcome_default">
+
+ <![CDATA[Con Circle of 6, te puedes conectar con tus amigos para mantenerse alerta, a salvo y prevenir violencia antes de que ocurra.  La aplicación hace posible contactar 6 amigos de tu elección de manera rápida y fácil. Necesitas ayuda para llegar a tu casa? Necesitas que te interrumpan? Dos selecciones en tu pantalla y tu circulo sabra donde estas y como pueden ayudarte. Los iconos representa acciónes, asi nadie puede saber lo que estas haciendo . Designado para mantener tu seguridad, es rápido, fácil de usar y privado.  Es un método móvil de proteger  a tus amigos y familia
+ 	]]></string>
 
     <string name="emergency_button_action_title_hws">*Indica un recurso confidencial</string>
 
 
-    <string name="circle_complete_confirmation">Has sido agregado a mi  Circle of 6, para obtener mas informacion visita www.circleof6app.com.</string>
-    <string name="emergency_button_action_title">Llamar a lineas de emergencia locales,
- numeros de proteccion civil y tus numeros personalizados.</string>
+    <string name="circle_complete_confirmation">Has sido agregado a mi  Circle of 6, para obtener mas información visita www.circleof6app.com.</string>
+    <string name="emergency_button_action_title">Llamar a líneas de emergencia locales,
+ numeros de protección civil y tu número personalizado.</string>
 
     <string name="title_activity_paged_tutorial">PagedTutorialActivity</string>
     <string name="title_activity_select_localization">SelectLocalizationActivity</string>
 
 
 
-    <string name="custom_number_entry_title"> <![CDATA[ Guarda un numero personal ]]></string>
+    <string name="custom_number_entry_title">
+ <![CDATA[ Ingresa tu numero personalizado de emergencia  ]]></string>
 
 
 
-    <string name="button_tutorial_initial_text"> <![CDATA[Toca los iconos para saber lo que hacen]]></string>
+    <string name="button_tutorial_initial_text">
+ <![CDATA[Toca los iconos para saber lo que hacen]]></string>
     <string name="button_tutorial_resources_text">
- <![CDATA[Numeros locales de proteccion civil]]></string>
+ <![CDATA[Numeros locales de protección civil]]></string>
     <string name="button_tutorial_sample_friend_text">
-<![CDATA[Agrega hasta 6 contactos1(app funciona con 3)]]></string>
-    <string name="button_tutorial_car_text"> 
-<![CDATA[Enviar un mensaje que dice,12&#x201c;Ven por me&#x201d;2a tu circulo con tu ubicacion geografica]]></string>
-    <string name="button_tutorial_call_text"> <![CDATA[Envia un texto que dice,12&#x201c;Llamame y dime que me necesitas&#x201d;2 a tu circulo si necesitas que alguien te interrumpa]]></string>
-    <string name="button_tutorial_message_text"> <![CDATA[Envia un texto que dice,12&#x201c;Necesito hablar con alguien&#x201d;2 a tu circulo]]> 24</string>
-    <string name="button_tutorial_check_text"> <![CDATA[Envia un texto que dice,12&#x201c;Estoy bien, alguien mas me ayudo&#x201d;2 a tu circulo]]></string>
-    <string name="button_tutorial_emergency_text"> <![CDATA[Llama a un numer de emergencia local o a tu numero de emergencia seleccionado]]></string>
+<![CDATA[Agrega hasta 6 contactos<br/>(la aplicacion puede funcionar  con 3)]]></string>
+    <string name="button_tutorial_car_text">
+<![CDATA[Enviar un mensaje que dice,<br><b>&#x201c;Ven por mi&#x201d;</b>a tu circulo con tu ubicación geografica]]></string>
+    <string name="button_tutorial_call_text">
+<![CDATA[Envia un texto que dice,<br><b>&#x201c;Llamame y dime que me necesitas&#x201d;</b> a tu circulo si necesitas que alguien te interrumpa]]></string>
+    <string name="button_tutorial_message_text">
+<![CDATA[Envia un texto que dice,12&#x201c;Necesito hablar con alguien&#x201d;2 a tu circulo]]> 24</string>
+    <string name="button_tutorial_check_text">
+
+ <![CDATA[Envia un texto que dice,12&#x201c;Estoy bien, alguien mas me ayudo&#x201d;2 a tu circulo]]></string>
+    <string name="button_tutorial_emergency_text">
+ <![CDATA[Llama a un numer de emergencia local o a tu numero de emergencia seleccionado]]></string>
     <string name="button_tutorial_info_text"><![CDATA[Volver al tutorial]]></string>
 
     <string name="welcome_instruction_text">OK, desliza la pantalla a la derecha para aprender acerca de las funciones de Circle of 6 e iniciar.</string>
@@ -59,33 +76,38 @@
     <string name="label_where_are_you">Donde estas?</string>
 
 
-<string name="us_default_step3_page"> <![CDATA[Toca el icono del telefono, esto te llevara a la opcion de 2 lineas de emergencia pre-programadas y una que tu puedes elegir.		]]></string>
+<string name="us_default_step3_page">
+ <![CDATA[Toca el icono del telefono, esto te llevara a la opcion de 2 lineas de emergencia pre-programadas y una que tu puedes elegir.		]]></string>
 
-    <string name="in_default_step3_page"> <![CDATA[Toca el icono del telefono, esto te llevara a dos lineas de emergencia (solo una es 24/7) y a un numero de emergencia que tu puedes escoger. 		]]></string>
+    <string name="in_default_step3_page"> 
+<![CDATA[
+Toca el icono del telefono, esto te llevara a dos lineas de emergencia (solo una es 24/7) y a un numero de emergencia que tu puedes escoger.
+ 		]]></string>
 
     <string name="message_friend_without_phone">Tu amigo no tiene un numero de telefono.</string>
     <string name="help_using_app">Ayudanos a informar a otros</string>
     <string name="share_on">Comparte en</string>
-    <string name="text_share_app">Estoy usando @Circleof6app, pruebalo! MAntente conectado y a salvo.</string>
+    <string name="text_share_app">Estoy usando @Circleof6app, pruebalo! Mantente conectado y a salvo.</string>
     <string name="link_share_app">https://tinyurl.com/ljv7fgy</string>
     <string name="no_thanks">No Gracias</string>
-    <string name="shared_app">Comparte la Aplicacion</string>
-    <string name="url_app"> https://play.google.com/store/apps/details?id=com.circleof6.williamsuniversity 42</string>
+    <string name="shared_app">Comparte la Aplicación</string>
+    <string name="url_app">
+       https://play.google.com/store/apps/details?id=com.circleof6.williamsuniversity 42</string>
 
     <string name="error_share_facebook">Facebook no esta instalado</string>
     <string name="error_share_twitter">Twitter no esta instalado</string>
     <string name="error_share_instagram">Instagram no esta instalado</string>
 
-    <string name="thanks_share">Gracias por tu Amor!</string>
+    <string name="thanks_share">Gracias por tu apoyo!</string>
     <string name="back_app">Volver a la aplicacion</string>
-    <string name="select_number">Seleccionar un numero</string>
+    <string name="select_number">Seleccionar un numero:</string>
     <string name="numberi_invalid">No es un numero de telefono valido</string>
-    <string name="messsage_notification_share">Gracias por usar Circle of 6! toca para compartir nuestro amor!</string>
+    <string name="messsage_notification_share">Gracias por usar Circle of 6! toca para compartir nuestro entusiasmo :)</string>
     <string name="text_pick_another_college">Selecciona otra universidad</string>
 
     <!--alert-->
     <string name="no_posts">Falta contenido requerido</string>
-    <string name="no_posts_description">Revisa tu coneccion a internet y trata de nuevo</string>
+    <string name="no_posts_description">Revisa tu conexión a internet y trata de nuevo</string>
     <string name="retry">Intenta otra vez</string>
     <string name="loading">Cargando &#8230;</string>
 
