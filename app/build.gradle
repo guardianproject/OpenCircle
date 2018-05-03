@@ -22,8 +22,8 @@ android {
         applicationId "com.circleof6.open"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 3003
-        versionName "3.0.0-OPEN-ALPHA-3"
+        versionCode 3004
+        versionName "3.0.0-OPEN-ALPHA-4"
     }
 
     flavorDimensions "free"
