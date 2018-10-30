@@ -3,6 +3,7 @@
     <color name="ripple_color">#1f000000</color>
     <color name="transparent">#00000000</color>
     <color name="purple">#A4206E</color>
+    <color name="purple_dark">#901265</color>
     <color name="cyan">#73CCD9</color>
     <color name="external_circle_color">#A2206E</color>
     <color name="internal_circle_color">#FFDB4B</color>
@@ -19,4 +20,6 @@
     <color name="link_color">#5AC8DA</color>
     <color name="text_color_select_college">#00C6D9</color>
 
+    <color name="tabColorBack">@color/purple</color>
+    <color name="tabColorIndicator">#ffea38</color>
 </resources>

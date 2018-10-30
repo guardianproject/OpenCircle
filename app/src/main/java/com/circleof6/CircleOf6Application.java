@@ -151,6 +151,7 @@ public class CircleOf6Application extends Application {
         //TODO
         StatusUpdate update = new StatusUpdate();
         update.setDate(new Date(118, 9, 30, 9, 52));
+        update.setContact(contact);
         update.setEmoji(0x1f600 + (int)(20.0f * Math.random()));
         update.setLocation("1234;12342");
         update.setMessage("I am ok");

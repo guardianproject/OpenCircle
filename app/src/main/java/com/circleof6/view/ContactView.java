@@ -60,4 +60,9 @@ public class ContactView extends FrameLayout {
         tvName.setText(contact.getName());
         avatarView.setContact(contact);
     }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        avatarView.setOnClickListener(l);
+    }
 }

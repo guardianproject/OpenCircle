@@ -127,4 +127,5 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="retry">Retry</string>
     <string name="loading">Loading &#8230;</string>
 
+    <string name="whats_your_status">What\'s your status?</string>
 </resources>

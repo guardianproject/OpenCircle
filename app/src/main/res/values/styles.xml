@@ -1,6 +1,9 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple_dark</item>
+    </style>
 
     <style name="AppTheme.ShareApp" parent="AppTheme">
         <item name="colorPrimary">@color/primary_color_sharing_app</item>
@@ -9,4 +12,8 @@
     </style>
 
     <style name="TitleDialogTextAppearance" parent="@android:style/TextAppearance.Holo.DialogWindowTitle"/>
+
+    <style name="statusTextAppearance" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">#888888</item>
+    </style>
 </resources>

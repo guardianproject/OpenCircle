@@ -16,4 +16,18 @@
         <attr name="text_ask_circle" format="string"/>
         <attr name="text_close_ask_circle" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="DottedViewPagerIndicator">
+        <attr name="dot_distance" format="dimension" />
+        <attr name="dot_radius" format="dimension" />
+        <attr name="dot_radius_current" format="dimension" />
+        <attr name="dot_color" format="color" />
+        <attr name="dot_rim_color" format="color" />
+        <attr name="dot_color_current" format="color" />
+        <attr name="dot_rim_color_current" format="color" />
+        <attr name="dot_total" />
+        <attr name="dot_current" />
+        <attr name="hide_if_only_one" />
+        <attr name="android:gravity" />
+    </declare-styleable>
 </resources>    

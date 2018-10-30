@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class StatusUpdate {
     private Date date;
+    private Contact contact;
     private int emoji;
     private String message;
     private String location;
@@ -24,6 +25,14 @@ public class StatusUpdate {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
     public int getEmoji() {

@@ -15,8 +15,6 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -27,10 +25,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-import android.support.annotation.DrawableRes;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
@@ -43,12 +42,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
+import com.circleof6.adapter.StatusViewPagerAdapter;
 import com.circleof6.data.DBHelper;
-import com.circleof6.data.DBUpdateService;
 import com.circleof6.data.DBUpdateServicePhaseTwo;
 import com.circleof6.dialog.ContactNumbersDialog;
 import com.circleof6.dialog.EmergencyPhonesDialog;
@@ -58,16 +56,16 @@ import com.circleof6.dialog.SendSmsAlertDialog;
 import com.circleof6.dialog.UnsentSMSDialog;
 import com.circleof6.dialog.utils.ConstantsDialog;
 import com.circleof6.dialog.utils.TypeSendSmsListener;
-import com.circleof6.model.CollegeCountry;
 import com.circleof6.model.Contact;
 import com.circleof6.model.SMS;
+import com.circleof6.model.StatusUpdate;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.receiver.SentSMSReceiver;
-import com.circleof6.receiver.ShareNotificationReceiver;
 import com.circleof6.util.Constants;
 import com.circleof6.util.ConstantsAnalytics;
 import com.circleof6.view.CircleOf6View;
 import com.circleof6.view.ContactView;
+import com.circleof6.view.DottedViewPagerIndicator;
 import com.circleof6.view.util.DrawUtils;
 import com.circleof6.view.util.OnClickListenerCircleOf6View;
 import com.google.android.gms.common.ConnectionResult;
@@ -89,10 +87,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.Timer;
-import java.util.TimerTask;
 
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.circleof6.CircleOf6Application.isUniversalFlavor;
 import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
@@ -125,6 +120,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private FrameLayout fullBody;
     private DBHelper dbHelper;
     private List<SMS> sms;
+    private ViewPager statusPager;
+    private StatusViewPagerAdapter statusPagerAdapter;
+    private DottedViewPagerIndicator statusPagerIndicator;
 
     //----------------------------------------------------------------LifeCycle
     @Override
@@ -132,6 +130,66 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(MainActivity.this);
+
+        // Set up viewpager and tabs
+        //
+        final ViewPager viewPager = findViewById(R.id.viewPager);
+        final TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (viewPager.getCurrentItem() != tab.getPosition()) {
+                    viewPager.setCurrentItem(tab.getPosition(), true);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position != tabLayout.getSelectedTabPosition()) {
+                    tabLayout.getTabAt(position).select();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        statusPager = findViewById(R.id.statusPager);
+        statusPagerIndicator = findViewById(R.id.statusPagerIndicator);
+        statusPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                statusPagerIndicator.setCurrentDot(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.progressBar);
         fullBody = (FrameLayout) findViewById(R.id.full_body);
@@ -400,6 +458,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             });
             contactView.setContact(contact);
         }
+
+        // TODO
+        List<StatusUpdate> statusList = new ArrayList<>();
+        for (Contact contact : contacts) {
+            if (contact != null && !TextUtils.isEmpty(contact.getPhoneNumber())) {
+                StatusUpdate update = CircleOf6Application.getInstance().getContactStatus(contact);
+                if (update != null) {
+                    statusList.add(update);
+                }
+            }
+        }
+        statusPagerAdapter = new StatusViewPagerAdapter();
+        statusPagerAdapter.setStatusUpdates(statusList);
+        statusPager.setAdapter(statusPagerAdapter);
+        statusPagerIndicator.setNumberOfDots(statusList.size());
     }
 
     private ArrayList<Contact> getContactsFromPreferences() {
