@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    tools:context=".ui.MainActivity"
+    >
+    <com.circleof6.view.ContactAvatarView
+        android:id="@+id/avatarView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        />
+    <TextView android:layout_width="match_parent"
+        android:id="@+id/name"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Contact Name"
+        android:layout_below="@id/avatarView"
+        />
+</RelativeLayout>

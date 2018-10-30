@@ -6,9 +6,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
+    <LinearLayout
+        android:id="@+id/contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        >
+        <com.circleof6.view.ContactView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <View android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/darker_gray" />
+        <com.circleof6.view.ContactView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <com.circleof6.view.ContactView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <com.circleof6.view.ContactView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <com.circleof6.view.ContactView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <com.circleof6.view.ContactView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <com.circleof6.view.ContactView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
     <FrameLayout
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
+        android:layout_below="@id/contacts"
                  android:background="@color/background_activity"
                  tools:context=".ui.MainActivity"
                  android:id="@+id/full_body"

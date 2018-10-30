@@ -7,9 +7,12 @@ import android.content.Context;
 import com.android.volley.toolbox.NetworkImageView;
 import com.circleof6.data.DBHelper;
 import com.circleof6.model.CollegeCountry;
+import com.circleof6.model.Contact;
+import com.circleof6.model.StatusUpdate;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.util.LruBitmapCache;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -142,5 +145,16 @@ public class CircleOf6Application extends Application {
             }
         }
 
+    }
+
+    public StatusUpdate getContactStatus(Contact contact) {
+        //TODO
+        StatusUpdate update = new StatusUpdate();
+        update.setDate(new Date(118, 9, 30, 9, 52));
+        update.setEmoji(0x1f600 + (int)(20.0f * Math.random()));
+        update.setLocation("1234;12342");
+        update.setMessage("I am ok");
+        update.setSeen(Math.random() > 0.5f);
+        return update;
     }
 }

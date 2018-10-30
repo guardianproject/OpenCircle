@@ -37,6 +37,7 @@ import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -66,6 +67,7 @@ import com.circleof6.receiver.ShareNotificationReceiver;
 import com.circleof6.util.Constants;
 import com.circleof6.util.ConstantsAnalytics;
 import com.circleof6.view.CircleOf6View;
+import com.circleof6.view.ContactView;
 import com.circleof6.view.util.DrawUtils;
 import com.circleof6.view.util.OnClickListenerCircleOf6View;
 import com.google.android.gms.common.ConnectionResult;
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private boolean isRegisterReceiver;
     private Set<Integer> contactsPicked;
     private CircleOf6View circleOf6View;
+    private ViewGroup contactsView;
     private boolean showAlertSentMessageSuccess;
     private int numMessagesSent;
     private int numSmsSent;
@@ -352,6 +355,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 });
         circleOf6View.refreshDrawableState();
 
+        contactsView = findViewById(R.id.contacts);
+
         setUpView();
         setupInfoContacts();
     }
@@ -369,6 +374,32 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             findViewById(R.id.checkbutton).setVisibility(View.VISIBLE);
         }
 
+        // TODO - Setup yourself
+        Contact you = new Contact(0, "You", null, null);
+        ContactView contactView = (ContactView) contactsView.getChildAt(0);
+        contactView.setContact(you);
+
+        int idxContact = 0;
+        int idxNonContact = 5;
+        for (int i = 0; i < contacts.size(); i++) {
+            Contact contact = contacts.get(i);
+            int idxSlot;
+            if (contact == null || TextUtils.isEmpty(contact.getPhoneNumber())) {
+                // Empty slot
+                idxSlot = idxNonContact--;
+            } else {
+                idxSlot = idxContact++;
+            }
+            contactView = (ContactView) contactsView.getChildAt(2 + idxSlot);
+            contactView.setTag(i);
+            contactView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    contactClicked((Integer) v.getTag());
+                }
+            });
+            contactView.setContact(contact);
+        }
     }
 
     private ArrayList<Contact> getContactsFromPreferences() {
