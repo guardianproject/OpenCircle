@@ -71,6 +71,7 @@ import com.circleof6.view.util.OnClickListenerCircleOf6View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -97,7 +98,7 @@ import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
  * Depends on https://github.com/codinguser/android_contact_picker.git
  * 
  */
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener, StatusViewPagerAdapter.OnAddResponseListener {
 
     //~=~=~=~=~=~=~=~=~=~=~=~=Constants
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -470,6 +471,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         }
         statusPagerAdapter = new StatusViewPagerAdapter();
+        statusPagerAdapter.setOnAddResponseListener(this);
         statusPagerAdapter.setStatusUpdates(statusList);
         statusPager.setAdapter(statusPagerAdapter);
         statusPagerIndicator.setNumberOfDots(statusList.size());
@@ -1424,5 +1426,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    @Override
+    public void onAddResponse(StatusUpdate statusUpdate) {
+        //TODO
+        Log.d("Main", "Add response to " + statusUpdate.getMessage());
     }
 }

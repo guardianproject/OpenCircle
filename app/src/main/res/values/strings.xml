@@ -128,4 +128,13 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="loading">Loading &#8230;</string>
 
     <string name="whats_your_status">What\'s your status?</string>
+
+    <string name="status_updated_ago_never" />
+    <string name="status_updated_ago_recently">Now</string>
+    <string name="status_updated_ago_minutes">%1$d minutes ago</string>
+    <string name="status_updated_ago_minute">%1$d minute ago</string>
+    <string name="status_updated_ago_hours">%1$d hours ago</string>
+    <string name="status_updated_ago_hour">%1$d hour ago</string>
+    <string name="status_updated_ago_days">%1$d days ago</string>
+    <string name="status_updated_ago_day">%1$d day ago</string>
 </resources>

@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/whats_your_status"
-                android:textAppearance="@style/statusTextAppearance"
+                android:textAppearance="@style/SetStatusLinkTextAppearance"
                 android:gravity="center_vertical"
                 />
             <ImageButton

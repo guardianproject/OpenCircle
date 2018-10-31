@@ -13,7 +13,22 @@
 
     <style name="TitleDialogTextAppearance" parent="@android:style/TextAppearance.Holo.DialogWindowTitle"/>
 
-    <style name="statusTextAppearance" parent="TextAppearance.AppCompat.Medium">
+    <style name="SetStatusLinkTextAppearance" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">#888888</item>
     </style>
+
+    <style name="StatusNameTextAppearance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StatusDateTextAppearance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="StatusTextAppearance" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
