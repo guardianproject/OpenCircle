@@ -137,4 +137,8 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="status_updated_ago_hour">%1$d hour ago</string>
     <string name="status_updated_ago_days">%1$d days ago</string>
     <string name="status_updated_ago_day">%1$d day ago</string>
+
+    <string name="status_safe">Safe</string>
+    <string name="status_unsure">Unsure</string>
+    <string name="status_scared">Scared</string>
 </resources>

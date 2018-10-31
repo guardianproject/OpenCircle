@@ -18,6 +18,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -25,6 +27,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -35,11 +39,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -63,6 +75,7 @@ import com.circleof6.preferences.AppPreferences;
 import com.circleof6.receiver.SentSMSReceiver;
 import com.circleof6.util.Constants;
 import com.circleof6.util.ConstantsAnalytics;
+import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.CircleOf6View;
 import com.circleof6.view.ContactView;
 import com.circleof6.view.DottedViewPagerIndicator;
@@ -88,7 +101,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.Timer;
-
 
 import static com.circleof6.CircleOf6Application.isUniversalFlavor;
 import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
@@ -131,66 +143,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(MainActivity.this);
-
-        // Set up viewpager and tabs
-        //
-        final ViewPager viewPager = findViewById(R.id.viewPager);
-        final TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (viewPager.getCurrentItem() != tab.getPosition()) {
-                    viewPager.setCurrentItem(tab.getPosition(), true);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position != tabLayout.getSelectedTabPosition()) {
-                    tabLayout.getTabAt(position).select();
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        statusPager = findViewById(R.id.statusPager);
-        statusPagerIndicator = findViewById(R.id.statusPagerIndicator);
-        statusPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                statusPagerIndicator.setCurrentDot(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.progressBar);
         fullBody = (FrameLayout) findViewById(R.id.full_body);
@@ -416,8 +368,160 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         contactsView = findViewById(R.id.contacts);
 
+        // Set up viewpager and tabs
+        //
+        final ViewPager viewPager = findViewById(R.id.viewPager);
+        final TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (viewPager.getCurrentItem() != tab.getPosition()) {
+                    viewPager.setCurrentItem(tab.getPosition(), true);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position != tabLayout.getSelectedTabPosition()) {
+                    tabLayout.getTabAt(position).select();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        statusPager = findViewById(R.id.statusPager);
+        statusPagerIndicator = findViewById(R.id.statusPagerIndicator);
+        statusPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                statusPagerIndicator.setCurrentDot(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        final ImageButton btnQuickStatus = findViewById(R.id.btnQuickStatus);
+        btnQuickStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showQuickStatusPopup(btnQuickStatus);
+            }
+        });
+
         setUpView();
         setupInfoContacts();
+    }
+
+    private void showQuickStatusPopup(final View anchor) {
+        try {
+            if (anchor == null)
+                return;
+
+            final Pair[] quickStatuses = new Pair[]{
+                    new Pair<>(R.string.status_safe, 0x1f600),
+                    new Pair<>(R.string.status_unsure, 0x1f606),
+                    new Pair<>(R.string.status_scared, 0x1f607)
+            };
+
+            final ArrayAdapter<Pair> adapter = new ArrayAdapter<Pair>(this, R.layout.quick_status_popup_item, 0,
+                    quickStatuses) {
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                    View view = convertView;
+                    if (view == null) {
+                        view = getLayoutInflater().inflate(R.layout.quick_status_popup_item, parent, false);
+                    }
+                    TextView statusText = view.findViewById(R.id.statusText);
+                    TextView statusIcon = view.findViewById(R.id.statusIcon);
+                    statusText.setText((Integer) quickStatuses[position].first);
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Character.toChars((Integer) quickStatuses[position].second));
+                    statusIcon.setText(sb);
+                    return view;
+                }
+            };
+
+            // Get root and locations
+            ViewGroup rootView = findViewById(R.id.contactTabRoot);
+            Rect rectGlobal = new Rect();
+            anchor.getGlobalVisibleRect(rectGlobal);
+
+            View dialogView = getLayoutInflater().inflate(R.layout.quick_status_popup, rootView, false);
+
+            ListView lv = dialogView.findViewById(R.id.lvItems);
+            lv.setBackgroundColor(Color.TRANSPARENT);
+            lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            lv.setAdapter(adapter);
+
+            final Dialog dialog = new Dialog(this,
+                    android.R.style.Theme_Translucent_NoTitleBar);
+
+            // Setting dialogview
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+            wlp.x = rectGlobal.right - MethodsUtils.dpToPx(200, this);
+            wlp.y = rectGlobal.top;
+            wlp.width = MethodsUtils.dpToPx(200, this);
+            wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            wlp.gravity = Gravity.TOP | Gravity.START;
+            wlp.dimAmount = 0.6f;
+            wlp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            window.setAttributes(wlp);
+
+            dialog.setTitle(null);
+            dialog.setContentView(dialogView);
+            dialog.setCancelable(true);
+            //dialog.setCanceledOnTouchOutside(true);
+
+            anchor.setVisibility(View.INVISIBLE);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    anchor.setVisibility(View.VISIBLE);
+                }
+            });
+
+            View buttonClose = dialogView.findViewById(R.id.btnClose);
+            buttonClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupInfoContacts() {

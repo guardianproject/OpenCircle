@@ -1,6 +1,8 @@
 package com.circleof6.util;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 
 import java.util.Date;
 
@@ -12,6 +14,12 @@ public class MethodsUtils {
 
     public static String getPhotoFileByContact(int reqCode) {
         return "friend" + reqCode + "photoname.png";
+    }
+
+    public static int dpToPx(int dp, Context ctx)
+    {
+        Resources r = ctx.getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
     public static String dateDiffDisplayString(Date date, Context context, int idStringNever, int idStringRecently, int idStringMinutes, int idStringMinute,

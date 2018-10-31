@@ -1,5 +1,6 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contactTabRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +16,10 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             app:layout_scrollFlags="scroll|snap|enterAlways"
-            android:padding="16dp"
+            android:paddingStart="16dp"
+            android:paddingLeft="16dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp"
             >
             <TextView
                 android:id="@+id/tvStatus"
@@ -27,11 +31,11 @@
                 android:gravity="center_vertical"
                 />
             <ImageButton
-                android:id="@+id/btnStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btnQuickStatus"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
                 android:background="@null"
-                android:src="@drawable/ic_insert_emoticon_black_24dp"
+                android:src="@drawable/ic_insert_emoticon_black_32dp"
                 android:scaleType="centerInside"
                 android:tint="?attr/colorPrimary"/>
         </LinearLayout>
