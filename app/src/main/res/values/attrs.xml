@@ -30,4 +30,10 @@
         <attr name="hide_if_only_one" />
         <attr name="android:gravity" />
     </declare-styleable>
+
+    <declare-styleable name="RoundFrameLayout">
+        <attr name="frameBorderWidth" format="dimension|float" />
+        <attr name="frameBorderColor" format="color" />
+        <attr name="frameInsetBorder" format="boolean" />
+    </declare-styleable>
 </resources>    

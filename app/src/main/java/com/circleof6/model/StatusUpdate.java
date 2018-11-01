@@ -13,6 +13,7 @@ public class StatusUpdate {
     private Contact contact;
     private int emoji;
     private String message;
+    private boolean urgent;
     private String location;
     private List<StatusUpdateResponse> responseList;
 
@@ -49,6 +50,14 @@ public class StatusUpdate {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean isUrgent() {
+        return urgent;
+    }
+
+    public void setUrgent(boolean urgent) {
+        this.urgent = urgent;
     }
 
     public String getLocation() {

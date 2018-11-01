@@ -149,6 +149,11 @@ public class CircleOf6Application extends Application {
 
     public StatusUpdate getContactStatus(Contact contact) {
         //TODO
+        // For now, randomize some data...
+        if (Math.random() < 0.4f) {
+            return null;
+        }
+
         StatusUpdate update = new StatusUpdate();
         update.setDate(new Date(118, 9, 30, 9, 52));
         update.setContact(contact);
@@ -156,6 +161,7 @@ public class CircleOf6Application extends Application {
         update.setLocation("1234;12342");
         update.setMessage("I am ok");
         update.setSeen(Math.random() > 0.5f);
+        update.setUrgent(Math.random() > 0.5f);
         return update;
     }
 }

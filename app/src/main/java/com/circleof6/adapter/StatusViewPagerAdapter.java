@@ -62,6 +62,16 @@ public class StatusViewPagerAdapter extends PagerAdapter {
         ContactAvatarView avatarView = view.findViewById(R.id.avatarView);
         avatarView.setContact(contact);
 
+        View layoutEmoji = view.findViewById(R.id.avatarViewEmojiLayout);
+        TextView tvEmoji = view.findViewById(R.id.avatarViewEmoji);
+        if (statusUpdate.getEmoji() != 0) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(Character.toChars(statusUpdate.getEmoji()));
+            tvEmoji.setText(sb);
+        } else {
+            layoutEmoji.setVisibility(View.GONE);
+        }
+
         TextView tvName = view.findViewById(R.id.tvContactName);
         tvName.setText(contact.getName());
 

@@ -22,4 +22,11 @@
 
     <color name="tabColorBack">@color/purple</color>
     <color name="tabColorIndicator">#ffea38</color>
+
+    <color name="avatarReadStart">#d1d1d1</color>
+    <color name="avatarReadEnd">#d1d1d1</color>
+    <color name="avatarUnreadStart">#ff4141</color>
+    <color name="avatarUnreadEnd">#ff4141</color>
+    <color name="avatarUnreadUrgentStart">#b03fa4</color>
+    <color name="avatarUnreadUrgentEnd">#704aa6</color>
 </resources>

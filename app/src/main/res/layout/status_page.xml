@@ -3,24 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@android:color/white">
 
-    <com.circleof6.view.ContactAvatarView
-        android:id="@+id/avatarView"
+    <FrameLayout
+        android:id="@+id/avatarLayout"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true">
+    <com.circleof6.view.ContactAvatarView
+        android:id="@+id/avatarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:frameBorderWidth="8"
+        app:frameBorderColor="@color/purple" />
+        <com.circleof6.view.RoundFrameLayout
+            android:id="@+id/avatarViewEmojiLayout"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom|end"
+            app:frameBorderWidth="1dp"
+            app:frameBorderColor="@android:color/white"
+            app:frameInsetBorder="false"
+            android:background="@android:color/white"
+            >
+            <TextView
+                android:id="@+id/avatarViewEmoji"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
+                tools:text="🎃"
+                />
+        </com.circleof6.view.RoundFrameLayout>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvContactName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/avatarView"
+        android:layout_below="@id/avatarLayout"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"

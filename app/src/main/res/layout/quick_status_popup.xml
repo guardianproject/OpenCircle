@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/btnClose"
-        android:layout_width="40dp"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_width="34dp"
+        android:layout_height="53dp"
         android:src="@drawable/ic_cancel_black_32dp"
         android:scaleType="centerInside"
         />
