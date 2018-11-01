@@ -129,7 +129,7 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
 
     <string name="whats_your_status">What\'s your status?</string>
 
-    <string name="status_updated_ago_never" />
+    <string name="status_updated_ago_never">No update</string>
     <string name="status_updated_ago_recently">Now</string>
     <string name="status_updated_ago_minutes">%1$d minutes ago</string>
     <string name="status_updated_ago_minute">%1$d minute ago</string>
@@ -141,4 +141,6 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="status_safe">Safe</string>
     <string name="status_unsure">Unsure</string>
     <string name="status_scared">Scared</string>
+
+    <string name="near">Near</string>
 </resources>

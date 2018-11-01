@@ -1,11 +1,14 @@
 package com.circleof6.adapter;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.model.Contact;
 import com.circleof6.model.StatusUpdate;
@@ -19,52 +22,55 @@ import java.util.List;
  */
 public class StatusViewPagerAdapter extends PagerAdapter {
 
-    public interface OnAddResponseListener {
-        void onAddResponse(StatusUpdate statusUpdate);
+    public interface OnReplyListener {
+        void onReply(StatusUpdate statusUpdate);
     }
 
-    private OnAddResponseListener onAddResponseListener;
-    private List<StatusUpdate> statusUpdates;
+    private OnReplyListener onReplyListener;
+    private List<Contact> contacts;
 
-    public List<StatusUpdate> getStatusUpdates() {
-        return statusUpdates;
+    public OnReplyListener getOnReplyListener() {
+        return onReplyListener;
     }
 
-    public void setStatusUpdates(List<StatusUpdate> statusUpdates) {
-        this.statusUpdates = statusUpdates;
+    public void setOnReplyListener(OnReplyListener onReplyListener) {
+        this.onReplyListener = onReplyListener;
     }
 
-    public OnAddResponseListener getOnAddResponseListener() {
-        return onAddResponseListener;
-    }
-
-    public void setOnAddResponseListener(OnAddResponseListener onAddResponseListener) {
-        this.onAddResponseListener = onAddResponseListener;
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 
     @Override
     public int getCount() {
-        if (this.statusUpdates == null) {
+        if (this.contacts == null) {
             return 0;
         }
-        return this.statusUpdates.size();
+        return this.contacts.size();
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        final StatusUpdate statusUpdate = statusUpdates.get(position);
-        Contact contact = statusUpdate.getContact();
+        final Contact contact = contacts.get(position);
+        final StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
 
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.status_page, container, false);
-
 
         ContactAvatarView avatarView = view.findViewById(R.id.avatarView);
         avatarView.setContact(contact);
 
         View layoutEmoji = view.findViewById(R.id.avatarViewEmojiLayout);
         TextView tvEmoji = view.findViewById(R.id.avatarViewEmoji);
-        if (statusUpdate.getEmoji() != 0) {
+        TextView tvName = view.findViewById(R.id.tvContactName);
+        TextView tvDate = view.findViewById(R.id.tvDate);
+        TextView tvStatus = view.findViewById(R.id.tvStatus);
+        View layoutLocation = view.findViewById(R.id.locationLayout);
+        TextView tvLocation = view.findViewById(R.id.tvLocation);
+        View layoutAddResponse = view.findViewById(R.id.layoutAddResponse);
+        FloatingActionButton fabReply = view.findViewById(R.id.fabReply);
+
+        if (statusUpdate != null && statusUpdate.getEmoji() != 0) {
             StringBuffer sb = new StringBuffer();
             sb.append(Character.toChars(statusUpdate.getEmoji()));
             tvEmoji.setText(sb);
@@ -72,27 +78,40 @@ public class StatusViewPagerAdapter extends PagerAdapter {
             layoutEmoji.setVisibility(View.GONE);
         }
 
-        TextView tvName = view.findViewById(R.id.tvContactName);
         tvName.setText(contact.getName());
 
-        TextView tvDate = view.findViewById(R.id.tvDate);
-        tvDate.setText(MethodsUtils.dateDiffDisplayString(statusUpdate.getDate(), container.getContext(), R.string.status_updated_ago_never, R.string.status_updated_ago_recently, R.string.status_updated_ago_minutes, R.string.status_updated_ago_minute, R.string.status_updated_ago_hours, R.string.status_updated_ago_hour, R.string.status_updated_ago_days, R.string.status_updated_ago_day));
-
-        TextView tvStatus = view.findViewById(R.id.tvStatus);
-        tvStatus.setText(statusUpdate.getMessage());
-
-        TextView tvLocation = view.findViewById(R.id.tvLocation);
-        tvLocation.setText(statusUpdate.getLocation());
-
-        View layoutAddResponse = view.findViewById(R.id.layoutAddResponse);
-        layoutAddResponse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getOnAddResponseListener() != null) {
-                    getOnAddResponseListener().onAddResponse(statusUpdate);
-                }
+        if (statusUpdate != null) {
+            tvDate.setText(MethodsUtils.dateDiffDisplayString(statusUpdate.getDate(), container.getContext(), R.string.status_updated_ago_never, R.string.status_updated_ago_recently, R.string.status_updated_ago_minutes, R.string.status_updated_ago_minute, R.string.status_updated_ago_hours, R.string.status_updated_ago_hour, R.string.status_updated_ago_days, R.string.status_updated_ago_day));
+            tvStatus.setText(statusUpdate.getMessage());
+            if (TextUtils.isEmpty(statusUpdate.getLocation())) {
+                // No location given
+                layoutLocation.setVisibility(View.GONE);
+            } else {
+                tvLocation.setText(statusUpdate.getLocation());
             }
-        });
+            layoutAddResponse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getOnReplyListener() != null) {
+                        getOnReplyListener().onReply(statusUpdate);
+                    }
+                }
+            });
+            fabReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getOnReplyListener() != null) {
+                        getOnReplyListener().onReply(statusUpdate);
+                    }
+                }
+            });
+        } else {
+            tvDate.setText(R.string.status_updated_ago_never);
+            tvStatus.setVisibility(View.GONE);
+            layoutLocation.setVisibility(View.GONE);
+            layoutAddResponse.setVisibility(View.GONE);
+            fabReply.setVisibility(View.GONE);
+        }
 
         container.addView(view);
         return view;

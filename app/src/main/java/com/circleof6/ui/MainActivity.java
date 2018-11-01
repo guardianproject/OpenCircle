@@ -110,7 +110,7 @@ import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
  * Depends on https://github.com/codinguser/android_contact_picker.git
  * 
  */
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener, StatusViewPagerAdapter.OnAddResponseListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener, StatusViewPagerAdapter.OnReplyListener {
 
     //~=~=~=~=~=~=~=~=~=~=~=~=Constants
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -542,15 +542,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         ContactView contactView = (ContactView) contactsView.getChildAt(0);
         contactView.setContact(you);
 
+        final List<Contact> contactList = new ArrayList<>();
+
         int idxContact = 0;
         int idxNonContact = 5;
         for (int i = 0; i < contacts.size(); i++) {
-            Contact contact = contacts.get(i);
+            final Contact contact = contacts.get(i);
             int idxSlot;
             if (contact == null || TextUtils.isEmpty(contact.getPhoneNumber())) {
                 // Empty slot
                 idxSlot = idxNonContact--;
             } else {
+                contactList.add(contact);
                 idxSlot = idxContact++;
             }
             contactView = (ContactView) contactsView.getChildAt(2 + idxSlot);
@@ -558,27 +561,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             contactView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    contactClicked((Integer) v.getTag());
+                    //contactClicked((Integer) v.getTag());
+                    int index = contactList.indexOf(contact);
+                    if (index >= 0) {
+                        statusPager.setCurrentItem(index, true);
+                    }
+
                 }
             });
             contactView.setContact(contact);
         }
 
-        // TODO
-        List<StatusUpdate> statusList = new ArrayList<>();
-        for (Contact contact : contacts) {
-            if (contact != null && !TextUtils.isEmpty(contact.getPhoneNumber())) {
-                StatusUpdate update = CircleOf6Application.getInstance().getContactStatus(contact);
-                if (update != null) {
-                    statusList.add(update);
-                }
-            }
-        }
         statusPagerAdapter = new StatusViewPagerAdapter();
-        statusPagerAdapter.setOnAddResponseListener(this);
-        statusPagerAdapter.setStatusUpdates(statusList);
+        statusPagerAdapter.setOnReplyListener(this);
+        statusPagerAdapter.setContacts(contactList);
         statusPager.setAdapter(statusPagerAdapter);
-        statusPagerIndicator.setNumberOfDots(statusList.size());
+        statusPagerIndicator.setNumberOfDots(contactList.size());
     }
 
     private ArrayList<Contact> getContactsFromPreferences() {
@@ -1533,7 +1531,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     @Override
-    public void onAddResponse(StatusUpdate statusUpdate) {
+    public void onReply(StatusUpdate statusUpdate) {
         //TODO
         Log.d("Main", "Add response to " + statusUpdate.getMessage());
     }
