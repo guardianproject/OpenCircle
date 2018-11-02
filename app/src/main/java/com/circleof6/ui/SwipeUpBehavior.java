@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.circleof6.util.MethodsUtils;
@@ -21,7 +22,7 @@ public class SwipeUpBehavior extends AppBarLayout.ScrollingViewBehavior {
     private OnSwipeUpListener swipeUpListener;
     private AppBarLayout appBarLayout;
     private int totalSwipeUp = 0;
-    private int maxSwipeUp = 0;
+    private int maxSwipeUp = Integer.MAX_VALUE;
 
     public enum NestedScrollType {
         None,
@@ -58,34 +59,49 @@ public class SwipeUpBehavior extends AppBarLayout.ScrollingViewBehavior {
     }
 
     @Override
-    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
-        boolean ret = super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type);
-        if (nestedScrollType == NestedScrollType.None) {
+    public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
+        if (ev.getActionMasked() == MotionEvent.ACTION_CANCEL || ev.getActionMasked() == MotionEvent.ACTION_UP) {
+            stopSwipe(child);
+        } else if (ev.getActionMasked() == MotionEvent.ACTION_DOWN) {
             if (appBarLayout.getBottom() == 0) {
                 nestedScrollType = NestedScrollType.SwipeUp;
-                ret = true;
-            } else if (ret) {
-                nestedScrollType = NestedScrollType.Normal;
+            } else {
+                nestedScrollType = NestedScrollType.None;
             }
-        } else if (nestedScrollType == NestedScrollType.SwipeUp) {
-            ret = true;
+        }
+        return super.onInterceptTouchEvent(parent, child, ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
+        boolean ret = super.onTouchEvent(parent, child, ev);
+        if (ev.getActionMasked() == MotionEvent.ACTION_CANCEL || ev.getActionMasked() == MotionEvent.ACTION_UP) {
+            stopSwipe(child);
         }
         return ret;
+    }
+
+    private void stopSwipe(View child) {
+        if (totalSwipeUp > maxSwipeUp) {
+            if (getSwipeUpListener() != null) {
+                getSwipeUpListener().onSwipeUp();
+            }
+        } else {
+            totalSwipeUp = 0;
+            setSwipeUpValue(child, totalSwipeUp);
+        }
+    }
+
+    @Override
+    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
+        boolean ret = super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type);
+        return ret || nestedScrollType == NestedScrollType.SwipeUp;
     }
 
     @Override
     public void onStopNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int type) {
         super.onStopNestedScroll(coordinatorLayout, child, target, type);
-        nestedScrollType = NestedScrollType.None;
-
-        if (totalSwipeUp > maxSwipeUp) {
-            if (getSwipeUpListener() != null) {
-                getSwipeUpListener().onSwipeUp();
-            }
-        }
-
-        totalSwipeUp = 0;
-        setSwipeUpValue(child, totalSwipeUp);
+        stopSwipe(child);
     }
 
     @Override
