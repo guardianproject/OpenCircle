@@ -1538,9 +1538,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     @Override
-    public void onReply(StatusUpdate statusUpdate) {
-        //TODO
-        Log.d("Main", "Add response to " + statusUpdate.getMessage());
+    public void onReply(Contact contact, View anchorButton) {
+
     }
 
     @Override

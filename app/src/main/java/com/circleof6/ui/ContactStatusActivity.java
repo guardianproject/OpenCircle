@@ -3,11 +3,13 @@ package com.circleof6.ui;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.circleof6.R;
 import com.circleof6.model.Contact;
 import com.circleof6.model.StatusUpdate;
 import com.circleof6.preferences.AppPreferences;
+import com.circleof6.view.ReplyDialog;
 import com.circleof6.view.StatusViewHolder;
 
 public class ContactStatusActivity extends AppCompatActivity implements StatusViewHolder.OnReplyListener {
@@ -22,8 +24,11 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Contact contact = getContactFromIntent();
+        setTitle(contact.getName());
+
         StatusViewHolder holder = new StatusViewHolder(findViewById(R.id.statusRoot));
-        holder.populateWithContact(getContactFromIntent());
+        holder.populateWithContact(contact);
         holder.setOnReplyListener(this);
     }
 
@@ -40,7 +45,7 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
     }
 
     @Override
-    public void onReply(StatusUpdate statusUpdate) {
-
+    public void onReply(Contact contact, View anchorButton) {
+        ReplyDialog.showFromAnchor(anchorButton);
     }
 }

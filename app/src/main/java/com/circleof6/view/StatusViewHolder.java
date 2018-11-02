@@ -18,7 +18,7 @@ import com.circleof6.util.MethodsUtils;
 public class StatusViewHolder {
 
     public interface OnReplyListener {
-        void onReply(StatusUpdate statusUpdate);
+        void onReply(Contact contact, View anchorButton);
     }
 
     private OnReplyListener onReplyListener;
@@ -47,7 +47,7 @@ public class StatusViewHolder {
         fabReply = view.findViewById(R.id.fabReply);
     }
 
-    public void populateWithContact(Contact contact) {
+    public void populateWithContact(final Contact contact) {
         final StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
 
         avatarView.setContact(contact);
@@ -74,7 +74,7 @@ public class StatusViewHolder {
                 @Override
                 public void onClick(View v) {
                     if (getOnReplyListener() != null) {
-                        getOnReplyListener().onReply(statusUpdate);
+                        getOnReplyListener().onReply(contact, layoutAddResponse);
                     }
                 }
             });
@@ -82,7 +82,7 @@ public class StatusViewHolder {
                 @Override
                 public void onClick(View v) {
                     if (getOnReplyListener() != null) {
-                        getOnReplyListener().onReply(statusUpdate);
+                        getOnReplyListener().onReply(contact, fabReply);
                     }
                 }
             });

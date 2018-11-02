@@ -15,7 +15,7 @@ public class StatusUpdate {
     private String message;
     private boolean urgent;
     private String location;
-    private List<StatusUpdateResponse> responseList;
+    private List<StatusUpdateReply> responseList;
 
     // Has the user "seen" this update?
     private boolean seen;
@@ -76,17 +76,17 @@ public class StatusUpdate {
         this.seen = seen;
     }
 
-    public List<StatusUpdateResponse> getResponseList() {
+    public List<StatusUpdateReply> getResponseList() {
         return responseList;
     }
 
-    public void setResponseList(List<StatusUpdateResponse> responseList) {
+    public void setResponseList(List<StatusUpdateReply> responseList) {
         this.responseList = responseList;
         if (this.responseList != null) {
             // Order by date
-            Collections.sort(this.responseList, new Comparator<StatusUpdateResponse>() {
+            Collections.sort(this.responseList, new Comparator<StatusUpdateReply>() {
                 @Override
-                public int compare(StatusUpdateResponse o1, StatusUpdateResponse o2) {
+                public int compare(StatusUpdateReply o1, StatusUpdateReply o2) {
                     return (int)(o1.getDate().getTime() - o2.getDate().getTime());
                 }
             });

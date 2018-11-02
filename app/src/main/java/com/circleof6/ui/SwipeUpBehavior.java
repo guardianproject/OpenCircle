@@ -84,6 +84,8 @@ public class SwipeUpBehavior extends AppBarLayout.ScrollingViewBehavior {
     private void stopSwipe(View child) {
         if (totalSwipeUp > maxSwipeUp) {
             if (getSwipeUpListener() != null) {
+                nestedScrollType = NestedScrollType.None;
+                totalSwipeUp = 0;
                 getSwipeUpListener().onSwipeUp();
             }
         } else {

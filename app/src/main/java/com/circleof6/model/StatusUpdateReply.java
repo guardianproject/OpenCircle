@@ -5,11 +5,12 @@ import java.util.Date;
 /**
  * Created by N-Pex on 2018-10-30.
  */
-public class StatusUpdateResponse {
+public class StatusUpdateReply {
 
-    public enum ResponseType {
+    public enum ReplyType {
         Call,
         Message,
+        WhatsApp,
         Emoji;
 
         @Override
@@ -22,7 +23,7 @@ public class StatusUpdateResponse {
     }
 
     private Date date;
-    private ResponseType type;
+    private ReplyType type;
     private int emoji;
     private String message;
     private Contact contact;
@@ -35,11 +36,11 @@ public class StatusUpdateResponse {
         this.date = date;
     }
 
-    public ResponseType getType() {
+    public ReplyType getType() {
         return type;
     }
 
-    public void setType(ResponseType type) {
+    public void setType(ReplyType type) {
         this.type = type;
     }
 

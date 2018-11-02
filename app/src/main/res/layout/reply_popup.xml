@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="400dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="bottom|end"
+    android:gravity="bottom|end"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lvItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:stackFromBottom="true"
+        android:divider="@null"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_close_white_36dp"
+        app:backgroundTint="@android:color/black"
+        app:fabSize="normal" />
+
+</LinearLayout>
