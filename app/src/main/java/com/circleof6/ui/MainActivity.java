@@ -30,6 +30,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -80,6 +81,7 @@ import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.CircleOf6View;
 import com.circleof6.view.ContactView;
 import com.circleof6.view.DottedViewPagerIndicator;
+import com.circleof6.view.ReplyDialog;
 import com.circleof6.view.StatusViewHolder;
 import com.circleof6.view.util.DrawUtils;
 import com.circleof6.view.util.OnClickListenerCircleOf6View;
@@ -138,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private ViewPager statusPager;
     private StatusViewPagerAdapter statusPagerAdapter;
     private DottedViewPagerIndicator statusPagerIndicator;
+    private FloatingActionButton fabReply;
 
     //----------------------------------------------------------------LifeCycle
     @Override
@@ -375,6 +378,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             ((SwipeUpBehavior)lp.getBehavior()).setSwipeUpListener(this);
         }
 
+        fabReply = findViewById(R.id.fabReply);
+        fabReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReplyDialog.showFromAnchor(v);
+            }
+        });
+
         // Set up viewpager and tabs
         //
         final ViewPager viewPager = findViewById(R.id.viewPager);
@@ -427,6 +438,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onPageSelected(int position) {
                 statusPagerIndicator.setCurrentDot(position);
+
+                Contact contact = statusPagerAdapter.getContacts().get(position);
+                StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
+                fabReply.setVisibility(statusUpdate == null ? View.GONE : View.VISIBLE);
             }
 
             @Override

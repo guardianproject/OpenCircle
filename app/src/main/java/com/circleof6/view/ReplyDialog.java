@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,13 +77,16 @@ public class ReplyDialog {
             };
 
             Rect rectGlobal = new Rect();
-            anchor.getGlobalVisibleRect(rectGlobal);
+            int[] location = new int[2];
+            anchor.getLocationInWindow(location);
+            rectGlobal.set(location[0], location[1], location[0] + anchor.getWidth(), location[1] + anchor.getHeight());
+            //anchor.getGlobalVisibleRect(rectGlobal);
 
             View dialogView = LayoutInflater.from(context).inflate(R.layout.reply_popup, (ViewGroup)anchor.getRootView(), false);
 
             dialogView.measure(
                     View.MeasureSpec.makeMeasureSpec(MethodsUtils.dpToPx(200, context), View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(MethodsUtils.dpToPx(400, context), View.MeasureSpec.EXACTLY));
+                    View.MeasureSpec.makeMeasureSpec(rectGlobal.top, View.MeasureSpec.EXACTLY));
 
             ListView lv = dialogView.findViewById(R.id.lvItems);
             lv.setBackgroundColor(Color.TRANSPARENT);
@@ -92,6 +96,9 @@ public class ReplyDialog {
             final Dialog dialog = new Dialog(context,
                     android.R.style.Theme_Translucent_NoTitleBar);
 
+            dialog.setTitle(null);
+            dialog.setContentView(dialogView);
+            dialog.setCancelable(true);
 
             // Setting dialogview
             Window window = dialog.getWindow();
@@ -100,13 +107,11 @@ public class ReplyDialog {
             wlp.y = rectGlobal.bottom - dialogView.getMeasuredHeight();
             wlp.width = dialogView.getMeasuredWidth();
             wlp.height = dialogView.getMeasuredHeight();
+            wlp.gravity = Gravity.TOP | Gravity.START;
             wlp.dimAmount = 0.6f;
             wlp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
             window.setAttributes(wlp);
 
-            dialog.setTitle(null);
-            dialog.setContentView(dialogView);
-            dialog.setCancelable(true);
             //dialog.setCanceledOnTouchOutside(true);
 
             anchor.setVisibility(View.INVISIBLE);

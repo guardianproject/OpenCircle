@@ -240,4 +240,18 @@
                 />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_reply_white_32dp"
+        android:layout_gravity="bottom|end"
+        app:layout_anchor="@+id/contactScrollView"
+        app:layout_anchorGravity="bottom|end" />
+
+
+
 </android.support.design.widget.CoordinatorLayout>

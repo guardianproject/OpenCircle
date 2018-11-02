@@ -32,7 +32,6 @@ public class StatusViewHolder {
     private View layoutLocation;
     private TextView tvLocation;
     private View layoutAddResponse;
-    private FloatingActionButton fabReply;
 
     public StatusViewHolder(View view) {
         avatarView = view.findViewById(R.id.avatarView);
@@ -44,7 +43,6 @@ public class StatusViewHolder {
         layoutLocation = view.findViewById(R.id.locationLayout);
         tvLocation = view.findViewById(R.id.tvLocation);
         layoutAddResponse = view.findViewById(R.id.layoutAddResponse);
-        fabReply = view.findViewById(R.id.fabReply);
     }
 
     public void populateWithContact(final Contact contact) {
@@ -78,20 +76,11 @@ public class StatusViewHolder {
                     }
                 }
             });
-            fabReply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (getOnReplyListener() != null) {
-                        getOnReplyListener().onReply(contact, fabReply);
-                    }
-                }
-            });
         } else {
             tvDate.setText(R.string.status_updated_ago_never);
             tvStatus.setVisibility(View.GONE);
             layoutLocation.setVisibility(View.GONE);
             layoutAddResponse.setVisibility(View.GONE);
-            fabReply.setVisibility(View.GONE);
         }
     }
 

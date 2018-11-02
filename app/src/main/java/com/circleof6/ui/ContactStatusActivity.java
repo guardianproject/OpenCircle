@@ -1,6 +1,7 @@
 package com.circleof6.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -30,6 +31,14 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
         StatusViewHolder holder = new StatusViewHolder(findViewById(R.id.statusRoot));
         holder.populateWithContact(contact);
         holder.setOnReplyListener(this);
+
+        FloatingActionButton fabReply = findViewById(R.id.fabReply);
+        fabReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReplyDialog.showFromAnchor(v);
+            }
+        });
     }
 
     private Contact getContactFromIntent() {
