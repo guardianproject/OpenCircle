@@ -2,11 +2,14 @@ package com.circleof6.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
+import com.circleof6.adapter.RepliesViewPagerAdapter;
 import com.circleof6.model.Contact;
 import com.circleof6.model.StatusUpdate;
 import com.circleof6.preferences.AppPreferences;
@@ -16,6 +19,8 @@ import com.circleof6.view.StatusViewHolder;
 public class ContactStatusActivity extends AppCompatActivity implements StatusViewHolder.OnReplyListener {
 
     public static final String ARG_CONTACT_ID = "contact_id";
+    private ViewPager repliesPager;
+    private RepliesViewPagerAdapter repliesPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,13 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
                 ReplyDialog.showFromAnchor(v);
             }
         });
+
+        StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
+        if (statusUpdate != null) {
+            repliesPagerAdapter = new RepliesViewPagerAdapter(this, statusUpdate.getReplyList());
+        }
+        repliesPager = findViewById(R.id.repliesPager);
+        repliesPager.setAdapter(repliesPagerAdapter);
     }
 
     private Contact getContactFromIntent() {

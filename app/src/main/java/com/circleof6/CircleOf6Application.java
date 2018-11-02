@@ -9,15 +9,14 @@ import com.circleof6.data.DBHelper;
 import com.circleof6.model.CollegeCountry;
 import com.circleof6.model.Contact;
 import com.circleof6.model.StatusUpdate;
+import com.circleof6.model.StatusUpdateReply;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.util.LruBitmapCache;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import android.app.Application;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -162,6 +161,19 @@ public class CircleOf6Application extends Application {
         update.setMessage("I am ok");
         update.setSeen(Math.random() > 0.5f);
         update.setUrgent(Math.random() > 0.5f);
+
+        ArrayList<StatusUpdateReply> replies = new ArrayList<>();
+        StatusUpdateReply reply1 = new StatusUpdateReply();
+        reply1.setContact(contact);
+        reply1.setDate(new Date(118, 9, 31, 9, 52));
+        reply1.setType(StatusUpdateReply.ReplyType.Call);
+        replies.add(reply1);
+        StatusUpdateReply reply2 = new StatusUpdateReply();
+        reply2.setContact(contact);
+        reply2.setDate(new Date(118, 9, 31, 10, 52));
+        reply2.setType(StatusUpdateReply.ReplyType.Message);
+        replies.add(reply2);
+        update.setReplyList(replies);
         return update;
     }
 }
