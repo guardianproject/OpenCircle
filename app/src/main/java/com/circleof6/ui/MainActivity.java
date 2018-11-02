@@ -29,6 +29,7 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -79,6 +80,7 @@ import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.CircleOf6View;
 import com.circleof6.view.ContactView;
 import com.circleof6.view.DottedViewPagerIndicator;
+import com.circleof6.view.StatusViewHolder;
 import com.circleof6.view.util.DrawUtils;
 import com.circleof6.view.util.OnClickListenerCircleOf6View;
 import com.google.android.gms.common.ConnectionResult;
@@ -110,7 +112,7 @@ import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
  * Depends on https://github.com/codinguser/android_contact_picker.git
  * 
  */
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener, StatusViewPagerAdapter.OnReplyListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener, StatusViewHolder.OnReplyListener, SwipeUpBehavior.OnSwipeUpListener {
 
     //~=~=~=~=~=~=~=~=~=~=~=~=Constants
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -154,8 +156,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         sms = dbHelper.getSMS();
         init();
-
-
+        
         askForContactPermission(Manifest.permission.SEND_SMS);
         askForContactPermission(Manifest.permission.READ_PHONE_STATE);
         askForContactPermission(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -367,6 +368,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         circleOf6View.refreshDrawableState();
 
         contactsView = findViewById(R.id.contacts);
+
+        View contactScrollView = findViewById(R.id.contactScrollView);
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) contactScrollView.getLayoutParams();
+        if (lp.getBehavior() instanceof SwipeUpBehavior) {
+            ((SwipeUpBehavior)lp.getBehavior()).setSwipeUpListener(this);
+        }
 
         // Set up viewpager and tabs
         //
@@ -1534,5 +1541,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onReply(StatusUpdate statusUpdate) {
         //TODO
         Log.d("Main", "Add response to " + statusUpdate.getMessage());
+    }
+
+    @Override
+    public void onSwipeUp() {
+        Contact currentContact = statusPagerAdapter.getContacts().get(statusPager.getCurrentItem());
+        Intent intent = new Intent(this, ContactStatusActivity.class);
+        intent.putExtra(ContactStatusActivity.ARG_CONTACT_ID, currentContact.getId());
+        startActivity(intent);
     }
 }

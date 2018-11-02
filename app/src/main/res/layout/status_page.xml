@@ -4,138 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="16dp">
 
-    <FrameLayout
-        android:id="@+id/avatarLayout"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="29dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <com.circleof6.view.ContactAvatarView
-            android:id="@+id/avatarView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:frameBorderColor="@color/purple"
-            app:frameBorderWidth="8" />
+        <FrameLayout
+            android:id="@+id/avatarLayout"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="29dp">
 
-        <com.circleof6.view.RoundFrameLayout
-            android:id="@+id/avatarViewEmojiLayout"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_gravity="bottom|end"
-            android:background="@android:color/white"
-            app:frameBorderColor="@android:color/white"
-            app:frameBorderWidth="1dp"
-            app:frameInsetBorder="false">
-
-            <TextView
-                android:id="@+id/avatarViewEmoji"
+            <com.circleof6.view.ContactAvatarView
+                android:id="@+id/avatarView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="21dp"
-                tools:text="🎃" />
-        </com.circleof6.view.RoundFrameLayout>
-    </FrameLayout>
+                app:frameBorderColor="@color/purple"
+                app:frameBorderWidth="8" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="9dp"
-        android:orientation="horizontal">
+            <com.circleof6.view.RoundFrameLayout
+                android:id="@+id/avatarViewEmojiLayout"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:background="@android:color/white"
+                app:frameBorderColor="@android:color/white"
+                app:frameBorderWidth="1dp"
+                app:frameInsetBorder="false">
 
-        <TextView
-            android:id="@+id/tvContactName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:textAppearance="@style/StatusNameTextAppearance"
-            tools:text="Poster" />
+                <TextView
+                    android:id="@+id/avatarViewEmoji"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="21dp"
+                    tools:text="🎃" />
+            </com.circleof6.view.RoundFrameLayout>
+        </FrameLayout>
 
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/StatusDateTextAppearance"
-            tools:text="3 days ago" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/StatusTextAppearance"
-        tools:text="This is a status update text that can span several lines. It can also contain links." />
-
-    <LinearLayout
-        android:id="@+id/locationLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvLocationLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:drawableStart="@drawable/ic_location_on_black_16dp"
-            android:drawableLeft="@drawable/ic_location_on_black_16dp"
-            android:text="@string/near"
-            android:textAppearance="@style/StatusLocationLabelTextAppearance" />
-
-        <TextView
-            android:id="@+id/tvLocation"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/StatusLocationTextAppearance"
-            tools:text="Lat 0.3425, Long 0.2342" />
-    </LinearLayout>
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="9dp"
+            android:orientation="horizontal">
 
-    <FrameLayout
-        android:id="@+id/layoutAddResponse"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="16dp">
+            <TextView
+                android:id="@+id/tvContactName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:textAppearance="@style/StatusNameTextAppearance"
+                tools:text="Poster" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_insert_emoticon_black_24dp" />
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/StatusDateTextAppearance"
+                tools:text="3 days ago" />
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:background="@android:color/white"
-            android:text="+"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
-    </FrameLayout>
-</LinearLayout>
+            android:textAppearance="@style/StatusTextAppearance"
+            tools:text="This is a status update text that can span several lines. It can also contain links." />
+
+        <LinearLayout
+            android:id="@+id/locationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLocationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:drawableStart="@drawable/ic_location_on_black_16dp"
+                android:drawableLeft="@drawable/ic_location_on_black_16dp"
+                android:text="@string/near"
+                android:textAppearance="@style/StatusLocationLabelTextAppearance" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/StatusLocationTextAppearance"
+                tools:text="Lat 0.3425, Long 0.2342" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/layoutAddResponse"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_insert_emoticon_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:background="@android:color/white"
+                android:text="+"
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
+        </FrameLayout>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabSize="normal"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_reply_white_32dp"
-        />
+        app:fabSize="normal" />
 
 </FrameLayout>
