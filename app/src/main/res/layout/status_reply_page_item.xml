@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+    <com.circleof6.view.ContactAvatarView
+        android:id="@+id/avatarView"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_margin="8dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="9dp"
+        android:orientation="vertical"
+        android:layout_toEndOf="@id/avatarView"
+        android:layout_toRightOf="@id/avatarView"
+        >
+
+        <TextView
+            android:id="@+id/tvContactName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:textAppearance="@style/StatusNameTextAppearance"
+            tools:text="Poster" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/StatusDateTextAppearance"
+            tools:text="3 days ago" />
+    </LinearLayout>
+</RelativeLayout>

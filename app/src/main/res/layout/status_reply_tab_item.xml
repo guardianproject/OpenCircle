@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical">
+    <ImageView android:id="@android:id/icon"
+        android:layout_gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_width="24dp"
+        android:layout_marginTop="3dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_reply_call"
+        android:tint="@android:color/darker_gray"
+        />
+    <TextView android:id="@+id/textual_icon"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:textSize="24dp"
+        tools:text="🎃"
+        android:textColor="@android:color/darker_gray"
+        />
+    <TextView android:id="@android:id/text1"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:textAppearance="@style/TextAppearance.Design.Tab"
+        tools:text="Tab text"
+        android:textColor="@android:color/darker_gray"
+        />
+</LinearLayout>

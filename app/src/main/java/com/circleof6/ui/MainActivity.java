@@ -390,42 +390,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //
         final ViewPager viewPager = findViewById(R.id.viewPager);
         final TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (viewPager.getCurrentItem() != tab.getPosition()) {
-                    viewPager.setCurrentItem(tab.getPosition(), true);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position != tabLayout.getSelectedTabPosition()) {
-                    tabLayout.getTabAt(position).select();
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        MethodsUtils.connectTabLayoutAndViewPager(viewPager, tabLayout);
 
         statusPager = findViewById(R.id.statusPager);
         statusPagerIndicator = findViewById(R.id.statusPagerIndicator);

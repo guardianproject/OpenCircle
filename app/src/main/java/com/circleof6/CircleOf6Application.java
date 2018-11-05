@@ -149,7 +149,7 @@ public class CircleOf6Application extends Application {
     public StatusUpdate getContactStatus(Contact contact) {
         //TODO
         // For now, randomize some data...
-        if (Math.random() < 0.4f) {
+        if (Math.random() < 0.2f) {
             return null;
         }
 
@@ -173,6 +173,18 @@ public class CircleOf6Application extends Application {
         reply2.setDate(new Date(118, 9, 31, 10, 52));
         reply2.setType(StatusUpdateReply.ReplyType.Message);
         replies.add(reply2);
+        StatusUpdateReply reply3 = new StatusUpdateReply();
+        reply3.setContact(contact);
+        reply3.setDate(new Date(118, 9, 32, 10, 52));
+        reply3.setType(StatusUpdateReply.ReplyType.Emoji);
+        reply3.setEmoji(0x1f600);
+        replies.add(reply3);
+        StatusUpdateReply reply4 = new StatusUpdateReply();
+        reply4.setContact(contact);
+        reply4.setDate(new Date(118, 9, 32, 10, 52));
+        reply4.setType(StatusUpdateReply.ReplyType.Emoji);
+        reply4.setEmoji(0x1f601);
+        replies.add(reply4);
         update.setReplyList(replies);
         return update;
     }
