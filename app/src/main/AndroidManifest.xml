@@ -62,6 +62,15 @@
                 android:value=".ui.MainActivity" />
         </activity>
         <activity
+            android:name=".ui.EditStatusActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+        <activity
             android:name=".ui.PagedTutorialActivity"
             android:label="@string/title_activity_paged_tutorial"
             android:parentActivityName="android.app.ListActivity"

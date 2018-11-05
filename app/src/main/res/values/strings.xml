@@ -147,4 +147,5 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="reply_whatsapp">WhatsApp</string>
 
     <string name="near">Near</string>
+    <string name="urgent">Urgent</string>
 </resources>
