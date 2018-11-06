@@ -1,5 +1,6 @@
 package com.circleof6.ui;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -41,12 +42,24 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
         holder.setOnReplyListener(this);
 
         FloatingActionButton fabReply = findViewById(R.id.fabReply);
-        fabReply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ReplyDialog.showFromAnchor(v);
-            }
-        });
+        if (contact == CircleOf6Application.getInstance().getYouContact()) {
+            holder.tvName.setVisibility(View.GONE); // No need to show name for ourselves
+            holder.layoutQuickReply.setVisibility(View.GONE);
+            fabReply.setImageResource(android.R.drawable.ic_menu_edit);
+            fabReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ReplyDialog.showFromAnchor(v);
+                }
+            });
+        } else {
+            fabReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ReplyDialog.showFromAnchor(v);
+                }
+            });
+        }
 
         TabLayout repliesTitleStrip = findViewById(R.id.repliesTitleStrip);
 
@@ -65,10 +78,11 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
             String name = AppPreferences.getInstance(this).getNameContact(id);
             String phone = AppPreferences.getInstance(this).getPhoneContact(id);
             String photo = AppPreferences.getInstance(this).getPhotoContact(id);
-            Contact contact = new Contact(id, name, phone, photo);
-            return contact;
+            return new Contact(id, name, phone, photo);
+        } else {
+            // Id == 0, that's you!
+            return CircleOf6Application.getInstance().getYouContact();
         }
-        return null;
     }
 
     @Override

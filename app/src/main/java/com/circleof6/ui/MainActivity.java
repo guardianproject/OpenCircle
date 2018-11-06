@@ -457,10 +457,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             findViewById(R.id.checkbutton).setVisibility(View.VISIBLE);
         }
 
-        // TODO - Setup yourself
-        Contact you = new Contact(0, "You", null, null);
         ContactView contactView = (ContactView) contactsView.getChildAt(0);
-        contactView.setContact(you);
+        contactView.setContact(CircleOf6Application.getInstance().getYouContact());
+        contactView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ContactStatusActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final List<Contact> contactList = new ArrayList<>();
 

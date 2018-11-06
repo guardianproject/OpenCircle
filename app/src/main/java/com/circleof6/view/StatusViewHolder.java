@@ -1,8 +1,6 @@
 package com.circleof6.view;
 
-import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,12 +24,12 @@ public class StatusViewHolder {
     private ContactAvatarView avatarView;
     private View layoutEmoji;
     private TextView tvEmoji;
-    private TextView tvName;
+    public TextView tvName;
     private TextView tvDate;
     private TextView tvStatus;
     private View layoutLocation;
     private TextView tvLocation;
-    private View layoutAddResponse;
+    public View layoutQuickReply;
 
     public StatusViewHolder(View view) {
         avatarView = view.findViewById(R.id.avatarView);
@@ -42,7 +40,7 @@ public class StatusViewHolder {
         tvStatus = view.findViewById(R.id.tvStatus);
         layoutLocation = view.findViewById(R.id.locationLayout);
         tvLocation = view.findViewById(R.id.tvLocation);
-        layoutAddResponse = view.findViewById(R.id.layoutAddResponse);
+        layoutQuickReply = view.findViewById(R.id.layoutQuickReply);
     }
 
     public void populateWithContact(final Contact contact) {
@@ -68,11 +66,11 @@ public class StatusViewHolder {
             } else {
                 tvLocation.setText(statusUpdate.getLocation());
             }
-            layoutAddResponse.setOnClickListener(new View.OnClickListener() {
+            layoutQuickReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (getOnReplyListener() != null) {
-                        getOnReplyListener().onReply(contact, layoutAddResponse);
+                        getOnReplyListener().onReply(contact, layoutQuickReply);
                     }
                 }
             });
@@ -80,7 +78,7 @@ public class StatusViewHolder {
             tvDate.setText(R.string.status_updated_ago_never);
             tvStatus.setVisibility(View.GONE);
             layoutLocation.setVisibility(View.GONE);
-            layoutAddResponse.setVisibility(View.GONE);
+            layoutQuickReply.setVisibility(View.GONE);
         }
     }
 

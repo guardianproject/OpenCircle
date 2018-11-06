@@ -32,6 +32,8 @@ public class CircleOf6Application extends Application {
 
     private static CircleOf6Application context;
 
+    // The contact that represents the current user, i.e. "You". Lazy loaded in getYouContact().
+    private Contact youContact;
 
     @Override
     public void onCreate()
@@ -187,5 +189,13 @@ public class CircleOf6Application extends Application {
         replies.add(reply4);
         update.setReplyList(replies);
         return update;
+    }
+
+    // TODO - Setup yourself
+    public Contact getYouContact() {
+        if (youContact == null) {
+            youContact = new Contact(0, getString(R.string.you), null, null);
+        }
+        return youContact;
     }
 }
