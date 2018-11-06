@@ -66,4 +66,15 @@
         <item>http://www.jagori.org/</item>
     </string-array>
 
+    <string-array name="edit_status_tags">
+        <item>I am being followed</item>
+        <item>I am feeling unsafe</item>
+        <item>Someone is watching me</item>
+    </string-array>
+    <string-array name="edit_status_action_tags">
+        <item>Please come meet me</item>
+        <item>Call me a cab</item>
+        <item>Please call me</item>
+    </string-array>
+
 </resources>

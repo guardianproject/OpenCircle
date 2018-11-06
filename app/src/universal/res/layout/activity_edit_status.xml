@@ -59,19 +59,23 @@
             android:gravity="center_vertical"
             />
 
-        <LinearLayout
-            android:id="@+id/tagLayout"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTags"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="18dp"
+            android:paddingStart="18dp"
+            android:paddingLeft="18dp"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
             />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/tagLayout"
+            android:layout_above="@id/rvTags"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="22dp"
@@ -84,7 +88,7 @@
             android:id="@+id/btnQuickStatus"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_above="@id/tagLayout"
+            android:layout_above="@id/rvTags"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="24dp"
@@ -139,8 +143,9 @@
             android:layout_above="@id/btnQuickStatus"
             android:layout_alignStart="@id/tvContactName"
             android:layout_alignLeft="@id/tvContactName"
-            android:textAppearance="@style/StatusTextAppearance"
-            android:gravity="center_vertical"
+            android:textAppearance="@style/EditStatusTextAppearance"
+            android:textColor="@android:color/black"
+            android:gravity="top"
             />
 
     </RelativeLayout>
