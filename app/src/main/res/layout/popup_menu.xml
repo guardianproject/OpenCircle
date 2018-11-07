@@ -6,18 +6,27 @@
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnCloseTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="0dp"
+        android:src="@drawable/ic_close_white_36dp"
+        app:backgroundTint="@android:color/black"
+        app:fabSize="normal" />
+
     <ListView
         android:id="@+id/lvItems"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:stackFromBottom="true"
         android:divider="@null"
         />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnClose"
+        android:id="@+id/btnCloseBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

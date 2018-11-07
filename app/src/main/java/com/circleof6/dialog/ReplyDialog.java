@@ -1,26 +1,17 @@
-package com.circleof6.view;
+package com.circleof6.dialog;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.circleof6.R;
 import com.circleof6.model.StatusUpdateReply;
-import com.circleof6.util.MethodsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,64 +67,10 @@ public class ReplyDialog {
                 }
             };
 
-            Rect rectGlobal = new Rect();
-            int[] location = new int[2];
-            anchor.getLocationInWindow(location);
-            rectGlobal.set(location[0], location[1], location[0] + anchor.getWidth(), location[1] + anchor.getHeight());
-            //anchor.getGlobalVisibleRect(rectGlobal);
-
-            View dialogView = LayoutInflater.from(context).inflate(R.layout.reply_popup, (ViewGroup)anchor.getRootView(), false);
-
-            dialogView.measure(
-                    View.MeasureSpec.makeMeasureSpec(MethodsUtils.dpToPx(200, context), View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(rectGlobal.top, View.MeasureSpec.EXACTLY));
-
-            ListView lv = dialogView.findViewById(R.id.lvItems);
-            lv.setBackgroundColor(Color.TRANSPARENT);
-            lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            lv.setAdapter(adapter);
-
-            final Dialog dialog = new Dialog(context,
-                    android.R.style.Theme_Translucent_NoTitleBar);
-
-            dialog.setTitle(null);
-            dialog.setContentView(dialogView);
-            dialog.setCancelable(true);
-
-            // Setting dialogview
-            Window window = dialog.getWindow();
-            WindowManager.LayoutParams wlp = window.getAttributes();
-            wlp.x = rectGlobal.right - dialogView.getMeasuredWidth();
-            wlp.y = rectGlobal.bottom - dialogView.getMeasuredHeight();
-            wlp.width = dialogView.getMeasuredWidth();
-            wlp.height = dialogView.getMeasuredHeight();
-            wlp.gravity = Gravity.TOP | Gravity.START;
-            wlp.dimAmount = 0.6f;
-            wlp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-            window.setAttributes(wlp);
-
-            //dialog.setCanceledOnTouchOutside(true);
-
-            anchor.setVisibility(View.INVISIBLE);
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    anchor.setVisibility(View.VISIBLE);
-                }
-            });
-
-            View buttonClose = dialogView.findViewById(R.id.btnClose);
-            buttonClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-
-            dialog.show();
+            PopupDialog.showPopupFromAnchor(anchor, adapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 }

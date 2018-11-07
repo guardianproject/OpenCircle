@@ -1,10 +1,8 @@
 package com.circleof6.ui;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +15,7 @@ import com.circleof6.model.Contact;
 import com.circleof6.model.StatusUpdate;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.util.MethodsUtils;
-import com.circleof6.view.ReplyDialog;
+import com.circleof6.dialog.ReplyDialog;
 import com.circleof6.view.StatusViewHolder;
 
 public class ContactStatusActivity extends AppCompatActivity implements StatusViewHolder.OnReplyListener {

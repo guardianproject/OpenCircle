@@ -1,9 +1,6 @@
 package com.circleof6.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,18 +11,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
-import com.circleof6.adapter.RepliesViewPagerAdapter;
 import com.circleof6.adapter.TagsRecyclerViewAdapter;
 import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdate;
 import com.circleof6.preferences.AppPreferences;
-import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.ContactAvatarView;
-import com.circleof6.view.QuickStatusDialog;
-import com.circleof6.view.ReplyDialog;
-import com.circleof6.view.StatusViewHolder;
+import com.circleof6.dialog.QuickStatusDialog;
 
 import java.util.Arrays;
 import java.util.List;
