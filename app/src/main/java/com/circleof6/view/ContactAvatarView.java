@@ -115,14 +115,15 @@ public class ContactAvatarView extends RoundFrameLayout {
         } else {
             imageView.setImageBitmap(DrawUtils.getBitmapFromPath(contact.getPhoto()));
         }
+        invalidate();
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         shaderNormal = buildShader(ContextCompat.getColor(getContext(), R.color.avatarReadStart), ContextCompat.getColor(getContext(), R.color.avatarReadEnd), w, h);
-        shaderUnread = buildShader(ContextCompat.getColor(getContext(), R.color.avatarUnreadStart), ContextCompat.getColor(getContext(), R.color.avatarUnreadEnd), w, h);
-        shaderUnreadUrgent = buildShader(ContextCompat.getColor(getContext(), R.color.avatarUnreadUrgentStart), ContextCompat.getColor(getContext(), R.color.avatarUnreadUrgentEnd), w, h);
+        shaderUnreadUrgent = buildShader(ContextCompat.getColor(getContext(), R.color.avatarUnreadStart), ContextCompat.getColor(getContext(), R.color.avatarUnreadEnd), w, h);
+        shaderUnread = buildShader(ContextCompat.getColor(getContext(), R.color.avatarUnreadUrgentStart), ContextCompat.getColor(getContext(), R.color.avatarUnreadUrgentEnd), w, h);
     }
 
     private LinearGradient buildShader(int colStart, int colEnd, int width, int height) {

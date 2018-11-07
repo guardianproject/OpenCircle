@@ -21,6 +21,9 @@ public class StatusViewHolder {
 
     private OnReplyListener onReplyListener;
 
+    public Contact contact; // Currently bound contact
+
+    public View itemView;
     private ContactAvatarView avatarView;
     private View layoutEmoji;
     private TextView tvEmoji;
@@ -32,6 +35,7 @@ public class StatusViewHolder {
     public View layoutQuickReply;
 
     public StatusViewHolder(View view) {
+        itemView = view;
         avatarView = view.findViewById(R.id.avatarView);
         avatarView.setIgnoringSeenStatus(true);
         layoutEmoji = view.findViewById(R.id.avatarViewEmojiLayout);
@@ -45,6 +49,7 @@ public class StatusViewHolder {
     }
 
     public void populateWithContact(final Contact contact) {
+        this.contact = contact;
         final StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
 
         avatarView.setContact(contact);

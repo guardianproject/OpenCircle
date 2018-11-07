@@ -301,6 +301,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             if (contactId == CircleOf6Application.getInstance().getYouContact().getId()) {
                 showOrHideWhatsYouStatusPane();
             }
+            resortContacts();
         }
     };
 
@@ -525,8 +526,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
+        statusPagerAdapter = new StatusViewPagerAdapter();
+        statusPagerAdapter.setOnReplyListener(this);
+        statusPagerAdapter.setContacts(contacts);
+        statusPager.setAdapter(statusPagerAdapter);
+        statusPagerIndicator.setNumberOfDots(contacts.size());
+        statusPagerIndicator.setCurrentDot(0);
+        statusPager.setCurrentItem(0);
+        resortContacts();
+    }
 
-        // TODO - resort on updates
+    private void resortContacts() {
         Collections.sort(contacts, new Comparator<Contact>() {
             @Override
             public int compare(Contact o1, Contact o2) {
@@ -556,7 +566,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         for (int i = 0; i < contacts.size(); i++) {
             final Contact contact = contacts.get(i);
-            contactView = (ContactView) contactsView.getChildAt(2 + i);
+            ContactView contactView = (ContactView) contactsView.getChildAt(2 + i);
             contactView.setTag(i);
             contactView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -569,14 +579,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             });
             contactView.setContact(contact);
         }
-
-        statusPagerAdapter = new StatusViewPagerAdapter();
-        statusPagerAdapter.setOnReplyListener(this);
-        statusPagerAdapter.setContacts(contacts);
-        statusPager.setAdapter(statusPagerAdapter);
-        statusPagerIndicator.setNumberOfDots(contacts.size());
-        statusPagerIndicator.setCurrentDot(0);
-        statusPager.setCurrentItem(0);
+        statusPagerAdapter.notifyDataSetChanged();
     }
 
     private ArrayList<Contact> getContactsFromPreferences() {

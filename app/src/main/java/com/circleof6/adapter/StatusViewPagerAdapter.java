@@ -1,5 +1,6 @@
 package com.circleof6.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,12 @@ public class StatusViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
+    public int getItemPosition(@NonNull Object object) {
+        StatusViewHolder holder = (StatusViewHolder)object;
+        return contacts.indexOf(holder.contact);
+    }
+
+    @Override
     public int getCount() {
         if (this.contacts == null) {
             return 0;
@@ -51,16 +58,16 @@ public class StatusViewPagerAdapter extends PagerAdapter {
         holder.populateWithContact(contact);
         holder.setOnReplyListener(getOnReplyListener());
         container.addView(view);
-        return view;
+        return holder;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+        container.removeView(((StatusViewHolder) object).itemView);
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return (View) object == view;
+        return ((StatusViewHolder) object).itemView == view;
     }
 }
