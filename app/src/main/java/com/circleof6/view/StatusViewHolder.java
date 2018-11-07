@@ -33,6 +33,7 @@ public class StatusViewHolder {
 
     public StatusViewHolder(View view) {
         avatarView = view.findViewById(R.id.avatarView);
+        avatarView.setIgnoringSeenStatus(true);
         layoutEmoji = view.findViewById(R.id.avatarViewEmojiLayout);
         tvEmoji = view.findViewById(R.id.avatarViewEmoji);
         tvName = view.findViewById(R.id.tvContactName);

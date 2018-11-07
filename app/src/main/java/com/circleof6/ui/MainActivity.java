@@ -96,6 +96,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -476,7 +479,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     };
 
     private void showQuickStatusPopup(final View anchor) {
-        QuickStatusDialog.showFromAnchor(anchor, null);
+        QuickStatusDialog.showFromAnchor(anchor, new QuickStatusDialog.QuickStatusDialogListener() {
+            @Override
+            public void onQuickStatusSelected(int emoji) {
+                // Set your status
+                Contact you = CircleOf6Application.getInstance().getYouContact();
+                StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(you);
+                if (statusUpdate == null) {
+                    statusUpdate = new StatusUpdate();
+                    statusUpdate.setContact(you);
+                }
+                statusUpdate.setDate(new Date());
+                statusUpdate.setEmoji(emoji);
+                CircleOf6Application.getInstance().setContactStatus(you, statusUpdate);
+            }
+        });
     }
 
     private void setupInfoContacts() {
@@ -508,31 +525,46 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
-        final List<Contact> contactList = new ArrayList<>();
 
-        int idxContact = 0;
-        int idxNonContact = 5;
+        // TODO - resort on updates
+        Collections.sort(contacts, new Comparator<Contact>() {
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                if (o1.isEmpty() && !o2.isEmpty()) {
+                    return 1;
+                } else if (!o1.isEmpty() && o2.isEmpty()) {
+                    return -1;
+                }
+                StatusUpdate s1 = CircleOf6Application.getInstance().getContactStatus(o1);
+                StatusUpdate s2 = CircleOf6Application.getInstance().getContactStatus(o2);
+                if (s1 == null && s2 == null) {
+                    return o1.getId() - o2.getId();
+                }
+                if (s1 == null) {
+                    return 1;
+                } else if (s2 == null) {
+                    return -1;
+                }
+                if (s1.isUrgent() && !s2.isUrgent()) {
+                    return -1;
+                } else if (!s1.isUrgent() && s2.isUrgent()) {
+                    return 1;
+                }
+                return (int)(s1.getDate().getTime() - s2.getDate().getTime());
+            }
+        });
+
         for (int i = 0; i < contacts.size(); i++) {
             final Contact contact = contacts.get(i);
-            int idxSlot;
-            if (contact == null || TextUtils.isEmpty(contact.getPhoneNumber())) {
-                // Empty slot
-                idxSlot = idxNonContact--;
-            } else {
-                contactList.add(contact);
-                idxSlot = idxContact++;
-            }
-            contactView = (ContactView) contactsView.getChildAt(2 + idxSlot);
+            contactView = (ContactView) contactsView.getChildAt(2 + i);
             contactView.setTag(i);
             contactView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //contactClicked((Integer) v.getTag());
-                    int index = contactList.indexOf(contact);
+                    int index = contacts.indexOf(contact);
                     if (index >= 0) {
                         statusPager.setCurrentItem(index, true);
                     }
-
                 }
             });
             contactView.setContact(contact);
@@ -540,9 +572,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         statusPagerAdapter = new StatusViewPagerAdapter();
         statusPagerAdapter.setOnReplyListener(this);
-        statusPagerAdapter.setContacts(contactList);
+        statusPagerAdapter.setContacts(contacts);
         statusPager.setAdapter(statusPagerAdapter);
-        statusPagerIndicator.setNumberOfDots(contactList.size());
+        statusPagerIndicator.setNumberOfDots(contacts.size());
+        statusPagerIndicator.setCurrentDot(0);
+        statusPager.setCurrentItem(0);
     }
 
     private ArrayList<Contact> getContactsFromPreferences() {

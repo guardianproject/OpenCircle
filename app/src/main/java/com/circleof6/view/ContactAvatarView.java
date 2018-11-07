@@ -35,6 +35,7 @@ public class ContactAvatarView extends RoundFrameLayout {
     private LinearGradient shaderNormal;
     private LinearGradient shaderUnread;
     private LinearGradient shaderUnreadUrgent;
+    private boolean ignoringSeenStatus;
 
     private ImageView imageView;
 
@@ -55,6 +56,14 @@ public class ContactAvatarView extends RoundFrameLayout {
 
     private void init(AttributeSet attrs) {
 
+    }
+
+    public boolean isIgnoringSeenStatus() {
+        return ignoringSeenStatus;
+    }
+
+    public void setIgnoringSeenStatus(boolean ignoringSeenStatus) {
+        this.ignoringSeenStatus = ignoringSeenStatus;
     }
 
     @Override
@@ -125,7 +134,7 @@ public class ContactAvatarView extends RoundFrameLayout {
         if (this.contact != null && !TextUtils.isEmpty(contact.getPhoneNumber())) {
             StatusUpdate status = CircleOf6Application.getInstance().getContactStatus(this.contact);
             if (status != null) {
-                if (!status.isSeen()) {
+                if (!status.isSeen() || isIgnoringSeenStatus()) {
                     if (status.isUrgent()) {
                         setBorderShader(shaderUnreadUrgent);
                     } else {
