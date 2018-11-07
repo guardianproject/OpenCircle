@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,7 +30,7 @@ import java.util.List;
  * Created by N-Pex on 2018-11-07.
  */
 public class PopupDialog {
-    public static void showPopupFromAnchor(final View anchor, ArrayAdapter adapter) {
+    public static void showPopupFromAnchor(final View anchor, ArrayAdapter adapter, final AdapterView.OnItemClickListener listener) {
         try {
             if (anchor == null || adapter == null || adapter.getCount() == 0) {
                 return;
@@ -47,12 +48,24 @@ public class PopupDialog {
             rootView.getLocationInWindow(location);
             rectRoot.set(location[0], location[1], location[0] + rootView.getWidth(), location[1] + rootView.getHeight());
 
+            final Dialog dialog = new Dialog(context,
+                    android.R.style.Theme_Translucent_NoTitleBar);
+
             View dialogView = LayoutInflater.from(context).inflate(R.layout.popup_menu, (ViewGroup)anchor.getRootView(), false);
             View buttonCloseTop = dialogView.findViewById(R.id.btnCloseTop);
             View buttonCloseBottom = dialogView.findViewById(R.id.btnCloseBottom);
             ListView lv = dialogView.findViewById(R.id.lvItems);
             lv.setBackgroundColor(Color.TRANSPARENT);
             lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (listener != null) {
+                        listener.onItemClick(parent, view, position, id);
+                        dialog.dismiss();
+                    }
+                }
+            });
             lv.setAdapter(adapter);
 
 
@@ -71,9 +84,6 @@ public class PopupDialog {
                         View.MeasureSpec.makeMeasureSpec((rectRoot.bottom - rectAnchor.bottom), View.MeasureSpec.AT_MOST));
             }
 
-
-            final Dialog dialog = new Dialog(context,
-                    android.R.style.Theme_Translucent_NoTitleBar);
 
             dialog.setTitle(null);
             dialog.setContentView(dialogView);

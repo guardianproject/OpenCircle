@@ -8,7 +8,7 @@ public class Contact {
     private String name;
     private String phoneNumber;
     private String photo;
-
+    private boolean you;
 
     public Contact(int id, String name, String phoneNumber, String photo) {
         this.id = id;
@@ -54,4 +54,11 @@ public class Contact {
         return TextUtils.isEmpty(phoneNumber);
     }
 
+    public boolean isYou() {
+        return you;
+    }
+
+    public void setYou(boolean you) {
+        this.you = you;
+    }
 }

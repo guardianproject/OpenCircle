@@ -25,21 +25,52 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/statusRoot"
         >
-        <com.circleof6.view.ContactAvatarView
-            android:id="@+id/avatarView"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+
+        <FrameLayout
+            android:id="@+id/avatarLayout"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="42dp"
             android:layout_marginLeft="28dp"
-            android:layout_marginStart="28dp"
-            />
+            android:layout_marginStart="28dp">
+
+            <com.circleof6.view.ContactAvatarView
+                android:id="@+id/avatarView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:frameBorderColor="@color/purple"
+                app:frameBorderWidth="8" />
+
+            <com.circleof6.view.RoundFrameLayout
+                android:id="@+id/avatarViewEmojiLayout"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:background="@android:color/white"
+                app:frameBorderColor="@android:color/white"
+                app:frameBorderWidth="1dp"
+                app:frameInsetBorder="false">
+
+                <TextView
+                    android:id="@+id/avatarViewEmoji"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="21dp"
+                    tools:text="🎃" />
+            </com.circleof6.view.RoundFrameLayout>
+        </FrameLayout>
+
+
         <TextView
             android:id="@+id/tvContactName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/avatarView"
-            android:layout_toRightOf="@id/avatarView"
-            android:layout_alignTop="@id/avatarView"
+            android:layout_toEndOf="@id/avatarLayout"
+            android:layout_toRightOf="@id/avatarLayout"
+            android:layout_alignTop="@id/avatarLayout"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginStart="24dp"
@@ -73,6 +104,7 @@
             />
 
         <CheckBox
+            android:id="@+id/cbUrgent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/rvTags"
@@ -145,6 +177,7 @@
             android:layout_alignLeft="@id/tvContactName"
             android:textAppearance="@style/EditStatusTextAppearance"
             android:textColor="@android:color/black"
+            android:background="@null"
             android:gravity="top"
             />
 

@@ -11,12 +11,21 @@ import com.circleof6.model.Contact;
 import com.circleof6.model.StatusUpdate;
 import com.circleof6.model.StatusUpdateReply;
 import com.circleof6.preferences.AppPreferences;
+import com.circleof6.ui.Broadcasts;
+import com.circleof6.util.Constants;
 import com.circleof6.util.LruBitmapCache;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -24,6 +33,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.circleof6.util.MethodsUtils;
+import com.circleof6.view.util.DrawUtils;
+
+import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
+
 /**
  * Created by corbett on 9/28/14.
  */
@@ -34,6 +48,9 @@ public class CircleOf6Application extends Application {
 
     // The contact that represents the current user, i.e. "You". Lazy loaded in getYouContact().
     private Contact youContact;
+    private StatusUpdate youStatus;
+    private Contact[] contactList;
+    private StatusUpdate[] contactStatusList;
 
     @Override
     public void onCreate()
@@ -44,6 +61,9 @@ public class CircleOf6Application extends Application {
         context = this;
         updateLangLocale();
 
+        contactStatusList = new StatusUpdate[Constants.MAX_NUMBER_OF_FRIENDS];
+        initializeMockupContacts();
+        initializeMockupStatuses();
     }
 
     public static void updateLangLocale()
@@ -148,54 +168,159 @@ public class CircleOf6Application extends Application {
 
     }
 
+
+    public Contact[] getContactList() {
+        if (contactList == null) {
+            // Lazy loading
+            contactList = new Contact[Constants.MAX_NUMBER_OF_FRIENDS];
+            for (int idContact = 1; idContact <= Constants.MAX_NUMBER_OF_FRIENDS; idContact++) {
+                String name = AppPreferences.getInstance(this).getNameContact(idContact);
+                String phone = AppPreferences.getInstance(this).getPhoneContact(idContact);
+                String photo = AppPreferences.getInstance(this).getPhotoContact(idContact);
+                Contact contact = new Contact(idContact, name, phone, photo);
+                contactList[idContact - 1] = contact;
+            }
+        }
+        return contactList;
+    }
+
+    public Contact getContactWithId(int id) {
+        if (id == 0) {
+            return getYouContact();
+        } else {
+            return getContactList()[id - 1];
+        }
+    }
+
     public StatusUpdate getContactStatus(Contact contact) {
-        //TODO
-        // For now, randomize some data...
-        if (Math.random() < 0.2f) {
-            return null;
+        if (contact.isYou()) {
+            return youStatus;
+        }
+        return contactStatusList[contact.getId() - 1];
+    }
+
+    public void setContactStatus(Contact contact, StatusUpdate statusUpdate) {
+        if (contact.isYou()) {
+            youStatus = statusUpdate;
+        } else {
+            contactStatusList[contact.getId() - 1] = statusUpdate;
+            //TODO save
         }
 
-        StatusUpdate update = new StatusUpdate();
-        update.setDate(new Date(118, 9, 30, 9, 52));
-        update.setContact(contact);
-        update.setEmoji(0x1f600 + (int)(20.0f * Math.random()));
-        update.setLocation("1234;12342");
-        update.setMessage("I am ok");
-        update.setSeen(Math.random() > 0.5f);
-        update.setUrgent(Math.random() > 0.5f);
+        Intent intent = new Intent(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED);
+        intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, contact.getId());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
 
-        ArrayList<StatusUpdateReply> replies = new ArrayList<>();
-        StatusUpdateReply reply1 = new StatusUpdateReply();
-        reply1.setContact(contact);
-        reply1.setDate(new Date(118, 9, 31, 9, 52));
-        reply1.setType(StatusUpdateReply.ReplyType.Call);
-        replies.add(reply1);
-        StatusUpdateReply reply2 = new StatusUpdateReply();
-        reply2.setContact(contact);
-        reply2.setDate(new Date(118, 9, 31, 10, 52));
-        reply2.setType(StatusUpdateReply.ReplyType.Message);
-        replies.add(reply2);
-        StatusUpdateReply reply3 = new StatusUpdateReply();
-        reply3.setContact(contact);
-        reply3.setDate(new Date(118, 9, 32, 10, 52));
-        reply3.setType(StatusUpdateReply.ReplyType.Emoji);
-        reply3.setEmoji(0x1f600);
-        replies.add(reply3);
-        StatusUpdateReply reply4 = new StatusUpdateReply();
-        reply4.setContact(contact);
-        reply4.setDate(new Date(118, 9, 32, 10, 52));
-        reply4.setType(StatusUpdateReply.ReplyType.Emoji);
-        reply4.setEmoji(0x1f601);
-        replies.add(reply4);
-        update.setReplyList(replies);
-        return update;
+    public void setStatusSeen(StatusUpdate statusUpdate) {
+        statusUpdate.setSeen(true);
+        //TODO save
+        Intent intent = new Intent(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED);
+        intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, statusUpdate.getContact().getId());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     // TODO - Setup yourself
     public Contact getYouContact() {
         if (youContact == null) {
             youContact = new Contact(0, getString(R.string.you), null, null);
+            youContact.setYou(true);
         }
         return youContact;
+    }
+
+    void initializeMockupContacts() {
+        AppPreferences.getInstance(this).saveNameCotact(1, "Ana");
+        AppPreferences.getInstance(this).savePhoneCotact(1, "555898989");
+        saveMockupPhoto(1);
+        AppPreferences.getInstance(this).savaPhotoCotact(1, getFileStreamPath(MethodsUtils.getPhotoFileByContact(1)).toString());
+        AppPreferences.getInstance(this).saveNameCotact(2, "Rosa");
+        AppPreferences.getInstance(this).savePhoneCotact(2, "555898989");
+        saveMockupPhoto(2);
+        AppPreferences.getInstance(this).savaPhotoCotact(2, getFileStreamPath(MethodsUtils.getPhotoFileByContact(2)).toString());
+        AppPreferences.getInstance(this).saveNameCotact(3, "Mariel");
+        AppPreferences.getInstance(this).savePhoneCotact(3, "555898989");
+        saveMockupPhoto(3);
+        AppPreferences.getInstance(this).savaPhotoCotact(3, getFileStreamPath(MethodsUtils.getPhotoFileByContact(3)).toString());
+        AppPreferences.getInstance(this).saveNameCotact(4, "Jaqueline");
+        AppPreferences.getInstance(this).savePhoneCotact(4, "555898989");
+        saveMockupPhoto(4);
+        AppPreferences.getInstance(this).savaPhotoCotact(4, getFileStreamPath(MethodsUtils.getPhotoFileByContact(4)).toString());
+        AppPreferences.getInstance(this).saveNameCotact(5, "Marta");
+        AppPreferences.getInstance(this).savePhoneCotact(5, "555898989");
+        saveMockupPhoto(5);
+        AppPreferences.getInstance(this).savaPhotoCotact(5, getFileStreamPath(MethodsUtils.getPhotoFileByContact(5)).toString());
+        AppPreferences.getInstance(this).saveNameCotact(6, "Isabela");
+        AppPreferences.getInstance(this).savePhoneCotact(6, "555898989");
+        saveMockupPhoto(6);
+        AppPreferences.getInstance(this).savaPhotoCotact(6, getFileStreamPath(MethodsUtils.getPhotoFileByContact(6)).toString());
+    }
+
+    void initializeMockupStatuses() {
+        StatusUpdate update = new StatusUpdate();
+        update.setDate(new Date(118, 9, 30, 9, 52));
+        update.setContact(getContactList()[0]);
+        update.setEmoji(0x1f604);
+        update.setLocation("1234;12342");
+        update.setMessage("I am worried about my physical safety");
+        update.setSeen(false);
+        update.setUrgent(true);
+
+        ArrayList<StatusUpdateReply> replies = new ArrayList<>();
+        StatusUpdateReply reply1 = new StatusUpdateReply();
+        reply1.setContact(getContactList()[1]);
+        reply1.setDate(new Date(118, 9, 31, 9, 52));
+        reply1.setType(StatusUpdateReply.ReplyType.Call);
+        replies.add(reply1);
+        StatusUpdateReply reply2 = new StatusUpdateReply();
+        reply2.setContact(getContactList()[2]);
+        reply2.setDate(new Date(118, 9, 31, 10, 52));
+        reply2.setType(StatusUpdateReply.ReplyType.Message);
+        replies.add(reply2);
+        StatusUpdateReply reply3 = new StatusUpdateReply();
+        reply3.setContact(getContactList()[3]);
+        reply3.setDate(new Date(118, 9, 32, 10, 52));
+        reply3.setType(StatusUpdateReply.ReplyType.Emoji);
+        reply3.setEmoji(0x1f600);
+        replies.add(reply3);
+        StatusUpdateReply reply4 = new StatusUpdateReply();
+        reply4.setContact(getContactList()[4]);
+        reply4.setDate(new Date(118, 9, 32, 10, 52));
+        reply4.setType(StatusUpdateReply.ReplyType.Emoji);
+        reply4.setEmoji(0x1f601);
+        replies.add(reply4);
+        update.setReplyList(replies);
+
+        contactStatusList[0] = update;
+
+        update = new StatusUpdate();
+        update.setDate(new Date(118, 10, 3, 19, 12));
+        update.setContact(getContactList()[3]);
+        update.setEmoji(0x1f608);
+        update.setLocation("1234;12342");
+        update.setMessage("I am worried about my physical safety");
+        update.setSeen(false);
+        update.setUrgent(false);
+        contactStatusList[3] = update;
+    }
+
+    void saveMockupPhoto(int friendId) {
+        String photoPng = getPhotoFileByContact(friendId);
+        FileOutputStream fos;
+        try
+        {
+            int[] colors = new int[] {
+                    Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.CYAN, Color.LTGRAY
+            };
+            fos = openFileOutput(photoPng, Context.MODE_PRIVATE);
+            Bitmap image = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+            image.eraseColor(colors[(int)(Math.random() * colors.length)]);
+            image.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

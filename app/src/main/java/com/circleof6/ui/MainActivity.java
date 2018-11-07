@@ -3,9 +3,11 @@ package com.circleof6.ui;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Application;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +20,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -31,6 +34,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +67,7 @@ import com.circleof6.dialog.utils.TypeSendSmsListener;
 import com.circleof6.model.Contact;
 import com.circleof6.model.SMS;
 import com.circleof6.model.StatusUpdate;
+import com.circleof6.model.StatusUpdateReply;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.receiver.SentSMSReceiver;
 import com.circleof6.util.Constants;
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     //~=~=~=~=~=~=~=~=~=~=~=~=Constants
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final long SET_SEEN_DELAY = 8000;
 
     //~=~=~=~=~=~=~=~=~=~=~=~=Fields
     private GoogleApiClient mGoogleApiClient;
@@ -132,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private StatusViewPagerAdapter statusPagerAdapter;
     private DottedViewPagerIndicator statusPagerIndicator;
     private FloatingActionButton fabReply;
+    private View whatsYourStatusLayout;
 
     //----------------------------------------------------------------LifeCycle
     @Override
@@ -254,6 +261,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(statusUpdateReceiver);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -274,9 +287,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (!AppPreferences.getInstance(MainActivity.this).hasCompletedTutorial()) {
                 launchPagedTutorial();
         }
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(statusUpdateReceiver, new IntentFilter(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED));
+        showOrHideWhatsYouStatusPane();
     }
 
+    private BroadcastReceiver statusUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int contactId = intent.getIntExtra(Broadcasts.EXTRAS_CONTACT_ID, -1);
+            if (contactId == CircleOf6Application.getInstance().getYouContact().getId()) {
+                showOrHideWhatsYouStatusPane();
+            }
+        }
+    };
 
     @Override
     protected void onStop() {
@@ -361,6 +384,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 });
         circleOf6View.refreshDrawableState();
 
+        whatsYourStatusLayout = findViewById(R.id.whatsYourStatusLayout);
+
         contactsView = findViewById(R.id.contacts);
 
         View contactScrollView = findViewById(R.id.contactScrollView);
@@ -373,10 +398,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         tvStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - Send ourselves!
-                Contact currentContact = statusPagerAdapter.getContacts().get(0);
                 Intent intent = new Intent(v.getContext(), EditStatusActivity.class);
-                intent.putExtra(EditStatusActivity.ARG_CONTACT_ID, currentContact.getId());
+                intent.putExtra(EditStatusActivity.ARG_CONTACT_ID, CircleOf6Application.getInstance().getYouContact().getId());
                 startActivity(intent);
             }
         });
@@ -385,7 +408,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         fabReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReplyDialog.showFromAnchor(v);
+                ReplyDialog.showFromAnchor(v, new ReplyDialog.ReplyDialogListener() {
+                    @Override
+                    public void onReplySelected(StatusUpdateReply.ReplyType replyType) {
+                        //TODO
+                    }
+                });
             }
         });
 
@@ -414,7 +442,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    statusPager.postDelayed(setSeenRunnable, SET_SEEN_DELAY);
+                } else {
+                    statusPager.removeCallbacks(setSeenRunnable);
+                }
             }
         });
 
@@ -429,6 +461,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         setUpView();
         setupInfoContacts();
     }
+
+    private Runnable setSeenRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (statusPager != null && statusPagerAdapter != null) {
+                Contact currentContact = statusPagerAdapter.getContacts().get(statusPager.getCurrentItem());
+                StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(currentContact);
+                if (statusUpdate != null) {
+                    CircleOf6Application.getInstance().setStatusSeen(statusUpdate);
+                }
+            }
+        }
+    };
 
     private void showQuickStatusPopup(final View anchor) {
         QuickStatusDialog.showFromAnchor(anchor, null);
@@ -452,7 +497,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         contactView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ContactStatusActivity.class);
+                Intent intent;
+                // If we have no status, jump directly to edit!
+                if (CircleOf6Application.getInstance().getContactStatus(CircleOf6Application.getInstance().getYouContact()) == null) {
+                     intent = new Intent(MainActivity.this, EditStatusActivity.class);
+                } else {
+                    intent = new Intent(MainActivity.this, ContactStatusActivity.class);
+                }
                 startActivity(intent);
             }
         });
@@ -495,14 +546,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     private ArrayList<Contact> getContactsFromPreferences() {
-
         ArrayList<Contact> savedFriends = new ArrayList<>();
-
-        for (int idContact = 1; idContact <= Constants.MAX_NUMBER_OF_FRIENDS; idContact++) {
-            String name = AppPreferences.getInstance(this).getNameContact(idContact);
-            String phone = AppPreferences.getInstance(this).getPhoneContact(idContact);
-            String photo = AppPreferences.getInstance(this).getPhotoContact(idContact);
-            Contact contact = new Contact(idContact, name, phone, photo);
+        for (Contact contact : CircleOf6Application.getInstance().getContactList()) {
             savedFriends.add(contact);
             if (!contact.isEmpty()) {
                 contactsPicked.add(contact.getId());
@@ -1456,5 +1501,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Intent intent = new Intent(this, ContactStatusActivity.class);
         intent.putExtra(ContactStatusActivity.ARG_CONTACT_ID, currentContact.getId());
         startActivity(intent);
+    }
+
+    private void showOrHideWhatsYouStatusPane() {
+        // Based on if you have a status or not, show the status pane
+        boolean hasStatus = (CircleOf6Application.getInstance().getContactStatus(CircleOf6Application.getInstance().getYouContact()) != null);
+        whatsYourStatusLayout.setVisibility(hasStatus ? View.GONE : View.VISIBLE);
     }
 }

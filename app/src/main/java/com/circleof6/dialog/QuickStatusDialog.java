@@ -7,6 +7,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -18,8 +19,7 @@ import com.circleof6.R;
 public class QuickStatusDialog {
 
     public interface QuickStatusDialogListener {
-        void onQuickStatusSelected();
-        void onQuickStatusCanceled();
+        void onQuickStatusSelected(int emoji);
     }
 
     public static void showFromAnchor(final View anchor, final QuickStatusDialogListener listener) {
@@ -28,9 +28,9 @@ public class QuickStatusDialog {
                 return;
 
             final Pair[] quickStatuses = new Pair[]{
-                    new Pair<>(R.string.status_safe, 0x1f600),
-                    new Pair<>(R.string.status_unsure, 0x1f606),
-                    new Pair<>(R.string.status_scared, 0x1f607)
+                    new Pair<>(R.string.status_safe, 0x1f60a),
+                    new Pair<>(R.string.status_unsure, 0x1f615),
+                    new Pair<>(R.string.status_scared, 0x1f628)
             };
 
             final Context context = anchor.getContext();
@@ -53,7 +53,14 @@ public class QuickStatusDialog {
                 }
             };
 
-            PopupDialog.showPopupFromAnchor(anchor, adapter);
+            PopupDialog.showPopupFromAnchor(anchor, adapter, new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (listener != null) {
+                        listener.onQuickStatusSelected((Integer)quickStatuses[position].second);
+                    }
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

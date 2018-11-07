@@ -1,12 +1,16 @@
 package com.circleof6.view;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -16,6 +20,7 @@ import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.model.Contact;
 import com.circleof6.model.StatusUpdate;
+import com.circleof6.ui.Broadcasts;
 import com.circleof6.view.util.ConstantsView;
 import com.circleof6.view.util.DrawUtils;
 
@@ -68,9 +73,31 @@ public class ContactAvatarView extends RoundFrameLayout {
         }
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(statusUpdateReceiver, new IntentFilter(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED));
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(statusUpdateReceiver);
+        super.onDetachedFromWindow();
+    }
+
+    private BroadcastReceiver statusUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int contactId = intent.getIntExtra(Broadcasts.EXTRAS_CONTACT_ID, -1);
+            if (contact != null && contact.getId() == contactId) {
+                invalidate();
+            }
+        }
+    };
+
     public void setContact(Contact contact) {
         this.contact = contact;
-        if (this.contact == null || TextUtils.isEmpty(this.contact.getPhoneNumber())) {
+        if (this.contact == null || (!this.contact.isYou() && TextUtils.isEmpty(this.contact.getPhoneNumber()))) {
             // Show the add!
             imageView.setImageResource(R.drawable.ic_add);
         } else if (contact.getPhoto() == null || contact.getPhoto().equals(ConstantsView.DEFAULT_PHOTO)) {

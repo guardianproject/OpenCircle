@@ -5,17 +5,19 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#eeeeee"
         >
 
         <LinearLayout
+            android:id="@+id/whatsYourStatusLayout"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:layout_scrollFlags="scroll|snap"
             android:paddingStart="25dp"
             android:paddingLeft="25dp"
             android:paddingEnd="22dp"
@@ -127,7 +129,9 @@
                 app:dot_radius="4dp"
                 app:dot_radius_current="6dp"
                 app:dot_rim_color="?attr/colorPrimary"
-                app:dot_rim_color_current="?attr/colorPrimary" />
+                app:dot_rim_color_current="?attr/colorPrimary"
+                android:background="@android:color/white"
+                />
 
             <FrameLayout
                 android:id="@+id/full_body"

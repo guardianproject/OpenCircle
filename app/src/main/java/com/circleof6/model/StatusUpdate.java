@@ -1,5 +1,6 @@
 package com.circleof6.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -77,6 +78,9 @@ public class StatusUpdate {
     }
 
     public List<StatusUpdateReply> getReplyList() {
+        if (replyList == null) {
+            replyList = new ArrayList<>();
+        }
         return replyList;
     }
 
