@@ -37,11 +37,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -86,6 +89,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.vanniktech.emoji.EmojiEditText;
+import com.vanniktech.emoji.EmojiPopup;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.ByteArrayInputStream;
@@ -1521,8 +1526,46 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     @Override
-    public void onReply(Contact contact, View anchorButton) {
+    public void onReply(final Contact contact, View anchorButton) {
+        // Show emoji keyboard popup!
+        final EmojiEditText editText = findViewById(R.id.emojiInputView);
+        editText.setVisibility(View.VISIBLE);
+        final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(statusPager).build(editText);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    // Ok, done
+                    editText.setVisibility(View.GONE);
+                    emojiPopup.dismiss();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS, null);
+                    int emoji = Character.codePointAt(s, 0);
+                    replyWithEmoji(contact, emoji);
+                    s.clear();
+                }
+            }
+        });
+        emojiPopup.toggle();
+    }
+
+    private void replyWithEmoji(Contact contact, int emoji) {
+        ContactStatusReply reply = new ContactStatusReply();
+        reply.setContact(CircleOf6Application.getInstance().getYouContact());
+        reply.setDate(new Date());
+        reply.setType(ContactStatusReply.ReplyType.Emoji);
+        reply.setEmoji(emoji);
+        CircleOf6Application.getInstance().sendReply(contact, reply);
     }
 
     @Override

@@ -35,6 +35,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.circleof6.util.MethodsUtils;
+import com.vanniktech.emoji.EmojiManager;
+import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
 import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
 
@@ -55,6 +57,7 @@ public class CircleOf6Application extends Application {
     {
         super.onCreate();
         //Fabric.with(this, new Crashlytics());
+        EmojiManager.install(new GoogleEmojiProvider());
 
         context = this;
         updateLangLocale();
@@ -202,6 +205,14 @@ public class CircleOf6Application extends Application {
             update.setSeen(true);
         }
         //TODO save
+        Intent intent = new Intent(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED);
+        intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, contact.getId());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    public void sendReply(Contact contact, ContactStatusReply reply) {
+        // TODO- Send and save!
+        contact.getStatus().getReplyList().add(reply);
         Intent intent = new Intent(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED);
         intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, contact.getId());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);

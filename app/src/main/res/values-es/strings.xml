@@ -132,7 +132,7 @@ Toca el icono del telefono, esto te llevara a dos lineas de emergencia (solo una
 
     <string name="you">Tu</string>
     <string name="near">Cerca</string>
-    <string name="urgent">Urgent</string>
+    <string name="urgent">Urgente</string>
     <string name="remove">Remove</string>
     <string name="update">Update</string>
     <string name="status_removed">Status removed</string>

@@ -8,38 +8,37 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eeeeee"
-        >
+        android:background="#eeeeee">
 
         <LinearLayout
             android:id="@+id/whatsYourStatusLayout"
             android:layout_width="match_parent"
             android:layout_height="53dp"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-            app:layout_scrollFlags="scroll|snap"
+            android:orientation="horizontal"
             android:paddingStart="25dp"
             android:paddingLeft="25dp"
             android:paddingEnd="22dp"
             android:paddingRight="22dp"
-            >
+            app:layout_scrollFlags="scroll|snap">
+
             <TextView
                 android:id="@+id/tvStatus"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/whats_your_status"
-                android:textAppearance="@style/SetStatusLinkTextAppearance"
                 android:gravity="center_vertical"
-                />
+                android:text="@string/whats_your_status"
+                android:textAppearance="@style/SetStatusLinkTextAppearance" />
+
             <ImageButton
                 android:id="@+id/btnQuickStatus"
                 android:layout_width="34dp"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:src="@drawable/ic_insert_emoticon_black_32dp"
                 android:scaleType="centerInside"
-                android:tint="?attr/colorPrimary"/>
+                android:src="@drawable/ic_insert_emoticon_black_32dp"
+                android:tint="?attr/colorPrimary" />
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -62,14 +61,14 @@
                 android:id="@+id/contacts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/contact_list_background"
+                android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingLeft="16dp"
+                android:paddingTop="20dp"
                 android:paddingEnd="18dp"
                 android:paddingRight="18dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="36dp"
-                android:background="@drawable/contact_list_background"
-                android:orientation="horizontal">
+                android:paddingBottom="36dp">
 
                 <com.circleof6.view.ContactView
                     android:layout_width="match_parent"
@@ -79,12 +78,12 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginLeft="2dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginRight="4dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@android:color/darker_gray" />
 
                 <com.circleof6.view.ContactView
@@ -123,15 +122,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@id/contacts"
+                android:background="@android:color/white"
                 app:dot_color="@android:color/white"
                 app:dot_color_current="?attr/colorPrimary"
                 app:dot_distance="20dp"
                 app:dot_radius="4dp"
                 app:dot_radius_current="6dp"
                 app:dot_rim_color="?attr/colorPrimary"
-                app:dot_rim_color_current="?attr/colorPrimary"
-                android:background="@android:color/white"
-                />
+                app:dot_rim_color_current="?attr/colorPrimary" />
 
             <FrameLayout
                 android:id="@+id/full_body"
@@ -240,8 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_below="@id/statusPagerIndicator"
-                android:layout_alignParentBottom="true"
-                />
+                android:layout_alignParentBottom="true" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -250,12 +247,16 @@
         android:id="@+id/fabReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_reply_white_32dp"
-        android:layout_gravity="bottom|end"
         app:layout_anchor="@+id/contactScrollView"
         app:layout_anchorGravity="bottom|end" />
 
-
+    <com.vanniktech.emoji.EmojiEditText
+        android:id="@+id/emojiInputView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>
