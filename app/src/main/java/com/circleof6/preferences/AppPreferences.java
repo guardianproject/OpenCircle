@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.circleof6.BuildConfig;
 import com.circleof6.CircleOf6Application;
 import com.circleof6.util.Constants;
 
@@ -177,6 +178,9 @@ public class AppPreferences
 
     public boolean hasCompletedTutorial()
     {
+        if (BuildConfig.DEBUG) {
+            return true; //TEMP TEMP - ignore for demo
+        }
         //final Constants.UniversityLocalization universityLocalization = getUniversityLocalization();
         return preferencesHelper.getBoolean(HAS_COMPLETED_TUTORIAL_KEY, false); // && universityLocalization != null && universityLocalization != Constants.UniversityLocalization.NONE;
     }
