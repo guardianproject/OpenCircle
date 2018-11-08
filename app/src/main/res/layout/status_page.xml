@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        android:padding="16dp">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
 
         <FrameLayout
             android:id="@+id/avatarLayout"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="29dp">
 
@@ -49,83 +43,11 @@
             </com.circleof6.view.RoundFrameLayout>
         </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="9dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvContactName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:textAppearance="@style/StatusNameTextAppearance"
-                tools:text="Poster" />
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/StatusDateTextAppearance"
-                tools:text="3 days ago" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/StatusTextAppearance"
-            tools:text="This is a status update text that can span several lines. It can also contain links." />
-
-        <LinearLayout
-            android:id="@+id/locationLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvLocationLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:drawableStart="@drawable/ic_location_on_black_16dp"
-                android:drawableLeft="@drawable/ic_location_on_black_16dp"
-                android:text="@string/near"
-                android:textAppearance="@style/StatusLocationLabelTextAppearance" />
-
-            <TextView
-                android:id="@+id/tvLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/StatusLocationTextAppearance"
-                tools:text="Lat 0.3425, Long 0.2342" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/layoutQuickReply"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="16dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_insert_emoticon_black_24dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:background="@android:color/white"
-                android:text="+"
-                android:textColor="@android:color/black"
-                android:textSize="12dp" />
-        </FrameLayout>
-    </LinearLayout>
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvStatusUpdates"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/avatarLayout"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

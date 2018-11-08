@@ -61,6 +61,7 @@ import com.circleof6.dialog.ContactNumbersDialog;
 import com.circleof6.dialog.EmergencyPhonesDialog;
 import com.circleof6.dialog.InformationLinksDialog;
 import com.circleof6.dialog.OverlayDialog;
+import com.circleof6.dialog.QuickReplyDialog;
 import com.circleof6.dialog.SendSmsAlertDialog;
 import com.circleof6.dialog.UnsentSMSDialog;
 import com.circleof6.dialog.utils.ConstantsDialog;
@@ -1527,45 +1528,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onReply(final Contact contact, View anchorButton) {
-        // Show emoji keyboard popup!
-        final EmojiEditText editText = findViewById(R.id.emojiInputView);
-        editText.setVisibility(View.VISIBLE);
-        final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(statusPager).build(editText);
-        editText.addTextChangedListener(new TextWatcher() {
+        QuickReplyDialog.showFromAnchor(statusPager, anchorButton, new QuickReplyDialog.QuickReplyDialogListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    // Ok, done
-                    editText.setVisibility(View.GONE);
-                    emojiPopup.dismiss();
-                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS, null);
-                    int emoji = Character.codePointAt(s, 0);
-                    replyWithEmoji(contact, emoji);
-                    s.clear();
-                }
+            public void onQuickReplySelected(int emoji) {
+                ContactStatusReply reply = new ContactStatusReply();
+                reply.setContact(CircleOf6Application.getInstance().getYouContact());
+                reply.setDate(new Date());
+                reply.setType(ContactStatusReply.ReplyType.Emoji);
+                reply.setEmoji(emoji);
+                CircleOf6Application.getInstance().sendReply(contact, reply);
             }
         });
-        emojiPopup.toggle();
-    }
-
-    private void replyWithEmoji(Contact contact, int emoji) {
-        ContactStatusReply reply = new ContactStatusReply();
-        reply.setContact(CircleOf6Application.getInstance().getYouContact());
-        reply.setDate(new Date());
-        reply.setType(ContactStatusReply.ReplyType.Emoji);
-        reply.setEmoji(emoji);
-        CircleOf6Application.getInstance().sendReply(contact, reply);
     }
 
     @Override

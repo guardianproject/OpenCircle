@@ -1,11 +1,14 @@
 package com.circleof6.view;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
+import com.circleof6.adapter.StatusUpdatesRecyclerViewAdapter;
 import com.circleof6.model.Contact;
 import com.circleof6.model.ContactStatus;
 import com.circleof6.model.ContactStatusUpdate;
@@ -28,12 +31,7 @@ public class StatusViewHolder {
     private ContactAvatarView avatarView;
     private View layoutEmoji;
     private TextView tvEmoji;
-    public TextView tvName;
-    private TextView tvDate;
-    private TextView tvStatus;
-    private View layoutLocation;
-    private TextView tvLocation;
-    public View layoutQuickReply;
+    private RecyclerView rvStatusUpdates;
 
     public StatusViewHolder(View view) {
         itemView = view;
@@ -41,12 +39,8 @@ public class StatusViewHolder {
         avatarView.setIgnoringSeenStatus(true);
         layoutEmoji = view.findViewById(R.id.avatarViewEmojiLayout);
         tvEmoji = view.findViewById(R.id.avatarViewEmoji);
-        tvName = view.findViewById(R.id.tvContactName);
-        tvDate = view.findViewById(R.id.tvDate);
-        tvStatus = view.findViewById(R.id.tvStatus);
-        layoutLocation = view.findViewById(R.id.locationLayout);
-        tvLocation = view.findViewById(R.id.tvLocation);
-        layoutQuickReply = view.findViewById(R.id.layoutQuickReply);
+        rvStatusUpdates = view.findViewById(R.id.rvStatusUpdates);
+        rvStatusUpdates.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
     public void populateWithContact(final Contact contact) {
@@ -61,32 +55,8 @@ public class StatusViewHolder {
             layoutEmoji.setVisibility(View.GONE);
         }
 
-        tvName.setText(contact.getName());
-
-        ContactStatusUpdate latestUpdate = contact.getStatus().getLatestUpdate(true);
-        if (latestUpdate != null) {
-            tvDate.setText(MethodsUtils.dateDiffDisplayString(latestUpdate.getDate(), tvDate.getContext(), R.string.status_updated_ago_never, R.string.status_updated_ago_recently, R.string.status_updated_ago_minutes, R.string.status_updated_ago_minute, R.string.status_updated_ago_hours, R.string.status_updated_ago_hour, R.string.status_updated_ago_days, R.string.status_updated_ago_day));
-            tvStatus.setText(latestUpdate.getMessage());
-            if (TextUtils.isEmpty(latestUpdate.getLocation())) {
-                // No location given
-                layoutLocation.setVisibility(View.GONE);
-            } else {
-                tvLocation.setText(latestUpdate.getLocation());
-            }
-            layoutQuickReply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (getOnReplyListener() != null) {
-                        getOnReplyListener().onReply(contact, layoutQuickReply);
-                    }
-                }
-            });
-        } else {
-            tvDate.setText(R.string.status_updated_ago_never);
-            tvStatus.setVisibility(View.GONE);
-            layoutLocation.setVisibility(View.GONE);
-            layoutQuickReply.setVisibility(View.GONE);
-        }
+        rvStatusUpdates.setAdapter(new StatusUpdatesRecyclerViewAdapter(itemView.getContext(), contact));
+        ((StatusUpdatesRecyclerViewAdapter)rvStatusUpdates.getAdapter()).setOnReplyListener(onReplyListener);
     }
 
     public OnReplyListener getOnReplyListener() {
@@ -95,5 +65,8 @@ public class StatusViewHolder {
 
     public void setOnReplyListener(OnReplyListener onReplyListener) {
         this.onReplyListener = onReplyListener;
+        if (rvStatusUpdates != null && rvStatusUpdates.getAdapter() != null) {
+            ((StatusUpdatesRecyclerViewAdapter) rvStatusUpdates.getAdapter()).setOnReplyListener(onReplyListener);
+        }
     }
 }

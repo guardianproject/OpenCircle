@@ -65,7 +65,7 @@ public class RepliesViewPagerAdapter extends PagerAdapter {
 
         // Sort
         Arrays.sort(categorizedReplyKeys);
-
+        tabLayout.removeAllTabs();
         for (int i = 0; i < categorizedReplyKeys.length; i++) {
             int key = categorizedReplyKeys[i];
             TabLayout.Tab tab = tabLayout.newTab();
