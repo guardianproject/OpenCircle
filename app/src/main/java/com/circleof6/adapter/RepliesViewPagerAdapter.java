@@ -98,7 +98,10 @@ public class RepliesViewPagerAdapter extends PagerAdapter {
                     break;
                 default:
                     icon.setVisibility(View.GONE);
-                    textualIcon.setText(new String(Character.toChars(replies.get(0).getEmoji())));
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Character.toChars(key));
+                    textualIcon.setText(sb);
+                    textualIcon.setVisibility(View.VISIBLE);
                     break;
             }
             tabLayout.addTab(tab);

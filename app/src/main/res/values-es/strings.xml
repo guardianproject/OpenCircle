@@ -111,4 +111,29 @@ Toca el icono del telefono, esto te llevara a dos lineas de emergencia (solo una
     <string name="retry">Intenta otra vez</string>
     <string name="loading">Cargando &#8230;</string>
 
+    <string name="whats_your_status">¿Cual es tu estado?</string>
+
+    <string name="status_updated_ago_never">No update</string>
+    <string name="status_updated_ago_recently">Justo ahora</string>
+    <string name="status_updated_ago_minutes">Hace %1$d minutos</string>
+    <string name="status_updated_ago_minute">Hace %1$d minuto</string>
+    <string name="status_updated_ago_hours">Hace %1$d horas</string>
+    <string name="status_updated_ago_hour">Hace %1$d hora</string>
+    <string name="status_updated_ago_days">Hace %1$d días</string>
+    <string name="status_updated_ago_day">Hace %1$d día</string>
+
+    <string name="status_safe">Safe</string>
+    <string name="status_unsure">Unsure</string>
+    <string name="status_scared">Scared</string>
+
+    <string name="reply_call">Calling</string>
+    <string name="reply_message">Messaging</string>
+    <string name="reply_whatsapp">WhatsApp</string>
+
+    <string name="you">Tu</string>
+    <string name="near">Cerca</string>
+    <string name="urgent">Urgent</string>
+    <string name="remove">Remove</string>
+    <string name="update">Update</string>
+    <string name="status_removed">Status removed</string>
 </resources>

@@ -12,19 +12,23 @@ import com.circleof6.model.StatusUpdate;
 import com.circleof6.model.StatusUpdateReply;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.ui.Broadcasts;
+import com.circleof6.ui.Emoji;
 import com.circleof6.util.Constants;
 import com.circleof6.util.LruBitmapCache;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -223,13 +227,18 @@ public class CircleOf6Application extends Application {
     // TODO - Setup yourself
     public Contact getYouContact() {
         if (youContact == null) {
-            youContact = new Contact(0, getString(R.string.you), null, null);
+            String phone = AppPreferences.getInstance(this).getPhoneContact(0);
+            String photo = AppPreferences.getInstance(this).getPhotoContact(0);
+            youContact = new Contact(0, getString(R.string.you), phone, photo);
             youContact.setYou(true);
         }
         return youContact;
     }
 
     void initializeMockupContacts() {
+        saveMockupPhoto(0);
+        AppPreferences.getInstance(this).savaPhotoCotact(0, getFileStreamPath(MethodsUtils.getPhotoFileByContact(0)).toString());
+
         AppPreferences.getInstance(this).saveNameCotact(1, "Ana");
         AppPreferences.getInstance(this).savePhoneCotact(1, "555898989");
         saveMockupPhoto(1);
@@ -258,13 +267,25 @@ public class CircleOf6Application extends Application {
 
     void initializeMockupStatuses() {
         StatusUpdate update = new StatusUpdate();
-        update.setDate(new Date(118, 9, 30, 9, 52));
-        update.setContact(getContactList()[0]);
-        update.setEmoji(0x1f604);
-        update.setLocation("1234;12342");
-        update.setMessage("I am worried about my physical safety");
+        update.setDate(new Date(new Date().getTime() - 2 * 60000));
+        update.setContact(getContactList()[4]);
+        update.setEmoji(Emoji.Unsure);
+        update.setLocation("12343,12342");
+        update.setMessage("En una entrevista. Me siento insegura. LLámame para interrumpirme.");
         update.setSeen(false);
-        update.setUrgent(true);
+        update.setUrgent(false);
+        contactStatusList[0] = update;
+
+        update = new StatusUpdate();
+        update.setDate(new Date(new Date().getTime() - 2 * 60000));
+        update.setContact(getContactList()[4]);
+        update.setEmoji(Emoji.Unsure);
+        update.setLocation("12343,12342");
+        update.setMessage("En una entrevista. Me siento insegura. LLámame para interrumpirme.");
+        update.setSeen(false);
+        update.setUrgent(false);
+        contactStatusList[1] = update;
+
 
         ArrayList<StatusUpdateReply> replies = new ArrayList<>();
         StatusUpdateReply reply1 = new StatusUpdateReply();
@@ -309,12 +330,12 @@ public class CircleOf6Application extends Application {
         FileOutputStream fos;
         try
         {
-            int[] colors = new int[] {
-                    Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.CYAN, Color.LTGRAY
+            int[] ids = new int[] {
+                    R.raw.av_00, R.raw.av_01, R.raw.av_02, R.raw.av_03, R.raw.av_04, R.raw.av_05, R.raw.av_06
             };
+            InputStream is = getResources().openRawResource(ids[friendId]);
+            Bitmap image = BitmapFactory.decodeStream(is);
             fos = openFileOutput(photoPng, Context.MODE_PRIVATE);
-            Bitmap image = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-            image.eraseColor(colors[(int)(Math.random() * colors.length)]);
             image.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
         }

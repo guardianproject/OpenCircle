@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.circleof6.R;
+import com.circleof6.ui.Emoji;
 
 /**
  * Created by N-Pex on 2018-11-02.
@@ -28,9 +29,9 @@ public class QuickStatusDialog {
                 return;
 
             final Pair[] quickStatuses = new Pair[]{
-                    new Pair<>(R.string.status_safe, 0x1f60a),
-                    new Pair<>(R.string.status_unsure, 0x1f615),
-                    new Pair<>(R.string.status_scared, 0x1f628)
+                    new Pair<>(R.string.status_safe, Emoji.Safe),
+                    new Pair<>(R.string.status_unsure, Emoji.Unsure),
+                    new Pair<>(R.string.status_scared, Emoji.Scared)
             };
 
             final Context context = anchor.getContext();
