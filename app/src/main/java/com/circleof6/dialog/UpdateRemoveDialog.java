@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.circleof6.R;
-import com.circleof6.model.StatusUpdateReply;
 
 import java.util.ArrayList;
 import java.util.List;

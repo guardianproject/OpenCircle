@@ -3,7 +3,6 @@ package com.circleof6.ui;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Application;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -20,7 +19,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -65,9 +63,10 @@ import com.circleof6.dialog.UnsentSMSDialog;
 import com.circleof6.dialog.utils.ConstantsDialog;
 import com.circleof6.dialog.utils.TypeSendSmsListener;
 import com.circleof6.model.Contact;
+import com.circleof6.model.ContactStatusUpdate;
 import com.circleof6.model.SMS;
-import com.circleof6.model.StatusUpdate;
-import com.circleof6.model.StatusUpdateReply;
+import com.circleof6.model.ContactStatus;
+import com.circleof6.model.ContactStatusReply;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.receiver.SentSMSReceiver;
 import com.circleof6.util.Constants;
@@ -414,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onClick(View v) {
                 ReplyDialog.showFromAnchor(v, new ReplyDialog.ReplyDialogListener() {
                     @Override
-                    public void onReplySelected(StatusUpdateReply.ReplyType replyType) {
+                    public void onReplySelected(ContactStatusReply.ReplyType replyType) {
                         //TODO
                     }
                 });
@@ -440,8 +439,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 statusPagerIndicator.setCurrentDot(position);
 
                 Contact contact = statusPagerAdapter.getContacts().get(position);
-                StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
-                fabReply.setVisibility(statusUpdate == null ? View.GONE : View.VISIBLE);
+                fabReply.setVisibility(contact.getStatus().canReply() ? View.VISIBLE : View.GONE);
             }
 
             @Override
@@ -471,10 +469,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         public void run() {
             if (statusPager != null && statusPagerAdapter != null) {
                 Contact currentContact = statusPagerAdapter.getContacts().get(statusPager.getCurrentItem());
-                StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(currentContact);
-                if (statusUpdate != null) {
-                    CircleOf6Application.getInstance().setStatusSeen(statusUpdate);
-                }
+                CircleOf6Application.getInstance().setStatusSeen(currentContact);
             }
         }
     };
@@ -485,14 +480,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onQuickStatusSelected(int emoji) {
                 // Set your status
                 Contact you = CircleOf6Application.getInstance().getYouContact();
-                StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(you);
-                if (statusUpdate == null) {
-                    statusUpdate = new StatusUpdate();
-                    statusUpdate.setContact(you);
-                }
-                statusUpdate.setDate(new Date());
-                statusUpdate.setEmoji(emoji);
-                CircleOf6Application.getInstance().setContactStatus(you, statusUpdate);
+                ContactStatusUpdate update = new ContactStatusUpdate();
+                update.setDate(new Date());
+                update.setEmoji(emoji);
+                you.getStatus().addUpdate(update);
+                CircleOf6Application.getInstance().statusUpdated(you);
             }
         });
     }
@@ -517,7 +509,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onClick(View v) {
                 Intent intent;
                 // If we have no status, jump directly to edit!
-                if (CircleOf6Application.getInstance().getContactStatus(CircleOf6Application.getInstance().getYouContact()) == null) {
+                Contact you = CircleOf6Application.getInstance().getYouContact();
+                if (!you.getStatus().canReply()) {
                      intent = new Intent(MainActivity.this, EditStatusActivity.class);
                 } else {
                     intent = new Intent(MainActivity.this, ContactStatusActivity.class);
@@ -545,8 +538,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 } else if (!o1.isEmpty() && o2.isEmpty()) {
                     return -1;
                 }
-                StatusUpdate s1 = CircleOf6Application.getInstance().getContactStatus(o1);
-                StatusUpdate s2 = CircleOf6Application.getInstance().getContactStatus(o2);
+                ContactStatusUpdate s1 = o1.getStatus().getLatestUpdate(true);
+                ContactStatusUpdate s2 = o2.getStatus().getLatestUpdate(true);
                 if (s1 == null && s2 == null) {
                     return o1.getId() - o2.getId();
                 }
@@ -1542,7 +1535,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void showOrHideWhatsYouStatusPane() {
         // Based on if you have a status or not, show the status pane
-        boolean hasStatus = (CircleOf6Application.getInstance().getContactStatus(CircleOf6Application.getInstance().getYouContact()) != null);
-        whatsYourStatusLayout.setVisibility(hasStatus ? View.GONE : View.VISIBLE);
+        Contact you = CircleOf6Application.getInstance().getYouContact();
+        whatsYourStatusLayout.setVisibility(you.getStatus().canReply() ? View.GONE : View.VISIBLE);
     }
 }

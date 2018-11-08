@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by N-Pex on 2018-10-30.
  */
-public class StatusUpdateReply {
+public class ContactStatusReply {
 
     public enum ReplyType {
         Call,

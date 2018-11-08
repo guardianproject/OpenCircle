@@ -2,8 +2,6 @@ package com.circleof6.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,12 +10,8 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdate;
-import com.circleof6.view.util.ConstantsView;
-import com.circleof6.view.util.DrawUtils;
 
 /**
  * Created by N-Pex on 2018-10-30.

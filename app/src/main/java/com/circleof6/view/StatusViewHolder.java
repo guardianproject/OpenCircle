@@ -7,7 +7,8 @@ import android.widget.TextView;
 import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdate;
+import com.circleof6.model.ContactStatus;
+import com.circleof6.model.ContactStatusUpdate;
 import com.circleof6.util.MethodsUtils;
 
 /**
@@ -50,12 +51,11 @@ public class StatusViewHolder {
 
     public void populateWithContact(final Contact contact) {
         this.contact = contact;
-        final StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
 
         avatarView.setContact(contact);
-        if (statusUpdate != null && statusUpdate.getEmoji() != 0) {
+        if (contact.getStatus().getEmoji() != 0) {
             StringBuffer sb = new StringBuffer();
-            sb.append(Character.toChars(statusUpdate.getEmoji()));
+            sb.append(Character.toChars(contact.getStatus().getEmoji()));
             tvEmoji.setText(sb);
         } else {
             layoutEmoji.setVisibility(View.GONE);
@@ -63,14 +63,15 @@ public class StatusViewHolder {
 
         tvName.setText(contact.getName());
 
-        if (statusUpdate != null) {
-            tvDate.setText(MethodsUtils.dateDiffDisplayString(statusUpdate.getDate(), tvDate.getContext(), R.string.status_updated_ago_never, R.string.status_updated_ago_recently, R.string.status_updated_ago_minutes, R.string.status_updated_ago_minute, R.string.status_updated_ago_hours, R.string.status_updated_ago_hour, R.string.status_updated_ago_days, R.string.status_updated_ago_day));
-            tvStatus.setText(statusUpdate.getMessage());
-            if (TextUtils.isEmpty(statusUpdate.getLocation())) {
+        ContactStatusUpdate latestUpdate = contact.getStatus().getLatestUpdate(true);
+        if (latestUpdate != null) {
+            tvDate.setText(MethodsUtils.dateDiffDisplayString(latestUpdate.getDate(), tvDate.getContext(), R.string.status_updated_ago_never, R.string.status_updated_ago_recently, R.string.status_updated_ago_minutes, R.string.status_updated_ago_minute, R.string.status_updated_ago_hours, R.string.status_updated_ago_hour, R.string.status_updated_ago_days, R.string.status_updated_ago_day));
+            tvStatus.setText(latestUpdate.getMessage());
+            if (TextUtils.isEmpty(latestUpdate.getLocation())) {
                 // No location given
                 layoutLocation.setVisibility(View.GONE);
             } else {
-                tvLocation.setText(statusUpdate.getLocation());
+                tvLocation.setText(latestUpdate.getLocation());
             }
             layoutQuickReply.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.circleof6.R;
-import com.circleof6.model.StatusUpdateReply;
+import com.circleof6.model.ContactStatusReply;
 import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.ContactAvatarView;
 
@@ -20,9 +20,9 @@ import java.util.List;
 public class StatusReplyPageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
-    private List<StatusUpdateReply> replies;
+    private List<ContactStatusReply> replies;
 
-    public StatusReplyPageRecyclerViewAdapter(Context context, List<StatusUpdateReply> replies) {
+    public StatusReplyPageRecyclerViewAdapter(Context context, List<ContactStatusReply> replies) {
         super();
         setHasStableIds(true);
         this.context = context;
@@ -53,7 +53,7 @@ public class StatusReplyPageRecyclerViewAdapter extends RecyclerView.Adapter<Rec
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         StatusReplyViewHolder viewHolder = (StatusReplyViewHolder) holder;
-        StatusUpdateReply reply = replies.get(position);
+        ContactStatusReply reply = replies.get(position);
         viewHolder.bindModel(reply);
     }
 
@@ -74,7 +74,7 @@ public class StatusReplyPageRecyclerViewAdapter extends RecyclerView.Adapter<Rec
             return super.toString() + " '" + name.getText() + "'";
         }
 
-        void bindModel(final StatusUpdateReply reply) {
+        void bindModel(final ContactStatusReply reply) {
             avatarView.setContact(reply.getContact());
             name.setText(reply.getContact().getName());
             date.setText(MethodsUtils.dateDiffDisplayString(reply.getDate(), getContext(), R.string.status_updated_ago_never, R.string.status_updated_ago_recently, R.string.status_updated_ago_minutes, R.string.status_updated_ago_minute, R.string.status_updated_ago_hours, R.string.status_updated_ago_hour, R.string.status_updated_ago_days, R.string.status_updated_ago_day));

@@ -18,8 +18,8 @@ import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.adapter.TagsRecyclerViewAdapter;
 import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdate;
-import com.circleof6.preferences.AppPreferences;
+import com.circleof6.model.ContactStatus;
+import com.circleof6.model.ContactStatusUpdate;
 import com.circleof6.view.ContactAvatarView;
 import com.circleof6.dialog.QuickStatusDialog;
 
@@ -155,14 +155,14 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
                 return true;
             }
             case R.id.action_save:
-                StatusUpdate statusUpdate = new StatusUpdate();
-                statusUpdate.setContact(contact);
-                statusUpdate.setSeen(true);
-                statusUpdate.setMessage(editStatus.getText().toString());
-                statusUpdate.setDate(new Date());
-                statusUpdate.setEmoji(selectedEmoji);
-                statusUpdate.setUrgent(cbUrgent.isChecked());
-                CircleOf6Application.getInstance().setContactStatus(contact, statusUpdate);
+                ContactStatusUpdate contactStatus = new ContactStatusUpdate();
+                contactStatus.setSeen(true);
+                contactStatus.setMessage(editStatus.getText().toString());
+                contactStatus.setDate(new Date());
+                contactStatus.setEmoji(selectedEmoji);
+                contactStatus.setUrgent(cbUrgent.isChecked());
+                contact.getStatus().addUpdate(contactStatus);
+                CircleOf6Application.getInstance().statusUpdated(contact);
                 finish();
                 return true;
         }

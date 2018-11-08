@@ -48,16 +48,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:background="@color/center_circle_color"
-            android:text="Nothing yet"
+            android:background="@android:color/white"
+            android:text=""
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:background="@color/error_stroke_color"
-            android:text="Nothing yet"
+            android:background="@android:color/white"
+            android:text=""
             />
     </com.circleof6.view.DesignableViewPager>
 </LinearLayout>

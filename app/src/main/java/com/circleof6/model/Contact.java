@@ -8,6 +8,7 @@ public class Contact {
     private String name;
     private String phoneNumber;
     private String photo;
+    private ContactStatus status;
     private boolean you;
 
     public Contact(int id, String name, String phoneNumber, String photo) {
@@ -49,6 +50,16 @@ public class Contact {
         this.photo = photo;
     }
 
+    public ContactStatus getStatus() {
+        if (status == null) {
+            status = new ContactStatus();
+        }
+        return status;
+    }
+
+    public void setStatus(ContactStatus status) {
+        this.status = status;
+    }
 
     public  boolean isEmpty () {
         return TextUtils.isEmpty(phoneNumber);

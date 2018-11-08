@@ -1,39 +1,25 @@
 package com.circleof6.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.adapter.RepliesViewPagerAdapter;
-import com.circleof6.dialog.PopupDialog;
 import com.circleof6.dialog.UpdateRemoveDialog;
 import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdate;
-import com.circleof6.model.StatusUpdateReply;
-import com.circleof6.preferences.AppPreferences;
+import com.circleof6.model.ContactStatus;
+import com.circleof6.model.ContactStatusReply;
 import com.circleof6.util.MethodsUtils;
 import com.circleof6.dialog.ReplyDialog;
 import com.circleof6.view.StatusViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ContactStatusActivity extends AppCompatActivity implements StatusViewHolder.OnReplyListener {
 
@@ -69,7 +55,8 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
                     UpdateRemoveDialog.showFromAnchor(v, new UpdateRemoveDialog.UpdateRemoveDialogListener() {
                         @Override
                         public void onRemoveSelected() {
-                            CircleOf6Application.getInstance().setContactStatus(contact, null);
+                            contact.setStatus(null);
+                            CircleOf6Application.getInstance().statusUpdated(contact);
                             Toast.makeText(ContactStatusActivity.this, R.string.status_removed, Toast.LENGTH_SHORT).show();
                             finish();
                         }
@@ -90,7 +77,7 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
                 public void onClick(View v) {
                     ReplyDialog.showFromAnchor(v, new ReplyDialog.ReplyDialogListener() {
                         @Override
-                        public void onReplySelected(StatusUpdateReply.ReplyType replyType) {
+                        public void onReplySelected(ContactStatusReply.ReplyType replyType) {
                             //TODO
                         }
                     });
@@ -100,13 +87,10 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
 
         TabLayout repliesTitleStrip = findViewById(R.id.repliesTitleStrip);
 
-        StatusUpdate statusUpdate = CircleOf6Application.getInstance().getContactStatus(contact);
-        if (statusUpdate != null) {
-            if (!contact.isYou()) {
-                CircleOf6Application.getInstance().setStatusSeen(statusUpdate);
-            }
-            repliesPagerAdapter = new RepliesViewPagerAdapter(this, repliesTitleStrip, statusUpdate.getReplyList());
+        if (!contact.isYou()) {
+            CircleOf6Application.getInstance().setStatusSeen(contact);
         }
+        repliesPagerAdapter = new RepliesViewPagerAdapter(this, repliesTitleStrip, contact.getStatus().getReplyList());
         repliesPager = findViewById(R.id.repliesPager);
         repliesPager.setAdapter(repliesPagerAdapter);
         MethodsUtils.connectTabLayoutAndViewPager(repliesPager, repliesTitleStrip);
@@ -116,7 +100,7 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
     public void onReply(Contact contact, View anchorButton) {
         ReplyDialog.showFromAnchor(anchorButton, new ReplyDialog.ReplyDialogListener() {
             @Override
-            public void onReplySelected(StatusUpdateReply.ReplyType replyType) {
+            public void onReplySelected(ContactStatusReply.ReplyType replyType) {
                 //TODO
             }
         });

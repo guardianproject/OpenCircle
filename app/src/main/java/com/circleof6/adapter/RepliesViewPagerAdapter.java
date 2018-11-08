@@ -1,30 +1,20 @@
 package com.circleof6.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.DynamicDrawableSpan;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.circleof6.R;
-import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdateReply;
-import com.circleof6.view.StatusViewHolder;
+import com.circleof6.model.ContactStatusReply;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,16 +29,16 @@ public class RepliesViewPagerAdapter extends PagerAdapter {
     private static final int ID_WHATSAPP = 3;
 
     private Context context;
-    private List<StatusUpdateReply> replies;
+    private List<ContactStatusReply> replies;
 
-    private Map<Integer, List<StatusUpdateReply>> categorizedReplies;
+    private Map<Integer, List<ContactStatusReply>> categorizedReplies;
     private final Integer[] categorizedReplyKeys;
 
-    public RepliesViewPagerAdapter(Context context, TabLayout tabLayout, List<StatusUpdateReply> replies) {
+    public RepliesViewPagerAdapter(Context context, TabLayout tabLayout, List<ContactStatusReply> replies) {
         this.context = context;
         this.replies = replies;
         categorizedReplies = new HashMap<>();
-        for (StatusUpdateReply reply : replies) {
+        for (ContactStatusReply reply : replies) {
             int key = 0;
             switch (reply.getType()) {
                 case Call:
@@ -66,7 +56,7 @@ public class RepliesViewPagerAdapter extends PagerAdapter {
             }
             if (key > 0) {
                 if (!categorizedReplies.containsKey(key)) {
-                    categorizedReplies.put(key, new ArrayList<StatusUpdateReply>());
+                    categorizedReplies.put(key, new ArrayList<ContactStatusReply>());
                 }
                 categorizedReplies.get(key).add(reply);
             }

@@ -8,17 +8,16 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.circleof6.data.DBHelper;
 import com.circleof6.model.CollegeCountry;
 import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdate;
-import com.circleof6.model.StatusUpdateReply;
+import com.circleof6.model.ContactStatus;
+import com.circleof6.model.ContactStatusReply;
+import com.circleof6.model.ContactStatusUpdate;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.ui.Broadcasts;
 import com.circleof6.ui.Emoji;
 import com.circleof6.util.Constants;
 import com.circleof6.util.LruBitmapCache;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +26,6 @@ import java.util.Locale;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -38,7 +35,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.circleof6.util.MethodsUtils;
-import com.circleof6.view.util.DrawUtils;
 
 import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
 
@@ -52,9 +48,7 @@ public class CircleOf6Application extends Application {
 
     // The contact that represents the current user, i.e. "You". Lazy loaded in getYouContact().
     private Contact youContact;
-    private StatusUpdate youStatus;
     private Contact[] contactList;
-    private StatusUpdate[] contactStatusList;
 
     @Override
     public void onCreate()
@@ -65,7 +59,6 @@ public class CircleOf6Application extends Application {
         context = this;
         updateLangLocale();
 
-        contactStatusList = new StatusUpdate[Constants.MAX_NUMBER_OF_FRIENDS];
         initializeMockupContacts();
         initializeMockupStatuses();
     }
@@ -196,31 +189,21 @@ public class CircleOf6Application extends Application {
         }
     }
 
-    public StatusUpdate getContactStatus(Contact contact) {
-        if (contact.isYou()) {
-            return youStatus;
-        }
-        return contactStatusList[contact.getId() - 1];
-    }
-
-    public void setContactStatus(Contact contact, StatusUpdate statusUpdate) {
-        if (contact.isYou()) {
-            youStatus = statusUpdate;
-        } else {
-            contactStatusList[contact.getId() - 1] = statusUpdate;
-            //TODO save
-        }
-
+    public void statusUpdated(Contact contact) {
+        //TODO save
         Intent intent = new Intent(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED);
         intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, contact.getId());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    public void setStatusSeen(StatusUpdate statusUpdate) {
-        statusUpdate.setSeen(true);
+    public void setStatusSeen(Contact contact) {
+        ContactStatus status = contact.getStatus();
+        for (ContactStatusUpdate update : status.getUpdates()) {
+            update.setSeen(true);
+        }
         //TODO save
         Intent intent = new Intent(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED);
-        intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, statusUpdate.getContact().getId());
+        intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, contact.getId());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
@@ -243,7 +226,7 @@ public class CircleOf6Application extends Application {
         AppPreferences.getInstance(this).savePhoneCotact(1, "555898989");
         saveMockupPhoto(1);
         AppPreferences.getInstance(this).savaPhotoCotact(1, getFileStreamPath(MethodsUtils.getPhotoFileByContact(1)).toString());
-        AppPreferences.getInstance(this).saveNameCotact(2, "Rosa");
+        AppPreferences.getInstance(this).saveNameCotact(2, "Paulina");
         AppPreferences.getInstance(this).savePhoneCotact(2, "555898989");
         saveMockupPhoto(2);
         AppPreferences.getInstance(this).savaPhotoCotact(2, getFileStreamPath(MethodsUtils.getPhotoFileByContact(2)).toString());
@@ -266,63 +249,104 @@ public class CircleOf6Application extends Application {
     }
 
     void initializeMockupStatuses() {
-        StatusUpdate update = new StatusUpdate();
+        // Jaqueline
+        Contact contact = getContactWithId(4);
+        ContactStatusUpdate update = new ContactStatusUpdate();
         update.setDate(new Date(new Date().getTime() - 2 * 60000));
-        update.setContact(getContactList()[4]);
         update.setEmoji(Emoji.Unsure);
         update.setLocation("12343,12342");
         update.setMessage("En una entrevista. Me siento insegura. LLámame para interrumpirme.");
         update.setSeen(false);
         update.setUrgent(false);
-        contactStatusList[0] = update;
+        contact.getStatus().addUpdate(update);
 
-        update = new StatusUpdate();
-        update.setDate(new Date(new Date().getTime() - 2 * 60000));
-        update.setContact(getContactList()[4]);
+        // Paulina
+        contact = getContactWithId(2);
+        update = new ContactStatusUpdate();
+        update.setDate(new Date(new Date().getTime() - 20 * 60000));
         update.setEmoji(Emoji.Unsure);
-        update.setLocation("12343,12342");
-        update.setMessage("En una entrevista. Me siento insegura. LLámame para interrumpirme.");
+        //update.setLocation("12343,12342");
+        update.setMessage("Voy a entrevistar a un politico en Juarez hoy, a las 3 pm. Ya voy en camino.");
         update.setSeen(false);
         update.setUrgent(false);
-        contactStatusList[1] = update;
+        contact.getStatus().addUpdate(update);
+        update = new ContactStatusUpdate();
+        update.setDate(new Date(new Date().getTime() - 0));
+        update.setEmoji(Emoji.Safe);
+        //update.setLocation("12343,12342");
+        update.setMessage("Sigo en camino. Todo va bien.");
+        update.setSeen(false);
+        update.setUrgent(false);
+        contact.getStatus().addUpdate(update);
 
+        // Mariel
+        contact = getContactWithId(3);
+        update = new ContactStatusUpdate();
+        update.setDate(new Date(new Date().getTime() - 6 * 60 * 60000));
+        //update.setEmoji(Emoji.Unsure);
+        //update.setLocation("12343,12342");
+        update.setMessage("Estoy recibiendo cientos de tweets, usando el lenguaje más obsceno, amenazando con matarme, amenazando con violarme. Es difícil describir el miedo que siento.");
+        update.setSeen(false);
+        update.setUrgent(false);
+        contact.getStatus().addUpdate(update);
 
-        ArrayList<StatusUpdateReply> replies = new ArrayList<>();
-        StatusUpdateReply reply1 = new StatusUpdateReply();
+        // Ana
+        contact = getContactWithId(1);
+        update = new ContactStatusUpdate();
+        update.setDate(new Date(new Date().getTime() - 4 * 60 * 60000));
+        update.setEmoji(Emoji.Scared);
+        //update.setLocation("12343,12342");
+        update.setMessage("Me estan atacando en mi cuenta de Twitter. Por favor ayúdenme. https://twitter.com/reporter/status/1055410689425244161");
+        update.setSeen(false);
+        update.setUrgent(false);
+        contact.getStatus().addUpdate(update);
+
+        // Marta
+        contact = getContactWithId(5);
+        update = new ContactStatusUpdate();
+        update.setDate(new Date(new Date().getTime() - 6 * 60 * 60000));
+        update.setEmoji(Emoji.Unsure);
+        //update.setLocation("12343,12342");
+        update.setMessage("Estoy trabajando en una historia de un tema riesgoso, Por favor denme consejos.");
+        update.setSeen(false);
+        update.setUrgent(false);
+        contact.getStatus().addUpdate(update);
+
+        // Isabela
+        contact = getContactWithId(6);
+        update = new ContactStatusUpdate();
+        update.setDate(new Date(new Date().getTime() - 24 * 60 * 60000));
+        update.setEmoji(Emoji.Scared);
+        //update.setLocation("12343,12342");
+        update.setMessage("Me preocupa mi integridad física cuando estoy en las calles.");
+        update.setSeen(false);
+        update.setUrgent(true);
+        contact.getStatus().addUpdate(update);
+
+        ArrayList<ContactStatusReply> replies = new ArrayList<>();
+        ContactStatusReply reply1 = new ContactStatusReply();
         reply1.setContact(getContactList()[1]);
         reply1.setDate(new Date(118, 9, 31, 9, 52));
-        reply1.setType(StatusUpdateReply.ReplyType.Call);
+        reply1.setType(ContactStatusReply.ReplyType.Call);
         replies.add(reply1);
-        StatusUpdateReply reply2 = new StatusUpdateReply();
+        ContactStatusReply reply2 = new ContactStatusReply();
         reply2.setContact(getContactList()[2]);
         reply2.setDate(new Date(118, 9, 31, 10, 52));
-        reply2.setType(StatusUpdateReply.ReplyType.Message);
+        reply2.setType(ContactStatusReply.ReplyType.Message);
         replies.add(reply2);
-        StatusUpdateReply reply3 = new StatusUpdateReply();
+        ContactStatusReply reply3 = new ContactStatusReply();
         reply3.setContact(getContactList()[3]);
         reply3.setDate(new Date(118, 9, 32, 10, 52));
-        reply3.setType(StatusUpdateReply.ReplyType.Emoji);
+        reply3.setType(ContactStatusReply.ReplyType.Emoji);
         reply3.setEmoji(0x1f600);
         replies.add(reply3);
-        StatusUpdateReply reply4 = new StatusUpdateReply();
+        ContactStatusReply reply4 = new ContactStatusReply();
         reply4.setContact(getContactList()[4]);
         reply4.setDate(new Date(118, 9, 32, 10, 52));
-        reply4.setType(StatusUpdateReply.ReplyType.Emoji);
+        reply4.setType(ContactStatusReply.ReplyType.Emoji);
         reply4.setEmoji(0x1f601);
         replies.add(reply4);
-        update.setReplyList(replies);
-
-        contactStatusList[0] = update;
-
-        update = new StatusUpdate();
-        update.setDate(new Date(118, 10, 3, 19, 12));
-        update.setContact(getContactList()[3]);
-        update.setEmoji(0x1f608);
-        update.setLocation("1234;12342");
-        update.setMessage("I am worried about my physical safety");
-        update.setSeen(false);
-        update.setUrgent(false);
-        contactStatusList[3] = update;
+        getContactWithId(1).getStatus().setReplyList(replies);
     }
 
     void saveMockupPhoto(int friendId) {

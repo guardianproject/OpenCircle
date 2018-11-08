@@ -19,7 +19,8 @@ import android.widget.ImageView;
 import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.model.Contact;
-import com.circleof6.model.StatusUpdate;
+import com.circleof6.model.ContactStatus;
+import com.circleof6.model.ContactStatusUpdate;
 import com.circleof6.ui.Broadcasts;
 import com.circleof6.view.util.ConstantsView;
 import com.circleof6.view.util.DrawUtils;
@@ -133,10 +134,11 @@ public class ContactAvatarView extends RoundFrameLayout {
     @Override
     public void onDraw(Canvas canvas) {
         if (this.contact != null && !TextUtils.isEmpty(contact.getPhoneNumber())) {
-            StatusUpdate status = CircleOf6Application.getInstance().getContactStatus(this.contact);
-            if (status != null) {
-                if (!status.isSeen() || isIgnoringSeenStatus()) {
-                    if (status.isUrgent()) {
+            ContactStatus status = this.contact.getStatus();
+            if (status.canReply()) {
+                if (status.hasUnseenUpdates() || isIgnoringSeenStatus()) {
+                    ContactStatusUpdate latestUpdate = status.getLatestUpdate(true);
+                    if (latestUpdate != null && latestUpdate.isUrgent()) {
                         setBorderShader(shaderUnreadUrgent);
                     } else {
                         setBorderShader(shaderUnread);

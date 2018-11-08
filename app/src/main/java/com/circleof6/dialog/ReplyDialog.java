@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.circleof6.R;
-import com.circleof6.model.StatusUpdateReply;
+import com.circleof6.model.ContactStatusReply;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +23,16 @@ import java.util.List;
 public class ReplyDialog {
 
     public interface ReplyDialogListener {
-        void onReplySelected(StatusUpdateReply.ReplyType replyType);
+        void onReplySelected(ContactStatusReply.ReplyType replyType);
     }
 
     private static class ReplyEntry {
-        public StatusUpdateReply.ReplyType type;
+        public ContactStatusReply.ReplyType type;
         public int color;
         public int resIdTitle;
         public int resIdIcon;
 
-        public ReplyEntry(StatusUpdateReply.ReplyType type, int color, int resIdTitle, int resIdIcon) {
+        public ReplyEntry(ContactStatusReply.ReplyType type, int color, int resIdTitle, int resIdIcon) {
             this.type = type;
             this.color = color;
             this.resIdTitle = resIdTitle;
@@ -47,9 +47,9 @@ public class ReplyDialog {
 
             final Context context = anchor.getContext();
             final List<ReplyEntry> entries = new ArrayList<>();
-            entries.add(new ReplyEntry(StatusUpdateReply.ReplyType.Call, 0xfff8e71c, R.string.reply_call, R.drawable.ic_reply_call));
-            entries.add(new ReplyEntry(StatusUpdateReply.ReplyType.Message, 0xff3384ff, R.string.reply_message, R.drawable.ic_reply_message));
-            entries.add(new ReplyEntry(StatusUpdateReply.ReplyType.WhatsApp, 0xff23b180, R.string.reply_whatsapp, R.drawable.ic_reply_whatsapp));
+            entries.add(new ReplyEntry(ContactStatusReply.ReplyType.Call, 0xfff8e71c, R.string.reply_call, R.drawable.ic_reply_call));
+            entries.add(new ReplyEntry(ContactStatusReply.ReplyType.Message, 0xff3384ff, R.string.reply_message, R.drawable.ic_reply_message));
+            entries.add(new ReplyEntry(ContactStatusReply.ReplyType.WhatsApp, 0xff23b180, R.string.reply_whatsapp, R.drawable.ic_reply_whatsapp));
 
             final ArrayAdapter<ReplyEntry> adapter = new ArrayAdapter<ReplyEntry>(context, R.layout.quick_status_popup_item, 0,
                     entries.toArray(new ReplyEntry[0])) {
