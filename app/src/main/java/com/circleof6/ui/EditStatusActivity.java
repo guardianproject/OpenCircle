@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
+import com.circleof6.adapter.StatusUpdatesRecyclerViewAdapter;
 import com.circleof6.adapter.TagsRecyclerViewAdapter;
 import com.circleof6.model.Contact;
 import com.circleof6.model.ContactStatus;
@@ -54,6 +55,17 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
         contact = CircleOf6Application.getInstance().getContactWithId(id);
 
         setTitle(contact.getName());
+
+        RecyclerView rvStatusUpdates = findViewById(R.id.rvStatusUpdates);
+        if (contact.getStatus().canReply()) {
+            rvStatusUpdates.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            StatusUpdatesRecyclerViewAdapter adapter = new StatusUpdatesRecyclerViewAdapter(this, contact);
+            adapter.setUsingSeparateLayoutForFirstItem(false);
+            adapter.setShowingQuickReplyButton(false);
+            rvStatusUpdates.setAdapter(adapter);
+        } else {
+            rvStatusUpdates.setVisibility(View.GONE);
+        }
 
         ContactAvatarView avatarView = findViewById(R.id.avatarView);
         avatarView.setContact(contact);
@@ -126,15 +138,20 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
     private void updateUIBasedOnStatusText() {
         if (editStatus.getText().length() == 0) {
             tvStatusHint.setVisibility(editStatus.hasFocus() ? View.GONE : View.VISIBLE);
+            recyclerViewTagsAdapter.setTagBackgroundResourceId(R.drawable.status_tag_item_background_gray);
             recyclerViewTagsAdapter.setTags(listStatusTags);
         } else {
             tvStatusHint.setVisibility(View.GONE);
+            recyclerViewTagsAdapter.setTagBackgroundResourceId(R.drawable.status_tag_item_background);
             recyclerViewTagsAdapter.setTags(listActionTags);
         }
     }
 
     @Override
     public void onTagClicked(String tag) {
+        if (editStatus.getText().length() > 0 && !Character.isWhitespace(editStatus.getText().charAt(editStatus.getText().length() - 1))) {
+            editStatus.append(" ");
+        }
         editStatus.append(tag);
         updateUIBasedOnStatusText();
     }

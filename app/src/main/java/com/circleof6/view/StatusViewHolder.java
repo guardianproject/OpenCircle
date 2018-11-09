@@ -55,8 +55,10 @@ public class StatusViewHolder {
             layoutEmoji.setVisibility(View.GONE);
         }
 
-        rvStatusUpdates.setAdapter(new StatusUpdatesRecyclerViewAdapter(itemView.getContext(), contact));
-        ((StatusUpdatesRecyclerViewAdapter)rvStatusUpdates.getAdapter()).setOnReplyListener(onReplyListener);
+        StatusUpdatesRecyclerViewAdapter adapter = new StatusUpdatesRecyclerViewAdapter(itemView.getContext(), contact);
+        rvStatusUpdates.setAdapter(adapter);
+        adapter.setShowingQuickReplyButton(!contact.isYou());
+        adapter.setOnReplyListener(onReplyListener);
     }
 
     public OnReplyListener getOnReplyListener() {

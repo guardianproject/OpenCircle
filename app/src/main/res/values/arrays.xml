@@ -66,15 +66,33 @@
         <item>http://www.jagori.org/</item>
     </string-array>
 
+    <!--
     <string-array name="edit_status_tags">
-        <item>I am being followed</item>
-        <item>I am feeling unsafe</item>
-        <item>Someone is watching me</item>
+        <item>Everything is okay.</item>
+        <item>I'm being threatened.</item>
+        <item>Frightened for my safety.</item>
+        <item>I'm being trolled.</item>
+        <item>Fleeing.</item>
     </string-array>
     <string-array name="edit_status_action_tags">
-        <item>Please come meet me</item>
-        <item>Call me a cab</item>
-        <item>Please call me</item>
+        <item>Help me</item>
+        <item>Call me</item>
+        <item>What should I do</item>
+        <item>Meet me</item>
     </string-array>
+    -->
 
+    <string-array name="edit_status_tags">
+        <item>Todo va bien.</item>
+        <item>Estoy siendo amenazada (o).</item>
+        <item>Temiendo por mi seguridad.</item>
+        <item>Me estan troleando.</item>
+        <item>Huyendo.</item>
+    </string-array>
+    <string-array name="edit_status_action_tags">
+        <item>Ayudenme</item>
+        <item>Llamame</item>
+        <item>¿Que debo hacer?</item>
+        <item>Reúnete conmigo</item>
+    </string-array>
 </resources>

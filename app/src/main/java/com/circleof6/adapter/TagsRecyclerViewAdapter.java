@@ -24,6 +24,7 @@ public class TagsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final Context context;
     private List<String> tags;
     private TagsRecyclerViewAdapterListener listener;
+    private int tagBackgroundResourceId;
 
     public TagsRecyclerViewAdapter(Context context) {
         super();
@@ -40,6 +41,10 @@ public class TagsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             this.tags = tags;
             notifyDataSetChanged();
         }
+    }
+
+    public void setTagBackgroundResourceId(int tagBackgroundResourceId) {
+        this.tagBackgroundResourceId = tagBackgroundResourceId;
     }
 
     private Context getContext() {
@@ -81,6 +86,7 @@ public class TagsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         StatusTagViewHolder(View view) {
             super(view);
             tagView = (TextView)view;
+            tagView.setBackgroundResource(tagBackgroundResourceId);
         }
 
         @Override
