@@ -131,7 +131,7 @@
             android:layout_marginStart="22dp"
             android:layout_marginLeft="22dp"
             android:text="@string/urgent"
-            app:buttonTint="@android:color/darker_gray"
+            app:buttonTint="@color/checkbox_urgent_color"
             />
 
         <ImageButton
