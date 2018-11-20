@@ -13,6 +13,7 @@
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="29dp">
 
             <com.circleof6.view.ContactAvatarView
