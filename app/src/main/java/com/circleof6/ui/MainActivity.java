@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private DottedViewPagerIndicator statusPagerIndicator;
     private FloatingActionButton fabReply;
     private View whatsYourStatusLayout;
+    private View contactScrollView;
 
     //----------------------------------------------------------------LifeCycle
     @Override
@@ -278,6 +279,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onResume() {
         super.onResume();
 
+        // Reset scroll and alpha of contactScrollView
+        contactScrollView.setTranslationY(0);
+        contactScrollView.setAlpha(1);
+
         connectGoogleApiClient();
 
         if (showAlertSentMessageSuccess) {
@@ -397,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         contactsView = findViewById(R.id.contacts);
 
-        View contactScrollView = findViewById(R.id.contactScrollView);
+        contactScrollView = findViewById(R.id.contactScrollView);
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) contactScrollView.getLayoutParams();
         if (lp.getBehavior() instanceof SwipeUpBehavior) {
             ((SwipeUpBehavior)lp.getBehavior()).setSwipeUpListener(this);
