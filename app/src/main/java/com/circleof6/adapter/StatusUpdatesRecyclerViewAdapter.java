@@ -1,8 +1,12 @@
 package com.circleof6.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import com.circleof6.R;
 import com.circleof6.model.Contact;
 import com.circleof6.model.ContactStatusUpdate;
+import com.circleof6.ui.NoUnderlineSpan;
 import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.StatusViewHolder;
 
@@ -113,6 +118,8 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             tvEmoji = view.findViewById(R.id.emoji);
             tvDate = view.findViewById(R.id.tvDate);
             tvStatus = view.findViewById(R.id.tvStatus);
+            tvStatus.setAutoLinkMask(Linkify.ALL);
+            tvStatus.setLinkTextColor(ContextCompat.getColor(view.getContext(), R.color.link_color));
             layoutLocation = view.findViewById(R.id.locationLayout);
             tvLocation = view.findViewById(R.id.tvLocation);
             layoutQuickReply = view.findViewById(R.id.layoutQuickReply);
@@ -135,6 +142,18 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             if (update != null) {
                 tvDate.setText(MethodsUtils.dateDiffDisplayString(update.getDate(), tvDate.getContext(), R.string.status_updated_ago_never, R.string.status_updated_ago_recently, R.string.status_updated_ago_minutes, R.string.status_updated_ago_minute, R.string.status_updated_ago_hours, R.string.status_updated_ago_hour, R.string.status_updated_ago_days, R.string.status_updated_ago_day));
                 tvStatus.setText(update.getMessage());
+
+                // Remove underline in links
+                if (tvStatus.getText() instanceof Spannable) {
+                    Spannable s = (Spannable)tvStatus.getText();
+                    for (Object span : s.getSpans(0, s.length(), NoUnderlineSpan.class)) {
+                        s.removeSpan(span);
+                    }
+                    for (Object span : s.getSpans(0, s.length(), ClickableSpan.class)) {
+                        s.setSpan(new NoUnderlineSpan(), s.getSpanStart(span), s.getSpanEnd(span), s.getSpanFlags(span));
+                    }
+                }
+
                 if (TextUtils.isEmpty(update.getLocation())) {
                     // No location given
                     layoutLocation.setVisibility(View.GONE);

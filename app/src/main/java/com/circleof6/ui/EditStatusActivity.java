@@ -1,12 +1,15 @@
 package com.circleof6.ui;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.style.ClickableSpan;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +21,10 @@ import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.adapter.StatusUpdatesRecyclerViewAdapter;
 import com.circleof6.adapter.TagsRecyclerViewAdapter;
+import com.circleof6.dialog.QuickStatusDialog;
 import com.circleof6.model.Contact;
-import com.circleof6.model.ContactStatus;
 import com.circleof6.model.ContactStatusUpdate;
 import com.circleof6.view.ContactAvatarView;
-import com.circleof6.dialog.QuickStatusDialog;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -42,6 +44,7 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
     private CheckBox cbUrgent;
     private TextView avatarViewEmoji;
     private View avatarViewEmojiLayout;
+    private NoUnderlineSpan noUnderlineSpan;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,13 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
 
         tvStatusHint = findViewById(R.id.tvStatus);
 
+
+        // We need a custom span to remove underlines from links.
+        noUnderlineSpan = new NoUnderlineSpan();
+
         editStatus = findViewById(R.id.editStatus);
+        editStatus.setAutoLinkMask(Linkify.ALL);
+        editStatus.setLinkTextColor(ContextCompat.getColor(this, R.color.link_color));
         editStatus.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,6 +100,13 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
 
             @Override
             public void afterTextChanged(Editable s) {
+                Linkify.addLinks(s, Linkify.ALL);
+                for (Object span : s.getSpans(0, s.length(), NoUnderlineSpan.class)) {
+                    s.removeSpan(span);
+                }
+                for (Object span : s.getSpans(0, s.length(), ClickableSpan.class)) {
+                    s.setSpan(new NoUnderlineSpan(), s.getSpanStart(span), s.getSpanEnd(span), s.getSpanFlags(span));
+                }
                 updateUIBasedOnStatusText();
             }
         });
@@ -185,5 +201,4 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
