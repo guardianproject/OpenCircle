@@ -1,6 +1,5 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contactTabRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -93,98 +92,6 @@
             app:dot_radius_current="6dp"
             app:dot_rim_color="?attr/colorPrimary"
             app:dot_rim_color_current="?attr/colorPrimary" />
-
-        <FrameLayout
-            android:id="@+id/full_body"
-            tools:context=".ui.MainActivity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/statusPagerIndicator"
-            android:background="@color/background_activity"
-            android:visibility="gone">
-
-            <com.circleof6.view.CircleOf6View
-                android:id="@+id/circle_of_6"
-                app:center_text_color="@color/center_circle_color"
-                app:details_color="@color/details_color"
-                app:external_circle_color="@color/external_circle_color"
-                app:internal_circle_color="@color/internal_circle_color"
-                app:src_image_911="@drawable/nineoneone_button"
-                app:src_image_add_contact="@drawable/ic_add"
-                app:src_image_default_contact="@drawable/contact_icon"
-                app:src_image_info="@drawable/ic_info"
-                app:src_image_location="@drawable/ic_location"
-                app:src_image_message="@drawable/ic_message"
-                app:src_image_phone="@drawable/ic_phone"
-                app:text_add_contacts="@string/text_add_more_contacts"
-                app:text_ask_circle="@string/text_ask_my_circle"
-                app:text_close_ask_circle="@string/text_cancel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="invisible" />
-
-            <include layout="@layout/include_logo" />
-
-            <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/logo"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_gravity="right|top"
-                android:layout_margin="12dp"
-                android:scaleType="centerInside"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/checkbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|bottom"
-                android:layout_margin="12dp"
-                android:background="@drawable/click_default_event"
-                android:clickable="true"
-                android:contentDescription="@string/check_button"
-                android:onClick="okButtonPress"
-                android:padding="@dimen/padding_icons_main_activity"
-                android:src="@drawable/ic_check" />
-
-            <ImageButton
-                android:id="@+id/emergencwybutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/click_default_event"
-                android:contentDescription="@string/emergency_button"
-                android:onClick="emergencyButtonPress"
-                android:padding="@dimen/padding_icons_main_activity"
-                android:src="@drawable/ic_hotlines" />
-
-            <ImageView
-                android:id="@+id/infobutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|bottom"
-                android:layout_margin="12dp"
-                android:background="@drawable/click_default_event"
-                android:clickable="true"
-                android:contentDescription="@string/info_button"
-                android:onClick="onInfoButtonClicked"
-                android:padding="@dimen/padding_icons_main_activity"
-                android:src="@drawable/ic_questionmark" />
-
-            <Button
-                android:id="@+id/share_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:background="@drawable/click_default_event"
-                android:onClick="shareApp"
-                android:padding="0dp"
-                android:text="share"
-                android:textColor="@color/primary_text_white"
-                android:visibility="gone" />
-
-        </FrameLayout>
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/progressBar"

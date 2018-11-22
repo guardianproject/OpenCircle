@@ -43,8 +43,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -73,7 +71,6 @@ import com.circleof6.receiver.SentSMSReceiver;
 import com.circleof6.util.Constants;
 import com.circleof6.util.ConstantsAnalytics;
 import com.circleof6.util.MethodsUtils;
-import com.circleof6.view.CircleOf6View;
 import com.circleof6.view.ContactView;
 import com.circleof6.view.DottedViewPagerIndicator;
 import com.circleof6.view.StatusViewHolder;
@@ -123,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private SentSMSReceiver broadcastReceiverSentSMS;
     private boolean isRegisterReceiver;
     private Set<Integer> contactsPicked;
-    private CircleOf6View circleOf6View;
     private ViewGroup contactsView;
     private boolean showAlertSentMessageSuccess;
     private int numMessagesSent;
@@ -132,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private boolean isStopActivity;
     private Timer timer;
     private AVLoadingIndicatorView progressBar;
-    private FrameLayout fullBody;
     private DBHelper dbHelper;
     private List<SMS> sms;
     private ViewPager statusPager;
@@ -161,10 +156,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         dbHelper = new DBHelper(MainActivity.this);
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.progressBar);
-        fullBody = (FrameLayout) findViewById(R.id.full_body);
-
         progressBar.setVisibility(View.VISIBLE);
-        fullBody.setVisibility(View.GONE);
 
         appBarLayoutContacts = findViewById(R.id.appBarLayout);
         appBarLayoutContacts.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -292,7 +284,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
     public void init() {
-        fullBody.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
 
         setupViews();
@@ -413,17 +404,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         showAlertSentMessageSuccess = false;
         mRequestingLocationUpdates = false;
 
-        //Circle of 6 view
-        circleOf6View = (CircleOf6View) findViewById(R.id.circle_of_6);
-        circleOf6View.getViewTreeObserver()
-                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        circleOf6View.setOnClickListener(MainActivity.this);
-                    }
-                });
-        circleOf6View.refreshDrawableState();
-
         contactsView = findViewById(R.id.contacts);
 
         fabReply = findViewById(R.id.fabReply);
@@ -489,15 +469,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private void setupInfoContacts() {
         contactsPicked = new HashSet<>();
         contacts = getContactsFromPreferences();
-        circleOf6View.setContacts(contacts);
-
-        if (contactsPicked.size() < 3) {
-            circleOf6View.setIsTextAddContacts(true);
-            findViewById(R.id.checkbutton).setVisibility(View.GONE);
-        } else {
-            circleOf6View.setIsTextAddContacts(false);
-            findViewById(R.id.checkbutton).setVisibility(View.VISIBLE);
-        }
 
         ContactView contactView = (ContactView) contactsView.getChildAt(0);
         contactView.setContact(CircleOf6Application.getInstance().getYouContact());
@@ -603,9 +574,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void setUpCollege() {
-        //Default 911 is off
-        circleOf6View.setEnableButton911(false);
-
         //Get the set college
         NetworkImageView logo = (NetworkImageView) findViewById(R.id.logo);
         CircleOf6Application.getInstance().setUpLogo(logo, dbHelper);
@@ -931,7 +899,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     {
         ImageView okButton = (ImageView) findViewById(R.id.checkbutton);
         okButton.setVisibility(View.VISIBLE);
-        circleOf6View.setIsTextAddContacts(false);
     }
 
     public void displayNewContact()
@@ -1270,8 +1237,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         Contact updatedContact = saveContact(contactId, name, phoneNumber, photoId);
 
-        circleOf6View.addContact(updatedContact, contactId - 1);
-
         if(! updatedContact.isEmpty())
         {
             contactsPicked.add(updatedContact.getId());
@@ -1396,7 +1361,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     fos = openFileOutput(photoPng, Context.MODE_PRIVATE);
 
                     Bitmap contactPhotoCirculate = DrawUtils
-                            .getCroppedAndMaskedBitmap(circleOf6View, contactPhoto);
+                            .getCroppedAndMaskedBitmap(null, contactPhoto);
 
                     contactPhotoCirculate.compress(CompressFormat.PNG, 100, fos);
                     fos.close();
