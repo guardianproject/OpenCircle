@@ -26,7 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -36,19 +36,16 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -62,15 +59,15 @@ import com.circleof6.dialog.EmergencyPhonesDialog;
 import com.circleof6.dialog.InformationLinksDialog;
 import com.circleof6.dialog.OverlayDialog;
 import com.circleof6.dialog.QuickReplyDialog;
+import com.circleof6.dialog.ReplyDialog;
 import com.circleof6.dialog.SendSmsAlertDialog;
 import com.circleof6.dialog.UnsentSMSDialog;
 import com.circleof6.dialog.utils.ConstantsDialog;
 import com.circleof6.dialog.utils.TypeSendSmsListener;
 import com.circleof6.model.Contact;
+import com.circleof6.model.ContactStatusReply;
 import com.circleof6.model.ContactStatusUpdate;
 import com.circleof6.model.SMS;
-import com.circleof6.model.ContactStatus;
-import com.circleof6.model.ContactStatusReply;
 import com.circleof6.preferences.AppPreferences;
 import com.circleof6.receiver.SentSMSReceiver;
 import com.circleof6.util.Constants;
@@ -79,8 +76,6 @@ import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.CircleOf6View;
 import com.circleof6.view.ContactView;
 import com.circleof6.view.DottedViewPagerIndicator;
-import com.circleof6.dialog.QuickStatusDialog;
-import com.circleof6.dialog.ReplyDialog;
 import com.circleof6.view.StatusViewHolder;
 import com.circleof6.view.util.DrawUtils;
 import com.circleof6.view.util.OnClickListenerCircleOf6View;
@@ -90,8 +85,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.vanniktech.emoji.EmojiEditText;
-import com.vanniktech.emoji.EmojiPopup;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.ByteArrayInputStream;
@@ -118,7 +111,7 @@ import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
  * Depends on https://github.com/codinguser/android_contact_picker.git
  * 
  */
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener, StatusViewHolder.OnReplyListener, SwipeUpBehavior.OnSwipeUpListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnClickListenerCircleOf6View, TypeSendSmsListener, StatusViewHolder.OnReplyListener {
 
     //~=~=~=~=~=~=~=~=~=~=~=~=Constants
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -146,14 +139,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private StatusViewPagerAdapter statusPagerAdapter;
     private DottedViewPagerIndicator statusPagerIndicator;
     private FloatingActionButton fabReply;
-    private View whatsYourStatusLayout;
-    private View contactScrollView;
+    private AppBarLayout appBarLayoutContacts;
+    private int appBarLayoutContactsOffset; // Current offset in pixels
+
+    //private View whatsYourStatusLayout;
+    //private View contactScrollView;
 
     //----------------------------------------------------------------LifeCycle
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        final TabLayout tabLayout = findViewById(R.id.tabLayout);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+
         dbHelper = new DBHelper(MainActivity.this);
 
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.progressBar);
@@ -161,6 +165,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         progressBar.setVisibility(View.VISIBLE);
         fullBody.setVisibility(View.GONE);
+
+        appBarLayoutContacts = findViewById(R.id.appBarLayout);
+        appBarLayoutContacts.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                appBarLayoutContactsOffset = verticalOffset;
+                float a = Math.abs((float)verticalOffset / (float)appBarLayout.getTotalScrollRange());
+                if (a < 0.8f) {
+                    toolbar.setAlpha(0);
+                    toolbar.setVisibility(View.INVISIBLE);
+                    tabLayout.setAlpha(1);
+                } else {
+                    float d = (a - 0.8f) / 0.2f;
+                    toolbar.setAlpha(d);
+                    toolbar.setVisibility(View.VISIBLE);
+                    tabLayout.setAlpha(1 - d);
+                }
+            }
+        });
 
         connectGoogleApiClient();
 
@@ -171,6 +194,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         askForContactPermission(Manifest.permission.READ_PHONE_STATE);
         askForContactPermission(Manifest.permission.ACCESS_FINE_LOCATION);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Hitting "back" white in "full screen contact" mode means just collapse!
+        if (item.getItemId() == android.R.id.home && appBarLayoutContactsOffset != 0) {
+            appBarLayoutContacts.setExpanded(true, true);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -279,10 +313,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onResume() {
         super.onResume();
 
-        // Reset scroll and alpha of contactScrollView
-        contactScrollView.setTranslationY(0);
-        contactScrollView.setAlpha(1);
-
         connectGoogleApiClient();
 
         if (showAlertSentMessageSuccess) {
@@ -301,16 +331,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 launchPagedTutorial();
         }
         LocalBroadcastManager.getInstance(this).registerReceiver(statusUpdateReceiver, new IntentFilter(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED));
-        showOrHideWhatsYouStatusPane();
     }
 
     private BroadcastReceiver statusUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int contactId = intent.getIntExtra(Broadcasts.EXTRAS_CONTACT_ID, -1);
-            if (contactId == CircleOf6Application.getInstance().getYouContact().getId()) {
-                showOrHideWhatsYouStatusPane();
-            }
             resortContacts();
         }
     };
@@ -398,25 +424,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 });
         circleOf6View.refreshDrawableState();
 
-        whatsYourStatusLayout = findViewById(R.id.whatsYourStatusLayout);
-
         contactsView = findViewById(R.id.contacts);
-
-        contactScrollView = findViewById(R.id.contactScrollView);
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) contactScrollView.getLayoutParams();
-        if (lp.getBehavior() instanceof SwipeUpBehavior) {
-            ((SwipeUpBehavior)lp.getBehavior()).setSwipeUpListener(this);
-        }
-
-        TextView tvStatus = findViewById(R.id.tvStatus);
-        tvStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), EditStatusActivity.class);
-                intent.putExtra(EditStatusActivity.ARG_CONTACT_ID, CircleOf6Application.getInstance().getYouContact().getId());
-                startActivity(intent);
-            }
-        });
 
         fabReply = findViewById(R.id.fabReply);
         fabReply.setOnClickListener(new View.OnClickListener() {
@@ -450,6 +458,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 statusPagerIndicator.setCurrentDot(position);
 
                 Contact contact = statusPagerAdapter.getContacts().get(position);
+                getSupportActionBar().setTitle(contact.getName());
                 fabReply.setVisibility(contact.getStatus().canReply() ? View.VISIBLE : View.GONE);
             }
 
@@ -460,14 +469,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 } else {
                     statusPager.removeCallbacks(setSeenRunnable);
                 }
-            }
-        });
-
-        final ImageButton btnQuickStatus = findViewById(R.id.btnQuickStatus);
-        btnQuickStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showQuickStatusPopup(btnQuickStatus);
             }
         });
 
@@ -484,21 +485,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         }
     };
-
-    private void showQuickStatusPopup(final View anchor) {
-        QuickStatusDialog.showFromAnchor(anchor, new QuickStatusDialog.QuickStatusDialogListener() {
-            @Override
-            public void onQuickStatusSelected(int emoji) {
-                // Set your status
-                Contact you = CircleOf6Application.getInstance().getYouContact();
-                ContactStatusUpdate update = new ContactStatusUpdate();
-                update.setDate(new Date());
-                update.setEmoji(emoji);
-                you.getStatus().addUpdate(update);
-                CircleOf6Application.getInstance().statusUpdated(you);
-            }
-        });
-    }
 
     private void setupInfoContacts() {
         contactsPicked = new HashSet<>();
@@ -538,6 +524,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         statusPagerIndicator.setCurrentDot(0);
         statusPager.setCurrentItem(0);
         resortContacts();
+
+        // Default to name of first contact in the title
+        if (contacts != null && contacts.get(0) != null) {
+            getSupportActionBar().setTitle(contacts.get(0).getName());
+        }
     }
 
     private void resortContacts() {
@@ -1544,19 +1535,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 CircleOf6Application.getInstance().sendReply(contact, reply);
             }
         });
-    }
-
-    @Override
-    public void onSwipeUp() {
-        Contact currentContact = statusPagerAdapter.getContacts().get(statusPager.getCurrentItem());
-        Intent intent = new Intent(this, ContactStatusActivity.class);
-        intent.putExtra(ContactStatusActivity.ARG_CONTACT_ID, currentContact.getId());
-        startActivity(intent);
-    }
-
-    private void showOrHideWhatsYouStatusPane() {
-        // Based on if you have a status or not, show the status pane
-        Contact you = CircleOf6Application.getInstance().getYouContact();
-        whatsYourStatusLayout.setVisibility(you.getStatus().canReply() ? View.GONE : View.VISIBLE);
     }
 }

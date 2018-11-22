@@ -5,37 +5,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_gravity="center"
-        app:tabBackground="@color/tabColorBack"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/tabColorIndicator"
-        app:tabIndicatorHeight="4dp"
-        app:tabMaxWidth="0dp"
-        app:tabMode="fixed"
-        app:tabTextColor="@android:color/white">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        >
 
-        <android.support.design.widget.TabItem
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_circle"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center"
+            app:tabBackground="@color/tabColorBack"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/tabColorIndicator"
+            app:tabIndicatorHeight="4dp"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed"
+            app:tabTextColor="@android:color/white">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_tab_circle" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_tab_call" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_tab_books" />
+
+        </android.support.design.widget.TabLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
             />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_call" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_books"
-            />
-
-    </android.support.design.widget.TabLayout>
+    </FrameLayout>
 
     <com.circleof6.view.DesignableViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/viewPager"
@@ -47,17 +59,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:background="@android:color/white"
-            android:text=""
-            />
+            android:gravity="center"
+            android:text="" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:background="@android:color/white"
-            android:text=""
-            />
+            android:gravity="center"
+            android:text="" />
     </com.circleof6.view.DesignableViewPager>
 </LinearLayout>
