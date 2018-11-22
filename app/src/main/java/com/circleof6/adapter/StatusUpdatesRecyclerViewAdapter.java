@@ -32,6 +32,7 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     private StatusViewHolder.OnReplyListener onReplyListener;
     private boolean usingSeparateLayoutForFirstItem = true;
     private boolean showingQuickReplyButton = true;
+    private boolean showAll = false;
 
     public StatusUpdatesRecyclerViewAdapter(Context context, Contact contact) {
         super();
@@ -70,13 +71,21 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         if (updates == null || updates.size() == 0) {
             return 1; // Show the "no update" view
         }
-        return updates.size();
+        int num = showAll ? updates.size() : 1;
+        if (updates.size() > 1) {
+            // Add a view for "show more/show less"
+            num += 1;
+        }
+        return num;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (isUsingSeparateLayoutForFirstItem() && position == 0) {
             return 1;
+        }
+        if (updates.size() > 1 && ((showAll && position == updates.size()) || (!showAll && position == 1) )) {
+            return 2; // The show more/show less view type
         }
         return 0;
     }
@@ -88,6 +97,11 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == 2) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.status_page_item_show_more, parent, false);
+            return new ShowMoreViewHolder(view);
+        }
         View view = LayoutInflater.from(parent.getContext())
                 .inflate((viewType == 1) ? R.layout.status_page_item : R.layout.status_page_item_n, parent, false);
         return new StatusUpdateViewHolder(view);
@@ -95,12 +109,34 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof ShowMoreViewHolder) {
+            ShowMoreViewHolder vh = (ShowMoreViewHolder) holder;
+            vh.tv.setText(showAll ? R.string.show_less : R.string.show_more);
+            vh.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showAll = !showAll;
+                    notifyDataSetChanged();
+                }
+            });
+            return;
+        }
+
         StatusUpdateViewHolder viewHolder = (StatusUpdateViewHolder) holder;
         ContactStatusUpdate update = null;
         if (updates != null && updates.size() > 0) {
             update = updates.get(position);
         }
         viewHolder.bindModel(contact, update, isShowingQuickReplyButton() && (updates != null && position == 0));
+    }
+
+    private class ShowMoreViewHolder extends RecyclerView.ViewHolder {
+        public TextView tv;
+
+        public ShowMoreViewHolder(View view) {
+            super(view);
+            tv = view.findViewById(R.id.text);
+        }
     }
 
     private class StatusUpdateViewHolder extends RecyclerView.ViewHolder {

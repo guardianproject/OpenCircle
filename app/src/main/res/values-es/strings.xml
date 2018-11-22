@@ -136,4 +136,7 @@ Toca el icono del telefono, esto te llevara a dos lineas de emergencia (solo una
     <string name="remove">Remover</string>
     <string name="update">Actualizar</string>
     <string name="status_removed">Estatus removido</string>
+    <string name="show_more">Ver mas</string>
+    <string name="show_less">Ver menos</string>
+
 </resources>

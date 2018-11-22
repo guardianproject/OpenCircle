@@ -153,6 +153,9 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="remove">Remove</string>
     <string name="update">Update</string>
     <string name="status_removed">Status removed</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show more</string>
+
 -->
 
     <string name="whats_your_status">¿Cual es tu estado?</string>
@@ -180,4 +183,6 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="remove">Remover</string>
     <string name="update">Actualizar</string>
     <string name="status_removed">Estatus removido</string>
+    <string name="show_more">Ver mas</string>
+    <string name="show_less">Ver menos</string>
 </resources>
