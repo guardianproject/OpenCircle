@@ -52,6 +52,7 @@ public class ContactView extends FrameLayout {
     public void setContact(Contact contact) {
         this.contact = contact;
         tvName.setText(contact.getName());
+        avatarView.setIgnoringSeenStatus(contact.isYou());
         avatarView.setContact(contact);
     }
 

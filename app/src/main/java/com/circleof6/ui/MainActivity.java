@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private ViewPager statusPager;
     private StatusViewPagerAdapter statusPagerAdapter;
     private DottedViewPagerIndicator statusPagerIndicator;
-    private FloatingActionButton fabReply;
     private AppBarLayout appBarLayoutContacts;
     private int appBarLayoutContactsOffset; // Current offset in pixels
 
@@ -298,12 +297,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(statusUpdateReceiver);
+        statusPager.removeCallbacks(setSeenRunnable);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        statusPager.postDelayed(setSeenRunnable, SET_SEEN_DELAY);
         connectGoogleApiClient();
 
         if (showAlertSentMessageSuccess) {
@@ -406,19 +406,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         contactsView = findViewById(R.id.contacts);
 
-        fabReply = findViewById(R.id.fabReply);
-        fabReply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ReplyDialog.showFromAnchor(v, new ReplyDialog.ReplyDialogListener() {
-                    @Override
-                    public void onReplySelected(ContactStatusReply.ReplyType replyType) {
-                        //TODO
-                    }
-                });
-            }
-        });
-
         // Set up viewpager and tabs
         //
         final ViewPager viewPager = findViewById(R.id.viewPager);
@@ -439,7 +426,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                 Contact contact = statusPagerAdapter.getContacts().get(position);
                 getSupportActionBar().setTitle(contact.getName());
-                fabReply.setVisibility(contact.getStatus().canReply() ? View.VISIBLE : View.GONE);
             }
 
             @Override
@@ -452,7 +438,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
-        setUpView();
         setupInfoContacts();
     }
 
@@ -530,9 +515,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
+        // Update yourself
+        ContactView contactView = (ContactView) contactsView.getChildAt(0);
+        contactView.setContact(CircleOf6Application.getInstance().getYouContact());
+
         for (int i = 0; i < contacts.size(); i++) {
             final Contact contact = contacts.get(i);
-            ContactView contactView = (ContactView) contactsView.getChildAt(2 + i);
+            contactView = (ContactView) contactsView.getChildAt(2 + i);
             contactView.setTag(i);
             contactView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -559,27 +548,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         return savedFriends;
     }
-
-    public void setUpView() {
-        if (isUniversalFlavor()) {
-            setupUniversal();
-        } else {
-            setUpCollege();
-        }
-
-    }
-
-    public void setupUniversal() {
-        findViewById(R.id.logo).setVisibility(View.GONE);
-    }
-
-    public void setUpCollege() {
-        //Get the set college
-        NetworkImageView logo = (NetworkImageView) findViewById(R.id.logo);
-        CircleOf6Application.getInstance().setUpLogo(logo, dbHelper);
-
-    }
-
 
     //----------------------------------------------------------------Listeners
     @Override
@@ -1489,6 +1457,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onReply(final Contact contact, View anchorButton) {
+        ReplyDialog.showFromAnchor(anchorButton, new ReplyDialog.ReplyDialogListener() {
+            @Override
+            public void onReplySelected(ContactStatusReply.ReplyType replyType) {
+                //TODO
+            }
+        });
+    }
+
+    @Override
+    public void onQuickReply(final Contact contact, View anchorButton) {
         QuickReplyDialog.showFromAnchor(statusPager, anchorButton, new QuickReplyDialog.QuickReplyDialogListener() {
             @Override
             public void onQuickReplySelected(int emoji) {

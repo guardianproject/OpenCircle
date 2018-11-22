@@ -72,14 +72,6 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-    </android.support.design.widget.AppBarLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
         <com.circleof6.view.DottedViewPagerIndicator
             android:id="@+id/statusPagerIndicator"
             android:layout_width="match_parent"
@@ -91,7 +83,16 @@
             app:dot_radius="4dp"
             app:dot_radius_current="6dp"
             app:dot_rim_color="?attr/colorPrimary"
-            app:dot_rim_color_current="?attr/colorPrimary" />
+            app:dot_rim_color_current="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|snap"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/progressBar"
@@ -106,19 +107,10 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/statusPager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_below="@id/statusPagerIndicator"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabReply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_reply_white_32dp"
-        app:layout_anchorGravity="bottom|end" />
 
     <com.vanniktech.emoji.EmojiEditText
         android:id="@+id/emojiInputView"

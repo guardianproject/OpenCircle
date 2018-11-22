@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:padding="16dp">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/avatarLayout"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="29dp">
 
             <com.circleof6.view.ContactAvatarView
@@ -44,11 +46,52 @@
             </com.circleof6.view.RoundFrameLayout>
         </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvStatusUpdates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/avatarLayout"
-        android:layout_alignParentBottom="true"
-        />
-</RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvStatusUpdates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <FrameLayout
+            android:id="@+id/gradient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/gray_gradient" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_reply_white_32dp" />
+        </FrameLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/repliesTitleStrip"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="start|top"
+            app:tabBackground="@android:color/white"
+            app:tabIndicatorColor="@color/purple"
+            app:tabIndicatorHeight="4dp"
+            app:tabMaxWidth="0dp"
+            app:tabMinWidth="0dp"
+            app:tabMode="scrollable"
+            app:tabTextColor="@android:color/darker_gray" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/repliesPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -1,6 +1,7 @@
 package com.circleof6.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 public class RepliesViewPagerAdapter extends PagerAdapter {
 
+    private static final int ID_EMPTY = 0;
     private static final int ID_CALL = 1;
     private static final int ID_MESSAGE = 2;
     private static final int ID_WHATSAPP = 3;
@@ -61,6 +63,10 @@ public class RepliesViewPagerAdapter extends PagerAdapter {
                 categorizedReplies.get(key).add(reply);
             }
         }
+        if (categorizedReplies.size() == 0) {
+            // Nothing, add a default item, need this for view pager to react to nested scrolls!
+            categorizedReplies.put(ID_EMPTY, null);
+        }
         categorizedReplyKeys = categorizedReplies.keySet().toArray(new Integer[0]);
 
         // Sort
@@ -68,6 +74,9 @@ public class RepliesViewPagerAdapter extends PagerAdapter {
         tabLayout.removeAllTabs();
         for (int i = 0; i < categorizedReplyKeys.length; i++) {
             int key = categorizedReplyKeys[i];
+            if (key == ID_EMPTY) {
+                continue;
+            }
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setCustomView(R.layout.status_reply_tab_item);
             tab.setText(String.format("%d", categorizedReplies.get(key).size()));
@@ -107,6 +116,14 @@ public class RepliesViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         int key = categorizedReplyKeys[position];
+
+        if (key == ID_EMPTY) {
+            // Create an empty view, just so that the viewpager will react to nested scrolls in the content area.
+            View view = new View(container.getContext());
+            view.setBackgroundColor(Color.TRANSPARENT);
+            container.addView(view);
+            return view;
+        }
 
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.status_reply_page, container, false);
         RecyclerView rvReplies = view.findViewById(R.id.rvReplies);

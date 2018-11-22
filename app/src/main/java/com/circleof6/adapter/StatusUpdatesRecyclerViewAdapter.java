@@ -166,7 +166,7 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                             @Override
                             public void onClick(View v) {
                                 if (onReplyListener != null) {
-                                    onReplyListener.onReply(contact, layoutQuickReply);
+                                    onReplyListener.onQuickReply(contact, layoutQuickReply);
                                 }
                             }
                         });

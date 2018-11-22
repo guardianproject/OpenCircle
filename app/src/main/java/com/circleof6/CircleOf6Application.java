@@ -222,6 +222,9 @@ public class CircleOf6Application extends Application {
     public Contact getYouContact() {
         if (youContact == null) {
             String phone = AppPreferences.getInstance(this).getPhoneContact(0);
+            if (TextUtils.isEmpty(phone)) {
+                phone = "_"; //TEMP TODO, need a phone number to be a valid contact
+            }
             String photo = AppPreferences.getInstance(this).getPhotoContact(0);
             youContact = new Contact(0, getString(R.string.you), phone, photo);
             youContact.setYou(true);
@@ -307,6 +310,7 @@ public class CircleOf6Application extends Application {
         update.setDate(new Date(new Date().getTime() - 4 * 60 * 60000));
         update.setEmoji(Emoji.Scared);
         //update.setLocation("12343,12342");
+        //update.setMessage("asdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nkjdsfhsdkjhfkajhfkjahsdfsa\nkjahsdfkjahsdfkjhakjdfhkajdsf\naksjdfhkajdhfkjadsf\nkjafhdsfkjhadskjfhads\n\nskdjfhskjdhfksdhfsdkf\nkdsjfhaksjdfhjaskdfhaskdf\nskjdfhadkjsfhd skafhakjsdfhasdf\nakdjshfgak sdfjghakjsdfg asjkdhfg aksjdhfg ajksdhfg asjhkdfg aksjdhfg jksadhfg asjkdhfg ajksdhfg akjshdfg ajskdhfg ajksdhgf ajshdfg jakshdgf jkahsgd fahjsgdf hjkasgdf asldfgasftweirgasdkjfgai weyfga sdyfg adhjsfga uweyfg aysdgf Me estan atacando en mi cuenta de Twitter. Por favor ayúdenme. https://twitter.com/reporter/status/1055410689425244161");
         update.setMessage("Me estan atacando en mi cuenta de Twitter. Por favor ayúdenme. https://twitter.com/reporter/status/1055410689425244161");
         update.setSeen(false);
         update.setUrgent(false);

@@ -99,6 +99,7 @@ public class RoundFrameLayout extends FrameLayout {
     }
 
     public void setBorderShader(Shader shader) {
+        paintBorder.setColor(Color.BLACK);
         paintBorder.setShader(shader);
     }
 
