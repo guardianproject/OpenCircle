@@ -65,9 +65,14 @@
 
     <FrameLayout
         android:id="@+id/layoutQuickReply"
-        android:layout_width="24dp"
+        android:layout_width="32dp"
         android:layout_height="24dp"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="0dp"
+        android:paddingLeft="0dp"
+        >
 
         <ImageView
             android:layout_width="match_parent"
