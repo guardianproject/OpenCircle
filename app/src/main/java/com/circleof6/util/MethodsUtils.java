@@ -29,16 +29,14 @@ public class MethodsUtils {
     public static String dateDiffDisplayString(Date date, Context context, int idStringNever, int idStringRecently, int idStringMinutes, int idStringMinute,
                                                int idStringHours, int idStringHour, int idStringDays, int idStringDay) {
         if (date == null)
-            return "";
+            return context.getString(idStringNever);
 
         Date todayDate = new Date();
         double ti = todayDate.getTime() - date.getTime();
         if (ti < 0)
             ti = -ti;
         ti = ti / 1000; // Convert to seconds
-        if (ti < 1) {
-            return context.getString(idStringNever);
-        } else if (ti < 60) {
+        if (ti < 60) {
             return context.getString(idStringRecently);
         } else if (ti < 3600 && (int) Math.round(ti / 60) < 60) {
             int diff = (int) Math.round(ti / 60);
