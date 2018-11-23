@@ -10,7 +10,9 @@ import com.circleof6.R;
 import com.circleof6.model.Contact;
 import com.circleof6.view.StatusViewHolder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by N-Pex on 2018-10-30.
@@ -19,6 +21,16 @@ public class StatusViewPagerAdapter extends PagerAdapter {
 
     private StatusViewHolder.OnReplyListener onReplyListener;
     private List<Contact> contacts;
+
+    /**
+     * Stores a mapping of contact->StatusViewHolder, so we can refresh particular pages when a contact changes status.
+     */
+    private Map<Contact, StatusViewHolder> viewHolderMap;
+
+    public StatusViewPagerAdapter() {
+        super();
+        viewHolderMap = new HashMap<>();
+    }
 
     public StatusViewHolder.OnReplyListener getOnReplyListener() {
         return onReplyListener;
@@ -51,6 +63,11 @@ public class StatusViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
+    public void startUpdate(@NonNull ViewGroup container) {
+        super.startUpdate(container);
+    }
+
+    @Override
     public Object instantiateItem(ViewGroup container, int position) {
         final Contact contact = contacts.get(position);
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.status_page, container, false);
@@ -58,16 +75,27 @@ public class StatusViewPagerAdapter extends PagerAdapter {
         holder.populateWithContact(contact);
         holder.setOnReplyListener(getOnReplyListener());
         container.addView(view);
+        viewHolderMap.put(contact, holder);
         return holder;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView(((StatusViewHolder) object).itemView);
+        StatusViewHolder holder = (StatusViewHolder)object;
+        container.removeView(holder.itemView);
+        viewHolderMap.remove(holder.contact);
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return ((StatusViewHolder) object).itemView == view;
+    }
+
+    public void onContactStatusUpdated(Contact contact) {
+        StatusViewHolder holder = viewHolderMap.get(contact);
+        if (holder != null) {
+            // Refresh
+            holder.populateWithContact(contact);
+        }
     }
 }

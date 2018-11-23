@@ -294,9 +294,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(statusUpdateReceiver, new IntentFilter(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED));
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(statusUpdateReceiver);
         statusPager.removeCallbacks(setSeenRunnable);
     }
 
@@ -321,7 +326,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (!AppPreferences.getInstance(MainActivity.this).hasCompletedTutorial()) {
                 launchPagedTutorial();
         }
-        LocalBroadcastManager.getInstance(this).registerReceiver(statusUpdateReceiver, new IntentFilter(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED));
     }
 
     private BroadcastReceiver statusUpdateReceiver = new BroadcastReceiver() {
@@ -329,12 +333,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         public void onReceive(Context context, Intent intent) {
             int contactId = intent.getIntExtra(Broadcasts.EXTRAS_CONTACT_ID, -1);
             resortContacts();
+            statusPagerAdapter.onContactStatusUpdated(CircleOf6Application.getInstance().getContactWithId(contactId));
         }
     };
 
     @Override
     protected void onStop() {
         super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(statusUpdateReceiver);
         disconnectGoogleApiClient();
         isStopActivity = true;
     }
