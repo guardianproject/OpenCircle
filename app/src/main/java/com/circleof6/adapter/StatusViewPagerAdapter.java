@@ -95,7 +95,7 @@ public class StatusViewPagerAdapter extends PagerAdapter {
         StatusViewHolder holder = viewHolderMap.get(contact);
         if (holder != null) {
             // Refresh
-            holder.populateWithContact(contact);
+            holder.refresh();
         }
     }
 }

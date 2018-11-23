@@ -93,7 +93,7 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
         LocalBroadcastManager.getInstance(this).registerReceiver(statusUpdateReceiver, new IntentFilter(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED));
         if (contact != null) {
             // Refresh
-            viewHolder.populateWithContact(contact);
+            viewHolder.refresh();
         }
     }
 
@@ -102,7 +102,7 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
         public void onReceive(Context context, Intent intent) {
             int contactId = intent.getIntExtra(Broadcasts.EXTRAS_CONTACT_ID, -1);
             if (contact != null && contactId == contact.getId()) {
-                viewHolder.populateWithContact(contact);
+                viewHolder.refresh();
             }
         }
     };

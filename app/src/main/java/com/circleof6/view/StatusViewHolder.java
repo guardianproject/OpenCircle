@@ -69,9 +69,14 @@ public class StatusViewHolder {
 
     public void populateWithContact(final Contact contact) {
         this.contact = contact;
+        StatusUpdatesRecyclerViewAdapter adapter = new StatusUpdatesRecyclerViewAdapter(itemView.getContext(), contact);
+        rvStatusUpdates.setAdapter(adapter);
+        adapter.setShowingQuickReplyButton(!contact.isYou());
+        adapter.setOnReplyListener(onReplyListener);
+        refresh();
+    }
 
-        repliesPager.setAdapter(repliesPagerAdapter);
-
+    public void refresh() {
         avatarView.setContact(contact);
         if (contact.getStatus().getEmoji() != 0) {
             StringBuffer sb = new StringBuffer();
@@ -80,11 +85,7 @@ public class StatusViewHolder {
         } else {
             layoutEmoji.setVisibility(View.GONE);
         }
-
-        StatusUpdatesRecyclerViewAdapter adapter = new StatusUpdatesRecyclerViewAdapter(itemView.getContext(), contact);
-        rvStatusUpdates.setAdapter(adapter);
-        adapter.setShowingQuickReplyButton(!contact.isYou());
-        adapter.setOnReplyListener(onReplyListener);
+        rvStatusUpdates.getAdapter().notifyDataSetChanged();
         repliesPagerAdapter = new RepliesViewPagerAdapter(itemView.getContext(), repliesTitleStrip, contact.getStatus().getReplyList());
         repliesPager.setAdapter(repliesPagerAdapter);
     }

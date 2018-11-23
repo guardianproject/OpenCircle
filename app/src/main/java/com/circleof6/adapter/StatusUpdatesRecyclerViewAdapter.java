@@ -28,7 +28,6 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     private final Context context;
     private Contact contact;
-    private List<ContactStatusUpdate> updates;
     private StatusViewHolder.OnReplyListener onReplyListener;
     private boolean usingSeparateLayoutForFirstItem = true;
     private boolean showingQuickReplyButton = true;
@@ -39,7 +38,6 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         setHasStableIds(true);
         this.context = context;
         this.contact = contact;
-        this.updates = contact.getStatus().getUpdates();
     }
 
     public void setOnReplyListener(StatusViewHolder.OnReplyListener onReplyListener) {
@@ -68,11 +66,11 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public int getItemCount() {
-        if (updates == null || updates.size() == 0) {
+        if (contact.getStatus().getUpdates() == null || contact.getStatus().getUpdates().size() == 0) {
             return 1; // Show the "no update" view
         }
-        int num = showAll ? updates.size() : 1;
-        if (updates.size() > 1) {
+        int num = showAll ? contact.getStatus().getUpdates().size() : 1;
+        if (contact.getStatus().getUpdates().size() > 1) {
             // Add a view for "show more/show less"
             num += 1;
         }
@@ -84,7 +82,7 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         if (isUsingSeparateLayoutForFirstItem() && position == 0) {
             return 1;
         }
-        if (updates.size() > 1 && ((showAll && position == updates.size()) || (!showAll && position == 1) )) {
+        if (contact.getStatus().getUpdates().size() > 1 && ((showAll && position == contact.getStatus().getUpdates().size()) || (!showAll && position == 1) )) {
             return 2; // The show more/show less view type
         }
         return 0;
@@ -124,10 +122,10 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         StatusUpdateViewHolder viewHolder = (StatusUpdateViewHolder) holder;
         ContactStatusUpdate update = null;
-        if (updates != null && updates.size() > 0) {
-            update = updates.get(position);
+        if (contact.getStatus().getUpdates() != null && contact.getStatus().getUpdates().size() > 0) {
+            update = contact.getStatus().getUpdates().get(position);
         }
-        viewHolder.bindModel(contact, update, isShowingQuickReplyButton() && (updates != null && position == 0));
+        viewHolder.bindModel(contact, update, isShowingQuickReplyButton() && (contact.getStatus().getUpdates() != null && position == 0));
     }
 
     private class ShowMoreViewHolder extends RecyclerView.ViewHolder {
