@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/purple</item>
         <item name="colorControlNormal">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <style name="AppTheme.ShareApp" parent="AppTheme">

@@ -16,14 +16,14 @@ dependencies {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion="27.0.3"
+    buildToolsVersion="28.0.3"
 
     defaultConfig {
         applicationId "com.circleof6.open"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 3006
-        versionName "3.0.0-OPEN-ALPHA-5"
+        versionCode 3007
+        versionName "3.0.0-OPEN-ALPHA-6"
     }
 
     flavorDimensions "free"
