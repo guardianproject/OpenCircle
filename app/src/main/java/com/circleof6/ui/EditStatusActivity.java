@@ -64,7 +64,6 @@ public class EditStatusActivity extends AppCompatActivity implements QuickStatus
             rvStatusUpdates.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             StatusUpdatesRecyclerViewAdapter adapter = new StatusUpdatesRecyclerViewAdapter(this, contact);
             adapter.setUsingSeparateLayoutForFirstItem(false);
-            adapter.setShowingQuickReplyButton(false);
             rvStatusUpdates.setAdapter(adapter);
         } else {
             rvStatusUpdates.setVisibility(View.GONE);

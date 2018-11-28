@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private AVLoadingIndicatorView progressBar;
     private DBHelper dbHelper;
     private List<SMS> sms;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
     private ViewPager statusPager;
     private StatusViewPagerAdapter statusPagerAdapter;
     private DottedViewPagerIndicator statusPagerIndicator;
@@ -145,8 +147,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        final TabLayout tabLayout = findViewById(R.id.tabLayout);
+        toolbar = findViewById(R.id.toolbar);
+        tabLayout = findViewById(R.id.tabLayout);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -163,16 +165,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 appBarLayoutContactsOffset = verticalOffset;
                 float a = Math.abs((float)verticalOffset / (float)appBarLayout.getTotalScrollRange());
-                if (a < 0.8f) {
-                    toolbar.setAlpha(0);
-                    toolbar.setVisibility(View.INVISIBLE);
-                    tabLayout.setAlpha(1);
-                } else {
-                    float d = (a - 0.8f) / 0.2f;
-                    toolbar.setAlpha(d);
-                    toolbar.setVisibility(View.VISIBLE);
-                    tabLayout.setAlpha(1 - d);
-                }
+                setToolbarAndTabFade(a);
             }
         });
 
@@ -226,6 +219,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         timer.scheduleAtFixedRate(timerTask, 0, 3000);
     }
 **/
+
+    /**
+     * The main toolbar is faded between "tabs" and "selected contact name" based on scroll position.
+     * @param a
+     */
+    private void setToolbarAndTabFade(float a) {
+        if (a < 0.8f) {
+            toolbar.setAlpha(0);
+            toolbar.setVisibility(View.INVISIBLE);
+            tabLayout.setAlpha(1);
+        } else {
+            float d = (a - 0.8f) / 0.2f;
+            toolbar.setAlpha(d);
+            toolbar.setVisibility(View.VISIBLE);
+            tabLayout.setAlpha(1 - d);
+        }
+    }
 
     public boolean hasAllRequiredContent() {
 
@@ -417,6 +427,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         final ViewPager viewPager = findViewById(R.id.viewPager);
         final TabLayout tabLayout = findViewById(R.id.tabLayout);
         MethodsUtils.connectTabLayoutAndViewPager(viewPager, tabLayout);
+
+        // Add a page change listener to the top most viewpager to handle setting title
+        //
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if (i ==  0) {
+                    float a = Math.abs((float)appBarLayoutContactsOffset / (float)appBarLayoutContacts.getTotalScrollRange());
+                    setToolbarAndTabFade(a);
+                } else {
+                    // Not on contact tab, show tabs and hide toolbar!
+                    setToolbarAndTabFade(0);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
         statusPager = findViewById(R.id.statusPager);
         statusPagerIndicator = findViewById(R.id.statusPagerIndicator);
@@ -1476,13 +1511,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         QuickReplyDialog.showFromAnchor(statusPager, anchorButton, new QuickReplyDialog.QuickReplyDialogListener() {
             @Override
             public void onQuickReplySelected(int emoji) {
-                ContactStatusReply reply = new ContactStatusReply();
-                reply.setContact(CircleOf6Application.getInstance().getYouContact());
-                reply.setDate(new Date());
-                reply.setType(ContactStatusReply.ReplyType.Emoji);
-                reply.setEmoji(emoji);
-                CircleOf6Application.getInstance().sendReply(contact, reply);
+                onReply(contact, emoji);
             }
         });
+    }
+
+    @Override
+    public void onReply(Contact contact, int emoji) {
+        ContactStatusReply reply = new ContactStatusReply();
+        reply.setContact(CircleOf6Application.getInstance().getYouContact());
+        reply.setDate(new Date());
+        reply.setType(ContactStatusReply.ReplyType.Emoji);
+        reply.setEmoji(emoji);
+        CircleOf6Application.getInstance().sendReply(contact, reply);
+    }
+
+    @Override
+    public void onUnreply(Contact contact, int emoji) {
+        for (ContactStatusReply reply : contact.getStatus().getReplyList()) {
+            if (reply.getContact().isYou() && reply.getEmoji() == emoji) {
+                CircleOf6Application.getInstance().unsendReply(contact, reply);
+                break;
+            }
+        }
     }
 }

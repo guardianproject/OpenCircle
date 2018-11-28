@@ -218,6 +218,14 @@ public class CircleOf6Application extends Application {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
+    public void unsendReply(Contact contact, ContactStatusReply reply) {
+        // TODO - Send and save!
+        contact.getStatus().getReplyList().remove(reply);
+        Intent intent = new Intent(Broadcasts.BROADCAST_STATUS_UPDATE_CHANGED);
+        intent.putExtra(Broadcasts.EXTRAS_CONTACT_ID, contact.getId());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
     // TODO - Setup yourself
     public Contact getYouContact() {
         if (youContact == null) {
@@ -310,8 +318,8 @@ public class CircleOf6Application extends Application {
         update.setDate(new Date(new Date().getTime() - 4 * 60 * 60000));
         update.setEmoji(Emoji.Scared);
         //update.setLocation("12343,12342");
-        //update.setMessage("asdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nkjdsfhsdkjhfkajhfkjahsdfsa\nkjahsdfkjahsdfkjhakjdfhkajdsf\naksjdfhkajdhfkjadsf\nkjafhdsfkjhadskjfhads\n\nskdjfhskjdhfksdhfsdkf\nkdsjfhaksjdfhjaskdfhaskdf\nskjdfhadkjsfhd skafhakjsdfhasdf\nakdjshfgak sdfjghakjsdfg asjkdhfg aksjdhfg ajksdhfg asjhkdfg aksjdhfg jksadhfg asjkdhfg ajksdhfg akjshdfg ajskdhfg ajksdhgf ajshdfg jakshdgf jkahsgd fahjsgdf hjkasgdf asldfgasftweirgasdkjfgai weyfga sdyfg adhjsfga uweyfg aysdgf Me estan atacando en mi cuenta de Twitter. Por favor ayúdenme. https://twitter.com/reporter/status/1055410689425244161");
-        update.setMessage("Me estan atacando en mi cuenta de Twitter. Por favor ayúdenme. https://twitter.com/reporter/status/1055410689425244161");
+        update.setMessage("asdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nasdfjkhasdkfasdfafadsf\nkjdsfhsdkjhfkajhfkjahsdfsa\nkjahsdfkjahsdfkjhakjdfhkajdsf\naksjdfhkajdhfkjadsf\nkjafhdsfkjhadskjfhads\n\nskdjfhskjdhfksdhfsdkf\nkdsjfhaksjdfhjaskdfhaskdf\nskjdfhadkjsfhd skafhakjsdfhasdf\nakdjshfgak sdfjghakjsdfg asjkdhfg aksjdhfg ajksdhfg asjhkdfg aksjdhfg jksadhfg asjkdhfg ajksdhfg akjshdfg ajskdhfg ajksdhgf ajshdfg jakshdgf jkahsgd fahjsgdf hjkasgdf asldfgasftweirgasdkjfgai weyfga sdyfg adhjsfga uweyfg aysdgf Me estan atacando en mi cuenta de Twitter. Por favor ayúdenme. https://twitter.com/reporter/status/1055410689425244161");
+        //update.setMessage("Me estan atacando en mi cuenta de Twitter. Por favor ayúdenme. https://twitter.com/reporter/status/1055410689425244161");
         update.setSeen(false);
         update.setUrgent(false);
         contact.getStatus().addUpdate(update);

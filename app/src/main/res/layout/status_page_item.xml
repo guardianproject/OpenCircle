@@ -62,30 +62,4 @@
             android:textAppearance="@style/StatusLocationTextAppearance"
             tools:text="Lat 0.3425, Long 0.2342" />
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/layoutQuickReply"
-        android:layout_width="32dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="16dp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        android:paddingStart="0dp"
-        android:paddingLeft="0dp"
-        >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_insert_emoticon_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:background="@android:color/white"
-            android:text="+"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
-    </FrameLayout>
 </LinearLayout>

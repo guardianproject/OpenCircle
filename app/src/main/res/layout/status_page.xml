@@ -53,6 +53,44 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp" />
 
+        <LinearLayout
+            android:id="@+id/emojiReplyList"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            >
+
+            <FrameLayout
+                android:id="@+id/layoutQuickReply"
+                android:layout_width="32dp"
+                android:layout_height="24dp"
+                android:paddingRight="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="0dp"
+                android:paddingLeft="0dp"
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_insert_emoticon_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:background="@android:color/white"
+                    android:text="+"
+                    android:textColor="@android:color/black"
+                    android:textSize="12dp" />
+            </FrameLayout>
+
+        </LinearLayout>
+
         <FrameLayout
             android:id="@+id/gradient"
             android:layout_width="match_parent"
@@ -88,10 +126,14 @@
             app:tabMode="scrollable"
             app:tabTextColor="@android:color/darker_gray" />
 
-        <com.circleof6.view.WrapContentViewPager
-            android:id="@+id/repliesPager"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/repliesPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

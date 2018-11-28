@@ -28,9 +28,7 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     private final Context context;
     private Contact contact;
-    private StatusViewHolder.OnReplyListener onReplyListener;
     private boolean usingSeparateLayoutForFirstItem = true;
-    private boolean showingQuickReplyButton = true;
     private boolean showAll = false;
 
     public StatusUpdatesRecyclerViewAdapter(Context context, Contact contact) {
@@ -40,24 +38,12 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         this.contact = contact;
     }
 
-    public void setOnReplyListener(StatusViewHolder.OnReplyListener onReplyListener) {
-        this.onReplyListener = onReplyListener;
-    }
-
     public boolean isUsingSeparateLayoutForFirstItem() {
         return usingSeparateLayoutForFirstItem;
     }
 
     public void setUsingSeparateLayoutForFirstItem(boolean usingSeparateLayoutForFirstItem) {
         this.usingSeparateLayoutForFirstItem = usingSeparateLayoutForFirstItem;
-    }
-
-    public boolean isShowingQuickReplyButton() {
-        return showingQuickReplyButton;
-    }
-
-    public void setShowingQuickReplyButton(boolean showingQuickReplyButton) {
-        this.showingQuickReplyButton = showingQuickReplyButton;
     }
 
     private Context getContext() {
@@ -125,7 +111,7 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         if (contact.getStatus().getUpdates() != null && contact.getStatus().getUpdates().size() > 0) {
             update = contact.getStatus().getUpdates().get(position);
         }
-        viewHolder.bindModel(contact, update, isShowingQuickReplyButton() && (contact.getStatus().getUpdates() != null && position == 0));
+        viewHolder.bindModel(contact, update);
     }
 
     private class ShowMoreViewHolder extends RecyclerView.ViewHolder {
@@ -144,7 +130,6 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         private TextView tvStatus;
         private View layoutLocation;
         private TextView tvLocation;
-        public View layoutQuickReply;
 
         public StatusUpdateViewHolder(View view) {
             super(view);
@@ -156,10 +141,9 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             tvStatus.setLinkTextColor(ContextCompat.getColor(view.getContext(), R.color.link_color));
             layoutLocation = view.findViewById(R.id.locationLayout);
             tvLocation = view.findViewById(R.id.tvLocation);
-            layoutQuickReply = view.findViewById(R.id.layoutQuickReply);
         }
 
-        public void bindModel(final Contact contact, ContactStatusUpdate update, boolean showQuickReply) {
+        public void bindModel(final Contact contact, ContactStatusUpdate update) {
             if (tvName != null) {
                 tvName.setText(contact.getName());
             }
@@ -194,27 +178,10 @@ public class StatusUpdatesRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 } else {
                     tvLocation.setText(update.getLocation());
                 }
-                if (layoutQuickReply != null) {
-                    if (showQuickReply) {
-                        layoutQuickReply.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (onReplyListener != null) {
-                                    onReplyListener.onQuickReply(contact, layoutQuickReply);
-                                }
-                            }
-                        });
-                    } else {
-                        layoutQuickReply.setVisibility(View.GONE);
-                    }
-                }
             } else {
                 tvDate.setText(R.string.status_updated_ago_never);
                 tvStatus.setVisibility(View.GONE);
                 layoutLocation.setVisibility(View.GONE);
-                if (layoutQuickReply != null) {
-                    layoutQuickReply.setVisibility(View.GONE);
-                }
             }
         }
     }

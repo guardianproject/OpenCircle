@@ -2,8 +2,12 @@ package com.circleof6.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.TypedValue;
 
 import com.circleof6.R;
@@ -91,6 +95,40 @@ public class MethodsUtils {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+    }
+
+    public static void connectTabLayoutAndRecyclerView(final RecyclerView recyclerView, final TabLayout tabLayout) {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                LinearLayoutManager llm = (LinearLayoutManager)recyclerView.getLayoutManager();
+                if (llm.findFirstVisibleItemPosition() != tab.getPosition()) {
+                    llm.scrollToPosition(tab.getPosition());
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    LinearLayoutManager llm = (LinearLayoutManager)recyclerView.getLayoutManager();
+                    if (llm.findFirstVisibleItemPosition() != tabLayout.getSelectedTabPosition()) {
+                        tabLayout.getTabAt(llm.findFirstVisibleItemPosition()).select();
+                    }
+                }
             }
         });
     }

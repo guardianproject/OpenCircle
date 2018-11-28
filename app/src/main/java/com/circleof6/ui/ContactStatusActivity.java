@@ -121,6 +121,16 @@ public class ContactStatusActivity extends AppCompatActivity implements StatusVi
         });
     }
 
+    @Override
+    public void onReply(Contact contact, int emoji) {
+
+    }
+
+    @Override
+    public void onUnreply(Contact contact, int emoji) {
+
+    }
+
     private void replyWithEmoji(int emoji) {
         ContactStatusReply reply = new ContactStatusReply();
         reply.setContact(CircleOf6Application.getInstance().getYouContact());
