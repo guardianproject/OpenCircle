@@ -22,7 +22,7 @@ android {
         applicationId "com.circleof6.open"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 3007
+        versionCode 3008
         versionName "3.0.0-OPEN-ALPHA-6"
     }
 
