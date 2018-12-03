@@ -16,7 +16,7 @@ dependencies {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion="27.0.3"
+    buildToolsVersion= '28.0.3'
 
     defaultConfig {
         applicationId "com.circleof6.open"
@@ -67,12 +67,13 @@ android {
 }
 
 dependencies {
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
     implementation 'com.android.support:design:27.1.1'
-    implementation 'com.google.android.gms:play-services-location:15.0.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.mcxiaoke.volley:library-aar:1.0.0'
     implementation 'com.wang.avi:library:1.0.1'
     implementation 'cn.pedant.sweetalert:library:1.3'
