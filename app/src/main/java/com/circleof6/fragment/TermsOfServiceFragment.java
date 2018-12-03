@@ -21,6 +21,9 @@ import com.circleof6.ui.MainActivity;
 import com.circleof6.util.Constants;
 import com.circleof6.util.ConstantsAnalytics;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,7 +70,17 @@ public class TermsOfServiceFragment extends TutorialFragment
             CollegeCountry collegeCountry = dbHelper.getCollege(college_id);
             return collegeCountry.getTermsAndConditions();
         }**/
-        return getString(R.string.terms_of_service_text);
+        StringBuffer result = new StringBuffer();
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getActivity().getAssets().open("license.html")));
+            String line = null;
+            while ((line = reader.readLine())!=null)
+                result.append(line);
+        }
+        catch (Exception e){}
+
+        return result.toString();
     }
     private void setupAgreeButton(View view) {
         ImageButton agreeButton = (ImageButton) view.findViewById(R.id.i_agree_button);
