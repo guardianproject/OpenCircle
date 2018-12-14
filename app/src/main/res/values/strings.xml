@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">Co6-Dev</string>
+    <string name="app_name">CircleOf6</string>
     <string name="welcome_message">add contacts to your circle</string>
-    <string name="title_activity_main">Co6-Dev</string>
+    <string name="title_activity_main">Circle of 6</string>
 
     <string name="emergency_button">icon with emergency</string>
     <string name="info_button">information button</string>
@@ -103,11 +103,11 @@ Tap on the phone icon. This will take you to a choice of 2 hotlines (only one is
     <string name="text_share_app">I\'m using @Circleof6app, check it out! Stay connected and stay
         safe.
     </string>
-    <string name="link_share_app">https://tinyurl.com/ljv7fgy</string>
+    <string name="link_share_app">https://www.circleof6app.com/</string>
     <string name="no_thanks">NO THANKS</string>
     <string name="shared_app">Share App</string>
     <string name="url_app">
-        https://play.google.com/store/apps/details?id=com.circleof6.williamsuniversity
+        https://www.circleof6app.com/
     </string>
 
     <string name="error_share_facebook">Facebook app not installed</string>
