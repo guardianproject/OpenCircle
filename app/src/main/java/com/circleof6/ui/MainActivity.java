@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -46,7 +45,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.circleof6.CircleOf6Application;
 import com.circleof6.R;
 import com.circleof6.adapter.StatusViewPagerAdapter;
@@ -72,6 +70,7 @@ import com.circleof6.util.Constants;
 import com.circleof6.util.ConstantsAnalytics;
 import com.circleof6.util.MethodsUtils;
 import com.circleof6.view.ContactView;
+import com.circleof6.view.DesignableViewPager;
 import com.circleof6.view.DottedViewPagerIndicator;
 import com.circleof6.view.StatusViewHolder;
 import com.circleof6.view.util.DrawUtils;
@@ -100,7 +99,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.Timer;
 
-import static com.circleof6.CircleOf6Application.isUniversalFlavor;
 import static com.circleof6.util.MethodsUtils.getPhotoFileByContact;
 
 
@@ -132,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private List<SMS> sms;
     private Toolbar toolbar;
     private TabLayout tabLayout;
+    private DesignableViewPager mainViewPager;
     private ViewPager statusPager;
     private StatusViewPagerAdapter statusPagerAdapter;
     private DottedViewPagerIndicator statusPagerIndicator;
@@ -229,12 +228,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             toolbar.setAlpha(0);
             toolbar.setVisibility(View.INVISIBLE);
             tabLayout.setAlpha(1);
+            setFullscreenMode(false);
         } else {
             float d = (a - 0.8f) / 0.2f;
             toolbar.setAlpha(d);
             toolbar.setVisibility(View.VISIBLE);
             tabLayout.setAlpha(1 - d);
+            setFullscreenMode(true);
         }
+    }
+
+    private void setFullscreenMode(boolean fullscreenMode) {
+        // When showing status in full screen, disable swipe in the main view pager
+        mainViewPager.setSwipingEnabled(!fullscreenMode);
     }
 
     public boolean hasAllRequiredContent() {
@@ -424,13 +430,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         // Set up viewpager and tabs
         //
-        final ViewPager viewPager = findViewById(R.id.viewPager);
+        mainViewPager = findViewById(R.id.viewPager);
         final TabLayout tabLayout = findViewById(R.id.tabLayout);
-        MethodsUtils.connectTabLayoutAndViewPager(viewPager, tabLayout);
+        MethodsUtils.connectTabLayoutAndViewPager(mainViewPager, tabLayout);
 
         // Add a page change listener to the top most viewpager to handle setting title
         //
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 

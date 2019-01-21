@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,6 +17,8 @@ import java.util.List;
  * Created by N-Pex on 2018-10-30.
  */
 public class DesignableViewPager extends ViewPager {
+
+    private boolean swipingEnabled = true;
 
     public DesignableViewPager(@NonNull Context context) {
         super(context);
@@ -66,5 +69,33 @@ public class DesignableViewPager extends ViewPager {
             }
         });
         super.onFinishInflate();
+    }
+
+    public boolean isSwipingEnabled() {
+        return swipingEnabled;
+    }
+
+    /**
+     * Enable or disable swiping between pages. The default is "enabled".
+     * @param swipingEnabled true to enable page swipes, false to disable.
+     */
+    public void setSwipingEnabled(boolean swipingEnabled) {
+        this.swipingEnabled = swipingEnabled;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (swipingEnabled) {
+            return super.onTouchEvent(event);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        if (swipingEnabled) {
+            return super.onInterceptTouchEvent(event);
+        }
+        return false;
     }
 }
