@@ -14,13 +14,13 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion= '28.0.3'
 
     defaultConfig {
         applicationId "com.circleof6.open"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 3020
         versionName "3.0.0-OPEN-BETA-2"
     }
@@ -31,6 +31,11 @@ android {
         universal {
             dimension "free"
             applicationId "com.circleof6.open"
+        }
+        circulo {
+            dimension "free"
+            applicationId "org.article19.circulo"
+
         }
     }
 

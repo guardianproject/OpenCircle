@@ -6,4 +6,4 @@
     android:layout_height="wrap_content"
     android:layout_gravity="left|top"
     android:layout_margin="12dp"
-    android:src="@drawable/co6_u_logo"/>
+    android:src="@drawable/ic_launcher"/>

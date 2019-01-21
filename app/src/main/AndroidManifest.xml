@@ -74,7 +74,7 @@
         </activity>
         <provider
             android:name="com.circleof6.data.CustomContentProvider"
-            android:authorities="com.circleof6.data.CustomContentProvider"
+            android:authorities="${applicationId}.data.CustomContentProvider"
             android:exported="false"
             android:multiprocess="true">
         </provider>

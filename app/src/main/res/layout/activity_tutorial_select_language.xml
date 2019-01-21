@@ -63,14 +63,5 @@
         android:layout_height="1dp"
         android:background="@color/cyan"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_small"
-        android:layout_marginTop="@dimen/padding_small"
-        android:scaleType="centerInside"
-        android:src="@drawable/tutorial_co6_u_logo" />
 
 </LinearLayout>
