@@ -1,0 +1,8 @@
+O Circle of 6 é para toda a gente.
+
+É rápida, fácil de usar e privada. Originalmente concebida para estudantes para prevenir violência sexual, também é útil para adolescentes, pais, amigos ou todas as comunidades que promovem relacionamentos saudáveis, assim como a segurança da comunidade.
+
+Precisa de ajuda a chegar a casa? Precisa de uma pausa? Bastam dois toques e o seu círculo de pessoas pode saber onde está e como podem ajudar. A aplicação Circle of 6 para iPhone e Android torna fácil e rápido chegar a 6 pessoas que escolher.
+
+Circle of 6 foi desenvolvido originalmente pela Tech 4 Good, e é agora gerida e melhorada como código-fonte aberto pelo Guardian Project em: https://github.com/guardianproject/opencircle
+É a forma portátil para olharmos uns pelos outros na escola ou quando se sai à noite. Uma ferramenta simples para prevenir a violência antes que esta aconteça.
